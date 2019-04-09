@@ -3,6 +3,31 @@ import statusMessage from './status';
 import { Firebase, FirebaseRef } from '../lib/firebase';
 
 /**
+  * Get this User's Details
+  */
+function getUserData(dispatch) {
+  const UID = (
+    FirebaseRef
+    && Firebase
+    && Firebase.auth()
+    && Firebase.auth().currentUser
+    && Firebase.auth().currentUser.uid
+  ) ? Firebase.auth().currentUser.uid : null;
+
+  if (!UID) return false;
+
+  const ref = FirebaseRef.child(`users/${UID}`);
+
+  return ref.on('value', (snapshot) => {
+    const userData = snapshot.val() || [];
+
+    return dispatch({
+      type: 'USER_DETAILS_UPDATE',
+      data: userData,
+    });
+  });
+}
+/**
   * Sign Up to Firebase
   */
 export function signUp(formData) {
@@ -29,6 +54,8 @@ export function signUp(formData) {
     return Firebase.auth()
       .createUserWithEmailAndPassword(email, password)
       .then((res) => {
+        console.log('Sign up res:');
+        console.log(res);
         // Send user details to Firebase database
         if (res && res.user.uid) {
           FirebaseRef.child(`users/${res.user.uid}`).set({
@@ -36,7 +63,19 @@ export function signUp(formData) {
             lastName,
             signedUp: Firebase.database.ServerValue.TIMESTAMP,
             lastLoggedIn: Firebase.database.ServerValue.TIMESTAMP,
-          }).then(() => statusMessage(dispatch, 'loading', false).then(resolve));
+          }).then(async () => {
+
+            // Log user in
+            getUserData(dispatch);
+            await statusMessage(dispatch, 'loading', false);
+            const userDetails = res && res.user ? res.user : null;
+
+            // Send Login data to Redux
+            return resolve(dispatch({
+              type: 'USER_LOGIN',
+              data: userDetails,
+            }));
+          });
         }
       }).catch(reject);
   }).catch(async (err) => {
@@ -45,31 +84,6 @@ export function signUp(formData) {
   });
 }
 
-/**
-  * Get this User's Details
-  */
-function getUserData(dispatch) {
-  const UID = (
-    FirebaseRef
-    && Firebase
-    && Firebase.auth()
-    && Firebase.auth().currentUser
-    && Firebase.auth().currentUser.uid
-  ) ? Firebase.auth().currentUser.uid : null;
-
-  if (!UID) return false;
-
-  const ref = FirebaseRef.child(`users/${UID}`);
-
-  return ref.on('value', (snapshot) => {
-    const userData = snapshot.val() || [];
-
-    return dispatch({
-      type: 'USER_DETAILS_UPDATE',
-      data: userData,
-    });
-  });
-}
 
 export function getMemberData() {
   if (Firebase === null) return () => new Promise(resolve => resolve());
@@ -128,6 +142,9 @@ export function login(formData) {
           }
 
           await statusMessage(dispatch, 'loading', false);
+
+          console.log('Login up res:');
+          console.log(res);
 
           // Send Login data to Redux
           return resolve(dispatch({
