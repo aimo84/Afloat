@@ -54,8 +54,6 @@ export function signUp(formData) {
     return Firebase.auth()
       .createUserWithEmailAndPassword(email, password)
       .then((res) => {
-        console.log('Sign up res:');
-        console.log(res);
         // Send user details to Firebase database
         if (res && res.user.uid) {
           FirebaseRef.child(`users/${res.user.uid}`).set({
@@ -64,7 +62,6 @@ export function signUp(formData) {
             signedUp: Firebase.database.ServerValue.TIMESTAMP,
             lastLoggedIn: Firebase.database.ServerValue.TIMESTAMP,
           }).then(async () => {
-
             // Log user in
             getUserData(dispatch);
             await statusMessage(dispatch, 'loading', false);
@@ -142,9 +139,6 @@ export function login(formData) {
           }
 
           await statusMessage(dispatch, 'loading', false);
-
-          console.log('Login up res:');
-          console.log(res);
 
           // Send Login data to Redux
           return resolve(dispatch({
