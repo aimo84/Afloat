@@ -28,6 +28,7 @@ import MemberContainer from '../../containers/Member';
 import ProfileComponent from '../components/Profile';
 
 import AboutComponent from '../components/About';
+import Auth from '../components/Auth';
 
 import LandingContainer from '../../containers/Landing';
 import LandingComponent from '../components/Landing';
@@ -81,7 +82,7 @@ const Index = (
           icon={() => <Icon name="planet" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >
-          <Scene key="home" component={AboutComponent} />
+          <Scene key="home" component={Auth(AboutComponent)} />
         </Stack>
 
         <Stack
