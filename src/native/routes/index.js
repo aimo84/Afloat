@@ -29,9 +29,44 @@ import ProfileComponent from '../components/Profile';
 
 import AboutComponent from '../components/About';
 
+import LandingContainer from '../../containers/Landing';
+import LandingComponent from '../components/Landing';
+
+
 const Index = (
   <Stack hideNavBar>
     <Scene hideNavBar>
+      <Stack
+        key="landing"
+        title={AppConfig.appName.toUpperCase()}
+        {...DefaultProps.navbarProps}
+      >
+        <Scene
+          back
+          key="Landing"
+          title="Landing"
+          {...DefaultProps.navbarProps}
+          component={LandingContainer}
+          Layout={LandingComponent}
+        />
+        <Scene
+          back
+          key="signUp"
+          title="SIGN UP"
+          {...DefaultProps.navbarProps}
+          component={SignUpContainer}
+          Layout={SignUpComponent}
+        />
+        <Scene
+          back
+          key="login"
+          title="LOGIN"
+          {...DefaultProps.navbarProps}
+          component={LoginContainer}
+          Layout={LoginComponent}
+        />
+      </Stack>
+
       <Tabs
         key="tabbar"
         swipeEnabled
@@ -39,6 +74,7 @@ const Index = (
         showLabel={false}
         {...DefaultProps.tabProps}
       >
+
         <Stack
           key="home"
           title={AppConfig.appName.toUpperCase()}
@@ -111,8 +147,8 @@ const Index = (
     <Scene
       back
       clone
-      key="recipe"
-      title="RECIPE"
+      key="updateProfile"
+      title="UPDATE"
       {...DefaultProps.navbarProps}
       component={RecipesContainer}
       Layout={RecipeViewComponent}

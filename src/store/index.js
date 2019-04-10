@@ -3,7 +3,9 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { persistStore, persistCombineReducers } from 'redux-persist';
 import storage from 'redux-persist/es/storage'; // default: localStorage if web, AsyncStorage if react-native
 import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import reducers from '../reducers';
+
 
 // Redux Persist config
 const config = {
@@ -21,7 +23,7 @@ const configureStore = () => {
 
   const store = createStore(
     reducer,
-    composeEnhancer(applyMiddleware(...middleware)),
+    composeWithDevTools(composeEnhancer(applyMiddleware(...middleware))),
   );
 
   const persistor = persistStore(
