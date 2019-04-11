@@ -3,6 +3,12 @@ import { connect } from 'react-redux';
 
 export default function (ComposedComponent) {
   class Auth extends React.Component {
+    constructor(props) {
+      super(props);
+
+      this.state = {};
+    }
+
     render() {
       return (
         <ComposedComponent {...this.props} />

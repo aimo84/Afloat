@@ -3,7 +3,6 @@ import {
   Container, Content, Text, H1, H2, H3,
 } from 'native-base';
 import Spacer from './Spacer';
-// import console = require('console');
 
 const About = (props) => {
   return (
