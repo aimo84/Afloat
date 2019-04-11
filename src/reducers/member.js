@@ -3,6 +3,7 @@ import Store from '../store/member';
 export const initialState = Store;
 
 export default function userReducer(state = initialState, action) {
+  // console.log(action);
   switch (action.type) {
     case 'USER_LOGIN': {
       if (action.data) {
@@ -10,9 +11,10 @@ export default function userReducer(state = initialState, action) {
           ...state,
           loading: false,
           error: null,
-          uid: action.data.uid,
+          token: action.data.token,
           email: action.data.email,
-          emailVerified: action.data.emailVerified,
+          firstname: action.data.firstname,
+          emailVerified: false,
         };
       }
       return initialState;
@@ -23,8 +25,8 @@ export default function userReducer(state = initialState, action) {
           ...state,
           loading: false,
           error: null,
-          firstName: action.data.firstName,
-          lastName: action.data.lastName,
+          firstname: action.data.firstname,
+          lastname: action.data.lastname,
           signedUp: action.data.signedUp,
           role: action.data.role,
         };
