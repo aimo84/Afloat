@@ -1,11 +1,11 @@
-import { AsyncStorage } from 'react-native';
 import axios from 'axios';
 import ErrorMessages from '../constants/errors';
+import config from '../constants/config';
 import statusMessage from './status';
 import { Firebase, FirebaseRef } from '../lib/firebase';
-import { persistor, store } from '../store/index';
+import { store } from '../store/index';
 
-const ROOT_URL = 'http://581618f4.ngrok.io/api';
+const ROOT_URL = `${config.ROOT_URL}/api`;
 /**
   * Get this User's Details
   */
