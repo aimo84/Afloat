@@ -1,48 +1,32 @@
+import axios from 'axios';
 import ErrorMessages from '../constants/errors';
+import config from '../constants/config';
 import statusMessage from './status';
 import { Firebase, FirebaseRef } from '../lib/firebase';
+import { store } from '../store/index';
 
+const ROOT_URL = `${config.ROOT_URL}/api`;
 /**
   * Get this User's Details
   */
-function getUserData(dispatch) {
-  const UID = (
-    FirebaseRef
-    && Firebase
-    && Firebase.auth()
-    && Firebase.auth().currentUser
-    && Firebase.auth().currentUser.uid
-  ) ? Firebase.auth().currentUser.uid : null;
-
-  if (!UID) return false;
-
-  const ref = FirebaseRef.child(`users/${UID}`);
-
-  return ref.on('value', (snapshot) => {
-    const userData = snapshot.val() || [];
-
-    return dispatch({
-      type: 'USER_DETAILS_UPDATE',
-      data: userData,
-    });
-  });
+export function getUserData(dispatch) {
+  const state = store.getState();
+  return state;
 }
-/**
-  * Sign Up to Firebase
-  */
+
 export function signUp(formData) {
   const {
     email,
     password,
     password2,
-    firstName,
-    lastName,
+    firstname,
+    lastname,
   } = formData;
 
   return dispatch => new Promise(async (resolve, reject) => {
     // Validation checks
-    if (!firstName) return reject({ message: ErrorMessages.missingFirstName });
-    if (!lastName) return reject({ message: ErrorMessages.missingLastName });
+    if (!firstname) return reject({ message: ErrorMessages.missingFirstName });
+    if (!lastname) return reject({ message: ErrorMessages.missingLastName });
     if (!email) return reject({ message: ErrorMessages.missingEmail });
     if (!password) return reject({ message: ErrorMessages.missingPassword });
     if (!password2) return reject({ message: ErrorMessages.missingPassword });
@@ -50,50 +34,23 @@ export function signUp(formData) {
 
     await statusMessage(dispatch, 'loading', true);
 
-    // Go to Firebase
-    return Firebase.auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((res) => {
-        // Send user details to Firebase database
-        if (res && res.user.uid) {
-          FirebaseRef.child(`users/${res.user.uid}`).set({
-            firstName,
-            lastName,
-            signedUp: Firebase.database.ServerValue.TIMESTAMP,
-            lastLoggedIn: Firebase.database.ServerValue.TIMESTAMP,
-          }).then(async () => {
-            // Log user in
-            getUserData(dispatch);
-            await statusMessage(dispatch, 'loading', false);
-            const userDetails = res && res.user ? res.user : null;
-
-            // Send Login data to Redux
-            return resolve(dispatch({
-              type: 'USER_LOGIN',
-              data: userDetails,
-            }));
-          });
-        }
-      }).catch(reject);
-  }).catch(async (err) => {
+    // TODO: Replace with local auth:
+    //       - Create user
+    //       - getUserData (store token locally)
+    //       - send login action with user details
+    axios.post(`${ROOT_URL}/signup`, {
+      email, password, firstname, lastname,
+    }, { headers: { authorization: '' } }).then((response) => {
+      getUserData(dispatch);
+      const userDetails = response.data.user;
+      return resolve(dispatch({
+        type: 'USER_LOGIN',
+        data: userDetails,
+      }));
+    }).catch(reject);
+  }).catch(async (error) => {
     await statusMessage(dispatch, 'loading', false);
-    throw err.message;
-  });
-}
-
-
-export function getMemberData() {
-  if (Firebase === null) return () => new Promise(resolve => resolve());
-
-  // Ensure token is up to date
-  return dispatch => new Promise((resolve) => {
-    Firebase.auth().onAuthStateChanged((loggedIn) => {
-      if (loggedIn) {
-        return resolve(getUserData(dispatch));
-      }
-
-      return () => new Promise(() => resolve());
-    });
+    throw error;
   });
 }
 
@@ -113,42 +70,18 @@ export function login(formData) {
     if (!email) return reject({ message: ErrorMessages.missingEmail });
     if (!password) return reject({ message: ErrorMessages.missingPassword });
 
-    // Go to Firebase
-    return Firebase.auth()
-      .setPersistence(Firebase.auth.Auth.Persistence.LOCAL)
-      .then(() => Firebase.auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(async (res) => {
-          const userDetails = res && res.user ? res.user : null;
-
-          if (userDetails.uid) {
-            // Update last logged in data
-            FirebaseRef.child(`users/${userDetails.uid}`).update({
-              lastLoggedIn: Firebase.database.ServerValue.TIMESTAMP,
-            });
-
-            // Send verification Email when email hasn't been verified
-            if (userDetails.emailVerified === false) {
-              Firebase.auth().currentUser
-                .sendEmailVerification()
-                .catch(() => console.log('Verification email failed to send'));
-            }
-
-            // Get User Data
-            getUserData(dispatch);
-          }
-
-          await statusMessage(dispatch, 'loading', false);
-
-          // Send Login data to Redux
-          return resolve(dispatch({
-            type: 'USER_LOGIN',
-            data: userDetails,
-          }));
-        }).catch(reject));
-  }).catch(async (err) => {
+    axios.post(`${ROOT_URL}/signin`, { email, password },
+      { headers: { authorization: '' } }).then((response) => {
+      getUserData(dispatch);
+      const userDetails = response.data.user;
+      return resolve(dispatch({
+        type: 'USER_LOGIN',
+        data: userDetails,
+      }));
+    }).catch(reject);
+  }).catch(async (error) => {
     await statusMessage(dispatch, 'loading', false);
-    throw err.message;
+    throw error;
   });
 }
 
@@ -183,8 +116,8 @@ export function updateProfile(formData) {
     email,
     password,
     password2,
-    firstName,
-    lastName,
+    firstname,
+    lastname,
     changeEmail,
     changePassword,
   } = formData;
@@ -195,8 +128,8 @@ export function updateProfile(formData) {
     if (!UID) return reject({ message: ErrorMessages.missingFirstName });
 
     // Validation checks
-    if (!firstName) return reject({ message: ErrorMessages.missingFirstName });
-    if (!lastName) return reject({ message: ErrorMessages.missingLastName });
+    if (!firstname) return reject({ message: ErrorMessages.missingFirstName });
+    if (!lastname) return reject({ message: ErrorMessages.missingLastName });
     if (changeEmail) {
       if (!email) return reject({ message: ErrorMessages.missingEmail });
     }
@@ -209,7 +142,7 @@ export function updateProfile(formData) {
     await statusMessage(dispatch, 'loading', true);
 
     // Go to Firebase
-    return FirebaseRef.child(`users/${UID}`).update({ firstName, lastName })
+    return FirebaseRef.child(`users/${UID}`).update({ firstname, lastname })
       .then(async () => {
         // Update Email address
         if (changeEmail) {

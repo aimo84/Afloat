@@ -19,7 +19,7 @@ exports.makeUserFullName = functions.database.ref('/users/{userId}').onWrite((ch
   // The current value of what was written to the Realtime Database.
   const original = change.after.val();
 
-  const fullName = `${original.firstName} ${original.lastName}`;
+  const fullName = `${original.firstname} ${original.lastname}`;
   return change.after.ref.child('fullName').set(fullName);
 });
 

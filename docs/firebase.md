@@ -29,8 +29,8 @@ We've created a quick little "API server" on [Google's Firebase Platform](https:
         ".read": "auth != null && auth.uid == $uid",
         ".write": "auth != null && auth.uid == $uid",
 
-        "firstName": { ".validate": "newData.isString() && newData.val().length > 0" },
-        "lastName": { ".validate": "newData.isString() && newData.val().length > 0" },
+        "firstname": { ".validate": "newData.isString() && newData.val().length > 0" },
+        "lastname": { ".validate": "newData.isString() && newData.val().length > 0" },
         "lastLoggedIn": { ".validate": "newData.val() <= now" },
         "signedUp": { ".validate": "newData.val() <= now" },
         "role": {
