@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { Actions } from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
+// import { Text } from 'native-base';
 import { connect } from 'react-redux';
 
 import { getRecipes, getMeals, setError } from '../actions/recipes';
@@ -13,6 +14,12 @@ class Landing extends Component {
       params: PropTypes.shape({}),
     }),
     firstName: PropTypes.func.isRequired,
+    uid: PropTypes.shape({
+      error: PropTypes.string,
+    }).isRequired,
+    member: PropTypes.shape({
+      error: PropTypes.string,
+    }).isRequired,
   }
 
   static defaultProps = {
@@ -20,17 +27,30 @@ class Landing extends Component {
   }
 
 
-  // componentDidMount = () => this.fetchRecipes();
+  componentDidMount = () => {
+    const {
+      member,
+    } = this.props;
+    console.log(member);
+    setTimeout(() => {
+      if ('uid' in member) {
+        Actions.replace('entry');
+        console.log('logged in');
+      }
+    }, 10);
+  };
 
   checkState = () => {
-    const { firstName } = this.props;
-    console.log('hi');
-    console.log(firstName);
+    console.log(this.props);
   }
 
   render = () => {
-    const { Layout, loading, firstName } = this.props;
-    console.log(firstName);
+    const {
+      Layout, loading, firstName,
+    } = this.props;
+    // const { uid } = this.props.member;
+    console.log(this.props);
+
 
     return (
       <Layout
