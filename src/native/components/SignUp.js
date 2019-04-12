@@ -23,8 +23,8 @@ class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: '',
+      firstname: '',
+      lastname: '',
       email: '',
       password: '',
       password2: '',
@@ -67,14 +67,14 @@ class SignUp extends React.Component {
               <Label>
                 First Name
               </Label>
-              <Input onChangeText={v => this.handleChange('firstName', v)} />
+              <Input onChangeText={v => this.handleChange('firstname', v)} />
             </Item>
 
             <Item stackedLabel>
               <Label>
                 Last Name
               </Label>
-              <Input onChangeText={v => this.handleChange('lastName', v)} />
+              <Input onChangeText={v => this.handleChange('lastname', v)} />
             </Item>
 
             <Item stackedLabel>

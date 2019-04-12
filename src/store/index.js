@@ -18,21 +18,25 @@ const reducer = persistCombineReducers(config, reducers);
 
 const middleware = [thunk];
 
-const configureStore = () => {
-  const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+<<<<<<< HEAD
   const store = createStore(
     reducer,
     composeWithDevTools(composeEnhancer(applyMiddleware(...middleware))),
   );
+=======
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+>>>>>>> a7ee5e78b6cad0a0eecfa232d99bbe41faaa809b
 
-  const persistor = persistStore(
-    store,
-    null,
-    () => { store.getState(); },
-  );
+const store = createStore(
+  reducer,
+  composeEnhancer(applyMiddleware(...middleware)),
+);
 
-  return { persistor, store };
-};
+const persistor = persistStore(
+  store,
+  null,
+  () => { store.getState(); },
+);
 
-export default configureStore;
+export { store, persistor };
