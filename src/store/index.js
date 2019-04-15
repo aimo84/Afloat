@@ -5,6 +5,7 @@ import storage from 'redux-persist/es/storage'; // default: localStorage if web,
 import thunk from 'redux-thunk';
 import reducers from '../reducers';
 
+
 // Redux Persist config
 const config = {
   key: 'root',
