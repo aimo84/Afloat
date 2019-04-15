@@ -7,6 +7,8 @@ export default function userReducer(state = initialState, action) {
   switch (action.type) {
     case 'USER_LOGIN': {
       if (action.data) {
+        console.log('ACTION DATA');
+        console.log(action.data);
         return {
           ...state,
           loading: false,
@@ -15,6 +17,16 @@ export default function userReducer(state = initialState, action) {
           email: action.data.email,
           firstname: action.data.firstname,
           emailVerified: false,
+        };
+      }
+      return initialState;
+    }
+    case 'BANK_SET': {
+      console.log('dispatch recieved');
+      if (action.data) {
+        return {
+          ...state,
+          bankSet: action.data,
         };
       }
       return initialState;

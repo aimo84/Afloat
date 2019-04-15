@@ -18,9 +18,6 @@ class Entry extends Component {
     match: PropTypes.shape({
       params: PropTypes.shape({}),
     }),
-    uid: PropTypes.shape({
-      error: PropTypes.string,
-    }).isRequired,
     member: PropTypes.shape({
       error: PropTypes.string,
     }).isRequired,

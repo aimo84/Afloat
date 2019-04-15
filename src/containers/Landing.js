@@ -8,15 +8,10 @@ import { getRecipes, getMeals, setError } from '../actions/recipes';
 
 class Landing extends Component {
   static propTypes = {
-    loading: PropTypes.func.isRequired,
     Layout: PropTypes.func.isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({}),
     }),
-    firstName: PropTypes.func.isRequired,
-    uid: PropTypes.shape({
-      error: PropTypes.string,
-    }).isRequired,
     member: PropTypes.shape({
       error: PropTypes.string,
     }).isRequired,
@@ -33,28 +28,30 @@ class Landing extends Component {
     } = this.props;
     console.log(member);
     setTimeout(() => {
-      if ('uid' in member) {
-        Actions.replace('entry');
-        console.log('logged in');
+      if ('token' in member) {
+        if (member.bankSet) {
+          Actions.replace('home');
+        } else {
+          Actions.replace('entry');
+        }
       }
     }, 10);
   };
 
   checkState = () => {
-    console.log(this.props);
+    console.log('hi');
   }
 
   render = () => {
     const {
-      Layout, loading, firstName,
+      // eslint-disable-next-line
+      Layout, firstName,
     } = this.props;
     // const { uid } = this.props.member;
-    console.log(this.props);
 
 
     return (
       <Layout
-        loading={loading}
         recipes={firstName}
         checkState={this.checkState}
       />
