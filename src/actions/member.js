@@ -168,12 +168,9 @@ export function updateProfile(formData) {
 /**
   * Logout
   */
-export function logout() {
-  return dispatch => new Promise((resolve, reject) => {
-    Firebase.auth().signOut()
-      .then(() => {
-        dispatch({ type: 'USER_RESET' });
-        setTimeout(resolve, 1000); // Resolve after 1s so that user sees a message
-      }).catch(reject);
-  }).catch(async (err) => { await statusMessage(dispatch, 'error', err.message); throw err.message; });
+export function logout(cb) {
+  return (dispatch) => {
+    dispatch({ type: 'LOGOUT' });
+    cb();
+  };
 }

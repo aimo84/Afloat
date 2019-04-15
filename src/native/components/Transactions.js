@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import {
-  Container, Content, Text, H1, H2, H3,
+  Container, Content, Text, H1, H2, H3, Button,
 } from 'native-base';
+import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spacer from './Spacer';
 
 
 import { getTransactions } from '../../actions/bank';
+import { logout } from '../../actions/member';
 
 
 class Transactions extends Component {
@@ -81,10 +83,23 @@ class Transactions extends Component {
                 magna mollis euismod. Donec sed odio dui.
           {' '}
         </Text>
+        <Button onPress={() => {
+          this.props.logout(() => {
+            Actions.replace('Landing');
+          });
+        }}
+        >
+          <Text>
+            Log Out
+          </Text>
+        </Button>
       </Content>
     </Container>
   )
 }
 
+const mapDispatchToProps = {
+  logout,
+};
 
-export default connect(null, null)(Transactions);
+export default connect(null, mapDispatchToProps)(Transactions);

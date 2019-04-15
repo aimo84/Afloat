@@ -31,6 +31,12 @@ export default function userReducer(state = initialState, action) {
       }
       return initialState;
     }
+    case 'LOGOUT': {
+      return {
+        ...state,
+        token: '',
+      };
+    }
     case 'USER_DETAILS_UPDATE': {
       if (action.data) {
         return {
