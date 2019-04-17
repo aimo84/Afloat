@@ -37,6 +37,12 @@ export default function userReducer(state = initialState, action) {
         token: '',
       };
     }
+    case 'USER_TRANSFER': {
+      return {
+        ...state,
+        outstandingAmount: action.amount,
+      };
+    }
     case 'USER_DETAILS_UPDATE': {
       if (action.data) {
         return {
