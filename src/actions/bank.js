@@ -5,15 +5,28 @@ import config from '../constants/config';
 
 const ROOT_URL = `${config.ROOT_URL}/api`;
 
-export function addUserToBank(authToken, publicToken, cb) {
-  console.log(authToken);
-  console.log(publicToken);
+export function addUserToBank(authToken, publicToken, accountId, cb) {
+  console.log('id in bank');
+  console.log(accountId);
   return (dispatch) => {
-    axios.post(`${ROOT_URL}/addBank`, { publicToken }, { headers: { authorization: `Token ${authToken}` } })
+    axios.post(`${ROOT_URL}/addBank`, { publicToken, accountId }, { headers: { authorization: `Token ${authToken}` } })
       .then((response) => {
         if (response.status === 200) {
           cb();
           dispatch({ type: 'BANK_SET', data: true });
+        }
+      });
+  };
+}
+
+export function transferAchToUser(authToken, amount, cb) {
+  return (dispatch) => {
+    axios.post(`${ROOT_URL}/transferToUser`, { amount }, { headers: { authorization: `Token ${authToken}` } })
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          cb();
+          dispatch({ type: 'USER_TRANSFER', amount: response.data.amount });
         }
       });
   };

@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import Spacer from './Spacer';
 
 
-import { getTransactions } from '../../actions/bank';
+import { getTransactions, transferAchToUser } from '../../actions/bank';
 import { logout } from '../../actions/member';
 
 
@@ -44,62 +44,74 @@ class Transactions extends Component {
   }
 
 
-  render = () => (
+  render = () => {
+    const { member } = this.props;
 
-    <Container style={{ marginTop: 22 }}>
-      <Content style={{ flex: 1 }}>
-        <Spacer size={30} />
-        <H1>
-                Heading 1
-        </H1>
-        <Spacer size={10} />
-        <Text>
-                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
-                tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
-                malesuada magna mollis euismod. Donec sed odio dui.
-          {' '}
-        </Text>
-
-        <Spacer size={30} />
-        <H2>
-                Heading 2
-        </H2>
-        <Spacer size={10} />
-        <Text>
-                Elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                magna mollis euismod. Donec sed odio dui.
-          {' '}
-        </Text>
-
-        <Spacer size={30} />
-        <H3>
-                Heading 3
-        </H3>
-        <Spacer size={10} />
-        <Text>
-                Elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                magna mollis euismod. Donec sed odio dui.
-          {' '}
-        </Text>
-        <Button onPress={() => {
-          this.props.logout(() => {
-            Actions.replace('Landing');
-          });
-        }}
-        >
+    return (
+      <Container style={{ marginTop: 22 }}>
+        <Content style={{ flex: 1 }}>
+          <Spacer size={30} />
+          <H1>
+                  Heading 1
+          </H1>
+          <Spacer size={10} />
           <Text>
-            Log Out
+                  Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
+                  tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
+                  malesuada magna mollis euismod. Donec sed odio dui.
+            {' '}
           </Text>
-        </Button>
-      </Content>
-    </Container>
-  )
+
+          <Spacer size={30} />
+          <H2>
+                  Heading 2
+          </H2>
+          <Spacer size={10} />
+          <Text>
+                  Elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
+                  mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
+                  magna mollis euismod. Donec sed odio dui.
+            {' '}
+          </Text>
+
+          <Spacer size={30} />
+          <H3>
+                  Heading 3
+          </H3>
+          <Spacer size={10} />
+          <Text>
+                  Elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
+                  mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
+                  magna mollis euismod. Donec sed odio dui.
+            {' '}
+          </Text>
+          <Button onPress={() => {
+            this.props.logout(() => {
+              Actions.replace('Landing');
+            });
+          }}
+          >
+            <Text>
+              Log Out
+            </Text>
+          </Button>
+          <Button onPress={() => {
+            this.props.transferAchToUser(member.token, 200);
+          }}
+          >
+            <Text>
+              Initiate Transfer to USER
+            </Text>
+          </Button>
+        </Content>
+      </Container>
+    );
+  }
 }
 
 const mapDispatchToProps = {
   logout,
+  transferAchToUser,
 };
 
 export default connect(null, mapDispatchToProps)(Transactions);
