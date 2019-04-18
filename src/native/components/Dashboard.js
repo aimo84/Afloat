@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Container, Content, Text, H1, H2, H3,
+  Container, Content, Text, H1, H2, H3, Header,
 } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -10,7 +10,7 @@ import Spacer from './Spacer';
 import { getTransactions } from '../../actions/bank';
 
 
-class Transactions extends Component {
+class Dashboard extends Component {
   static propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({}),
@@ -44,7 +44,10 @@ class Transactions extends Component {
 
   render = () => (
 
-    <Container style={{ marginTop: 22 }}>
+    <Container>
+      <Header>
+        <Text>Bank balance $195.34</Text>
+      </Header>
       <Content style={{ flex: 1 }}>
         <Spacer size={30} />
         <H1>
@@ -87,4 +90,4 @@ class Transactions extends Component {
 }
 
 
-export default connect(null, null)(Transactions);
+export default connect(null, null)(Dashboard);

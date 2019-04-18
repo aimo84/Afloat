@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class RecipeListing extends Component {
+class Settings extends Component {
   static defaultProps = {
     match: null,
   }
@@ -120,16 +120,16 @@ render = () => (
 );
 }
 
-RecipeListing.propTypes = {
+Settings.propTypes = {
   error: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   recipes: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   reFetch: PropTypes.func,
 };
 
-RecipeListing.defaultProps = {
+Settings.defaultProps = {
   error: null,
   reFetch: null,
 };
 
-export default RecipeListing;
+export default Settings;

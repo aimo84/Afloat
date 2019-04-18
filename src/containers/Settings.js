@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { getRecipes, getMeals, setError } from '../actions/recipes';
 
-class RecipeListing extends Component {
+class Settings extends Component {
   static propTypes = {
     Layout: PropTypes.func.isRequired,
     recipes: PropTypes.shape({
@@ -65,4 +65,4 @@ const mapDispatchToProps = {
   showError: setError,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RecipeListing);
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);
