@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Alert } from 'react-native';
+
 import {
   View, Button, Text,
 } from 'native-base';
@@ -35,8 +37,11 @@ class LinkBank extends Component {
 
     if (data.action === 'plaid_link-undefined::connected') {
       const publicToken = data.metadata.public_token;
+      const accountId = data.metadata.account_id;
+      console.log('account id');
+      console.log(accountId);
       // eslint-ignore-next-line
-      this.props.addUserToBank(member.token, publicToken,
+      this.props.addUserToBank(member.token, publicToken, accountId,
         () => {
           Actions.replace('home');
         });
@@ -69,7 +74,7 @@ class LinkBank extends Component {
             env="sandbox"
             product="auth,transactions"
             clientName="QuantWeb"
-            selectAccount={false}
+            selectAccount
           />
         );
     }

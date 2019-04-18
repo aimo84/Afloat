@@ -28,7 +28,7 @@ class Landing extends Component {
     } = this.props;
     console.log(member);
     setTimeout(() => {
-      if ('token' in member) {
+      if ('token' in member && member.token !== '') {
         if (member.bankSet) {
           Actions.replace('home');
         } else {
