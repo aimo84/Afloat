@@ -97,7 +97,7 @@ const Index = (
         <Stack
           key="mainHome"
           title="Transactions"
-          icon={() => <Icon name="planet" {...DefaultProps.icons} />}
+          icon={() => <Icon name="person" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >
           <Scene key="home" component={Auth(TransactionComponent)} />
@@ -105,8 +105,8 @@ const Index = (
 
         <Stack
           key="mainRecipes"
-          title="RECIPES"
-          icon={() => <Icon name="book" {...DefaultProps.icons} />}
+          title="Settings"
+          icon={() => <Icon name="switch" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >
           <Scene key="recipes" component={RecipesContainer} Layout={RecipesComponent} />
