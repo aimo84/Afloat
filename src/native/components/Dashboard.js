@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
 import {
-  Container, Content, Text, H1, H2, H3, Header,
+  Container, Content, Text, H1, H2, H3, Header, List, ListItem,
 } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -8,6 +9,17 @@ import Spacer from './Spacer';
 
 
 import { getTransactions } from '../../actions/bank';
+
+const styles = StyleSheet.create({
+  balanceText: {
+    fontWeight: 'bold',
+    fontSize: 26,
+  },
+  dayText: {
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+});
 
 
 class Dashboard extends Component {
@@ -46,44 +58,33 @@ class Dashboard extends Component {
 
     <Container>
       <Header>
-        <Text>Bank balance $195.34</Text>
+        <Text style={styles.balanceText}>Bank balance $195.34</Text>
       </Header>
       <Content style={{ flex: 1 }}>
-        <Spacer size={30} />
-        <H1>
-                Heading 1
-        </H1>
         <Spacer size={10} />
-        <Text>
-                Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
-                tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
-                malesuada magna mollis euismod. Donec sed odio dui.
-          {' '}
-        </Text>
-
-        <Spacer size={30} />
-        <H2>
-                Heading 2
-        </H2>
-        <Spacer size={10} />
-        <Text>
-                Elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                magna mollis euismod. Donec sed odio dui.
-          {' '}
-        </Text>
-
-        <Spacer size={30} />
-        <H3>
-                Heading 3
-        </H3>
-        <Spacer size={10} />
-        <Text>
-                Elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                magna mollis euismod. Donec sed odio dui.
-          {' '}
-        </Text>
+        <Text style={styles.dayText}>Today</Text>
+        <List>
+          <ListItem>
+            <Text>Starbucks</Text>
+            <Text>--$10.52</Text>
+          </ListItem>
+          <ListItem>
+            <Text>Shell Gas Station</Text>
+            <Text>--$39.93</Text>
+          </ListItem>
+          <ListItem>
+            <Text>PCC Convenience Shops</Text>
+            <Text>--$5.42</Text>
+          </ListItem>
+          <Spacer size={10} />
+          <Text style={styles.dayText}>Yesterday</Text>
+          <List>
+            <ListItem>
+              <Text>Starbucks</Text>
+              <Text>--$10.52</Text>
+            </ListItem>
+          </List>
+        </List>
       </Content>
     </Container>
   )

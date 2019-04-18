@@ -23,9 +23,6 @@ const styles = StyleSheet.create({
     fontSize: 19,
     color: '#777c84',
   },
-  red: {
-    color: 'red',
-  },
 });
 
 class Settings extends Component {
