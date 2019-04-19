@@ -24,6 +24,7 @@ class Login extends Component {
 
   onFormSubmit = (data) => {
     const { onFormSubmit } = this.props;
+    console.log('login container');
     return onFormSubmit(data)
       .catch((err) => { this.setState({ errorMessage: err }); throw err; });
   }
