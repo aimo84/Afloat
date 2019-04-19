@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Container, Content, Text,
+  Container, Content, Text, Button,
 } from 'native-base';
 // import PlaidAuthenticator from 'react-native-plaid-link';
 import { connect } from 'react-redux';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { Actions } from 'react-native-router-flux';
 
-import { Dimensions, Button } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { getRecipes, getMeals, setError } from '../actions/recipes';
 import Cards from '../native/components/Cards';
 import all from './styles.js';
 
+// const styles = StyleSheet.create({
+//   mainContainer: {
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   dayText: {
+//     fontWeight: 'bold',
+//     fontSize: 18,
+//   },
+// });
 
 class Entry extends Component {
   static propTypes = {
@@ -38,7 +48,6 @@ class Entry extends Component {
   goToBank = () => {
     Actions.linkBank();
   };
-  // componentDidMount = () => this.fetchRecipes();
 
   checkState = () => {
     console.log(this.props);
@@ -73,9 +82,13 @@ class Entry extends Component {
     return (
 
       <Container style={{ marginTop: 22 }}>
-        <Content style={{ flex: 1 }}>
+        <Content>
           <Text>Please Link your bank account:</Text>
-          <Button primary title="Link Bank Account" onPress={() => this.goToBank()} />
+          <Button onPress={() => this.goToBank()}>
+            <Text>
+            Link Bank Account
+            </Text>
+          </Button>
         </Content>
       </Container>
     );
