@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import {
-  Container, Content, Text, H1, H2, H3, Header, List, ListItem,
+  Container, Content, Text, H1, H2, H3, Header, List, ListItem, Button,
 } from 'native-base';
+import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spacer from './Spacer';
 
 
 import { getTransactions } from '../../actions/bank';
+import { logout } from '../../actions/member';
 
 const styles = StyleSheet.create({
   balanceText: {
@@ -85,10 +87,23 @@ class Dashboard extends Component {
             </ListItem>
           </List>
         </List>
+        <Button onPress={() => {
+          this.props.logout(() => {
+            Actions.replace('Landing');
+          });
+        }}
+        >
+          <Text>
+              Log Out
+          </Text>
+        </Button>
       </Content>
     </Container>
   )
 }
 
+const mapDispatchToProps = {
+  logout,
+};
 
-export default connect(null, null)(Dashboard);
+export default connect(null, mapDispatchToProps)(Dashboard);
