@@ -3,10 +3,20 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import {
-  Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text, Icon, Switch,
+  View, Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text, Icon, Switch,
 } from 'native-base';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+  ProgressChart,
+  ContributionGraph,
+  StackedBarChart
+} from 'react-native-chart-kit';
+import { Dimensions } from 'react-native';
+const screenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   nameView: {
@@ -127,6 +137,47 @@ render = () => {
           </ListItem>
         </List>
       </Content>
+      <View>
+        <Text>
+        Bezier Line Chart
+        </Text>
+        <LineChart
+        data={{
+          labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+          datasets: [{
+            data: [
+              Math.random() * 100,
+              Math.random() * 100,
+              Math.random() * 100,
+              Math.random() * 100,
+              Math.random() * 100,
+              Math.random() * 100
+            ],
+            color: (opacity = 1) => `rgba(255,255,255, ${opacity})`, // optional
+            //strokeWidth: 5 // optional
+            //strokeWidth = 2;
+          }]
+        }}
+        width={Dimensions.get('window').width} // from react-native
+        height={220}
+        yAxisLabel={'$'}
+        chartConfig={{
+          backgroundColor: '#e20071',
+          backgroundGradientFrom: '#11267a',
+          backgroundGradientTo: '#253d93',
+          decimalPlaces: 2, // optional, defaults to 2dp
+          color: (opacity = 1) => `rgba(255,255,255, ${opacity})`,
+          style: {
+            borderRadius: 16
+          }
+        }}
+        bezier
+        style={{
+          marginVertical: 8,
+          borderRadius: 16
+        }}
+        />
+      </View>
     </Container>
 
   );

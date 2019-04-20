@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import {
-  View, Segment, Container, Content, H1, H2, H3, Header, List, ListItem, Button, Left, Body, Right, Thumbnail, Text, Icon, Switch,
+  View, Segment,Picker, Form, Container, Content, H1, H2, H3, Header, List, ListItem, Button, Left, Body, Right, Thumbnail, Text, Icon, Switch,
 } from 'native-base';
 import {
   LineChart,
@@ -50,8 +50,14 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      selected: "key1",
       transactions: {},
     };
+  }
+  onValueChange(value: string) {
+    this.setState({
+      selected: value
+    });
   }
 
   componentDidMount() {
@@ -68,7 +74,6 @@ class Dashboard extends Component {
     let transactionsListItems = [];
     if (transactions) {
       transactionsListItems = transactions.map((transaction) => {
-        // Deven you can look in terminal to see transaction js object
         // printed out so you know what data you could potentially display in UI
         // e.g. name, amount, date, etc
         console.log(transaction);
@@ -82,7 +87,8 @@ class Dashboard extends Component {
               <Text>{transaction.name}</Text>
             </Body>
             <Right>
-              <Text>{transaction.amount}</Text>
+              <Text style={{ color: 'green' }}>${transaction.amount}</Text>
+              <Text note>{transaction.date}</Text>
             </Right>
           </ListItem>
         );
@@ -104,7 +110,6 @@ class Dashboard extends Component {
             <Text>Finances</Text>
           </Button>
         </Segment>
-
         <Content style={{ flex: 1 }}>
           <Button onPress={() => {
             this.props.logout(() => {
@@ -122,47 +127,6 @@ class Dashboard extends Component {
             {transactionsListItems}
           </List>
         </Content>
-        <View>
-          <Text>
-          Bezier Line Chart
-          </Text>
-          <LineChart
-          data={{
-            labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-            datasets: [{
-              data: [
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100
-              ],
-              color: (opacity = 1) => `rgba(255,255,255, ${opacity})`, // optional
-              //strokeWidth: 5 // optional
-              //strokeWidth = 2;
-            }]
-          }}
-          width={Dimensions.get('window').width} // from react-native
-          height={220}
-          yAxisLabel={'$'}
-          chartConfig={{
-            backgroundColor: '#e20071',
-            backgroundGradientFrom: '#11267a',
-            backgroundGradientTo: '#253d93',
-            decimalPlaces: 2, // optional, defaults to 2dp
-            color: (opacity = 1) => `rgba(255,255,255, ${opacity})`,
-            style: {
-              borderRadius: 16
-            }
-          }}
-          bezier
-          style={{
-            marginVertical: 8,
-            borderRadius: 16
-          }}
-          />
-        </View>
       </Container>
     );
   }
