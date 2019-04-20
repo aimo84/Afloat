@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import {
-  Container, Content, Text, H1, H2, H3, Header, List, ListItem, Button,
+  View, Segment, Container, Content, H1, H2, H3, Header, List, ListItem, Button, Left, Body, Right, Thumbnail, Text, Icon, Switch,
 } from 'native-base';
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+  ProgressChart,
+  ContributionGraph,
+  StackedBarChart
+} from 'react-native-chart-kit';
+import { Dimensions } from 'react-native';
+const screenWidth = Dimensions.get('window').width;
 import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -64,9 +74,16 @@ class Dashboard extends Component {
         console.log(transaction);
         console.log('transaction printed');
         return (
-          <ListItem key={transaction.transaction_id}>
-            <Text>{transaction.name}</Text>
-            <Text>--$10.52</Text>
+          <ListItem avatar>
+            <Left>
+              <Thumbnail source={{ uri: 'https://cdn4.iconfinder.com/data/icons/iconsweets/50/x_card_2.png' }} />
+            </Left>
+            <Body>
+              <Text>{transaction.name}</Text>
+            </Body>
+            <Right>
+              <Text>{transaction.amount}</Text>
+            </Right>
           </ListItem>
         );
       });
@@ -79,9 +96,15 @@ class Dashboard extends Component {
     }
     return (
       <Container>
-        <Header>
-          <Text style={styles.balanceText}>Bank balance $195.34</Text>
-        </Header>
+        <Segment>
+          <Button first last active>
+            <Text>My Account</Text>
+          </Button>
+          <Button>
+            <Text>Finances</Text>
+          </Button>
+        </Segment>
+
         <Content style={{ flex: 1 }}>
           <Button onPress={() => {
             this.props.logout(() => {
@@ -94,11 +117,52 @@ class Dashboard extends Component {
             </Text>
           </Button>
           <Spacer size={10} />
-          <Text style={styles.dayText}>Today</Text>
+          <Text style={styles.dayText}>Bank balance $195.34</Text>
           <List>
             {transactionsListItems}
           </List>
         </Content>
+        <View>
+          <Text>
+          Bezier Line Chart
+          </Text>
+          <LineChart
+          data={{
+            labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+            datasets: [{
+              data: [
+                Math.random() * 100,
+                Math.random() * 100,
+                Math.random() * 100,
+                Math.random() * 100,
+                Math.random() * 100,
+                Math.random() * 100
+              ],
+              color: (opacity = 1) => `rgba(255,255,255, ${opacity})`, // optional
+              //strokeWidth: 5 // optional
+              //strokeWidth = 2;
+            }]
+          }}
+          width={Dimensions.get('window').width} // from react-native
+          height={220}
+          yAxisLabel={'$'}
+          chartConfig={{
+            backgroundColor: '#e20071',
+            backgroundGradientFrom: '#11267a',
+            backgroundGradientTo: '#253d93',
+            decimalPlaces: 2, // optional, defaults to 2dp
+            color: (opacity = 1) => `rgba(255,255,255, ${opacity})`,
+            style: {
+              borderRadius: 16
+            }
+          }}
+          bezier
+          style={{
+            marginVertical: 8,
+            borderRadius: 16
+          }}
+          />
+        </View>
       </Container>
     );
   }
