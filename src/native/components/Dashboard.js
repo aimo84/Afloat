@@ -50,66 +50,58 @@ class Dashboard extends Component {
       (res) => {
         this.setState({ transactions: res });
         const { transactions } = this.state;
-        console.log('transactions1');
-        // console.log(transactions);
-        console.log('transactions2');
       });
   }
 
-  // TODO remove this unused function:
-  // onButtonClicked = () => {
-  //   // console.log(this, 'button clicked');
-  //   console.log('clicked baby 1');
-  //   const { member } = this.props;
-  //   console.log(member);
-  //   console.log('clicked baby 2');
-  //   // getUserData(member.token);
-  // }
-
-  render = () => (
-
-    <Container>
-      <Header>
-        <Text style={styles.balanceText}>Bank balance $195.34</Text>
-      </Header>
-      <Content style={{ flex: 1 }}>
-        <Spacer size={10} />
-        <Text style={styles.dayText}>Today</Text>
-        <List>
-          <ListItem>
-            <Text>Starbucks</Text>
+  render = () => {
+    const transactions = this.state.transactions.transactions;
+    let transactionsListItems = [];
+    if (transactions) {
+      transactionsListItems = transactions.map((transaction) => {
+        // Deven you can look in terminal to see transaction js object
+        // printed out so you know what data you could potentially display in UI
+        // e.g. name, amount, date, etc
+        console.log(transaction);
+        console.log('transaction printed');
+        return (
+          <ListItem key={transaction.transaction_id}>
+            <Text>{transaction.name}</Text>
             <Text>--$10.52</Text>
           </ListItem>
-          <ListItem>
-            <Text>Shell Gas Station</Text>
-            <Text>--$39.93</Text>
-          </ListItem>
-          <ListItem>
-            <Text>PCC Convenience Shops</Text>
-            <Text>--$5.42</Text>
-          </ListItem>
-          <Spacer size={10} />
-          <Text style={styles.dayText}>Yesterday</Text>
-          <List>
-            <ListItem>
-              <Text>Starbucks</Text>
-              <Text>--$10.52</Text>
-            </ListItem>
-          </List>
-        </List>
-        <Button onPress={() => {
-          this.props.logout(() => {
-            Actions.replace('Landing');
-          });
-        }}
-        >
-          <Text>
+        );
+      });
+    } else {
+      transactionsListItems = (
+        <ListItem>
+          <Text>No transactions</Text>
+        </ListItem>
+      );
+    }
+    return (
+      <Container>
+        <Header>
+          <Text style={styles.balanceText}>Bank balance $195.34</Text>
+        </Header>
+        <Content style={{ flex: 1 }}>
+          <Button onPress={() => {
+            this.props.logout(() => {
+              Actions.replace('Landing');
+            });
+          }}
+          >
+            <Text>
               Log Out
-          </Text>
-        </Button>
-      </Content>
-    </Container>
-  )
+            </Text>
+          </Button>
+          <Spacer size={10} />
+          <Text style={styles.dayText}>Today</Text>
+          <List>
+            {transactionsListItems}
+          </List>
+        </Content>
+      </Container>
+    );
+  }
 }
 
 const mapDispatchToProps = {
