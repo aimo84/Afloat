@@ -8,9 +8,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spacer from './Spacer';
 
-
 import { getTransactions } from '../../actions/bank';
-import { logout } from '../../actions/member';
+import { logout, getUserData } from '../../actions/member';
 
 const styles = StyleSheet.create({
   balanceText: {
@@ -51,10 +50,21 @@ class Dashboard extends Component {
       (res) => {
         this.setState({ transactions: res });
         const { transactions } = this.state;
-        console.log(transactions);
+        console.log('transactions1');
+        // console.log(transactions);
+        console.log('transactions2');
       });
   }
 
+  // TODO remove this unused function:
+  // onButtonClicked = () => {
+  //   // console.log(this, 'button clicked');
+  //   console.log('clicked baby 1');
+  //   const { member } = this.props;
+  //   console.log(member);
+  //   console.log('clicked baby 2');
+  //   // getUserData(member.token);
+  // }
 
   render = () => (
 

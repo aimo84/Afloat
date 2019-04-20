@@ -109,7 +109,7 @@ const Index = (
           icon={() => <Icon name="person" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >
-          <Scene key="settings" component={SettingsContainer} Layout={SettingsComponent} />
+          <Scene key="settings" component={SettingsContainer} Layout={Auth(SettingsComponent)} />
         </Stack>
       </Tabs>
     </Scene>

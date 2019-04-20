@@ -11,11 +11,11 @@ class Cards extends React.Component {
   };
 
   render() {
-    console.log(all);
+    // console.log(all);
     // eslint-disable-next-line
     const { item, index } = this.props;
-    console.log('props');
-    console.log(index);
+    // console.log('props');
+    // console.log(index);
 
     if (index !== 2) {
       return (
