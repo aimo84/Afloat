@@ -69,6 +69,19 @@ class Dashboard extends Component {
       });
   }
 
+  renderJSXAmount(transactionAmount){
+    if (transactionAmount <= 0){
+      return (
+        <Text style={{ color: 'red',fontWeight: 'bold'}}>${transactionAmount}</Text>
+      );
+    }else{
+      return (
+        <Text style={{ color: 'green',fontWeight: 'bold'}}>${transactionAmount}</Text>
+      );
+
+    }
+  }
+
   render = () => {
     const transactions = this.state.transactions.transactions;
     let transactionsListItems = [];
@@ -77,17 +90,18 @@ class Dashboard extends Component {
         // printed out so you know what data you could potentially display in UI
         // e.g. name, amount, date, etc
         console.log(transaction);
-        console.log('transaction printed');
+        //console.log('transaction printed');
         return (
           <ListItem avatar>
             <Left>
               <Thumbnail source={{ uri: 'https://cdn4.iconfinder.com/data/icons/iconsweets/50/x_card_2.png' }} />
             </Left>
             <Body>
-              <Text>{transaction.name}</Text>
+              <Text style={{fontWeight: 'bold'}} >{transaction.name}</Text>
+              <Text note>{transaction.category}</Text>
             </Body>
             <Right>
-              <Text style={{ color: 'green' }}>${transaction.amount}</Text>
+              { this.renderJSXAmount(transaction.amount) }
               <Text note>{transaction.date}</Text>
             </Right>
           </ListItem>
