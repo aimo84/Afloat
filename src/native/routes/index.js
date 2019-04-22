@@ -7,8 +7,8 @@ import { Icon } from 'native-base';
 import DefaultProps from '../constants/navigation';
 import AppConfig from '../../constants/config';
 
-import RecipesContainer from '../../containers/Recipes';
-import RecipesComponent from '../components/Recipes';
+import SettingsContainer from '../../containers/Settings';
+import SettingsComponent from '../components/Settings';
 import RecipeViewComponent from '../components/Recipe';
 
 import SignUpContainer from '../../containers/SignUp';
@@ -26,7 +26,7 @@ import EntryContainer from '../../containers/Entry';
 
 import LinkBank from '../../containers/LinkBank';
 
-import TransactionComponent from '../components/Transactions';
+import DashboardComponent from '../components/Dashboard';
 
 const Index = (
   <Stack hideNavBar>
@@ -97,19 +97,19 @@ const Index = (
         <Stack
           key="mainHome"
           title="Transactions"
-          icon={() => <Icon name="planet" {...DefaultProps.icons} />}
+          icon={() => <Icon name="switch" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >
-          <Scene key="home" component={Auth(TransactionComponent)} />
+          <Scene key="home" component={Auth(DashboardComponent)} />
         </Stack>
 
         <Stack
-          key="mainRecipes"
-          title="RECIPES"
-          icon={() => <Icon name="book" {...DefaultProps.icons} />}
+          key="mainSettings"
+          title="Settings"
+          icon={() => <Icon name="person" {...DefaultProps.icons} />}
           {...DefaultProps.navbarProps}
         >
-          <Scene key="recipes" component={RecipesContainer} Layout={RecipesComponent} />
+          <Scene key="settings" component={SettingsContainer} Layout={Auth(SettingsComponent)} />
         </Stack>
       </Tabs>
     </Scene>
@@ -120,7 +120,7 @@ const Index = (
       key="updateProfile"
       title="UPDATE"
       {...DefaultProps.navbarProps}
-      component={RecipesContainer}
+      component={SettingsContainer}
       Layout={RecipeViewComponent}
     />
   </Stack>
