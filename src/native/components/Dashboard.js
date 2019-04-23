@@ -117,6 +117,7 @@ class Dashboard extends Component {
   }
 
   render = () => {
+    const data = [, , 0.8];
     const transactions = this.state.transactions.transactions;
     let transactionsListItems = [];
     if (transactions) {
@@ -161,6 +162,23 @@ class Dashboard extends Component {
               Log Out
             </Text>
           </Button>
+          <View>
+            <ProgressChart
+              data={data}
+              width={screenWidth}
+              height={220}
+            chartConfig={{
+              backgroundColor: '#eae9ef',
+              backgroundGradientFrom: '#eae9ef',
+              backgroundGradientTo: '#eae9ef',
+              decimalPlaces: 2, // optional, defaults to 2dp
+              color: (opacity = 1) => `rgba(46,139,87, ${opacity})`,
+              style: {
+                borderRadius: 16
+              }
+            }}
+            />
+          </View>
           <Spacer size={10} />
           <Text style={styles.dayText}>Bank balance $195.34</Text>
           <List>
