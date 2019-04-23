@@ -178,9 +178,21 @@ class Dashboard extends Component {
               }
             }}
             />
-          </View>
+          </View >
           <Spacer size={10} />
-          <Text style={styles.dayText}>Bank balance $195.34</Text>
+
+          <View>
+          <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:70, marginTop:-178, color: 'grey', fontSize: 23, fontFamily:'Avenir-Light'}} >Available</Text>
+          </View>
+
+          <View>
+          <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:80, marginTop:-145, fontWeight: 'bold', color: 'green', fontSize: 34, fontFamily:'AvenirNext-Heavy'}} >$762</Text>
+          </View>
+
+          <View>
+          <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:70, marginTop:-108, color: 'grey', fontSize: 23, fontFamily:'Avenir-Light'}} >from $3144.88</Text>
+          </View>
+
           <List>
             {transactionsListItems}
           </List>
