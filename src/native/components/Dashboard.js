@@ -109,34 +109,33 @@ class Dashboard extends Component {
     if (transactionDate != global.lastDate){
       global.lastDate = transactionDate;
       return (
-        <ListItem itemDivider>
-            <Text>{this.formatDate(transactionDate)}</Text>
+        <ListItem style={{backgroundColor: 'rgb(234,233,239)'}} itemDivider>
+            <Text style={{fontWeight: 'bold', color: 'grey', fontSize: 17,fontFamily:'Avenir-Medium'}} >{this.formatDate(transactionDate)}</Text>
         </ListItem>
       );
     }
   }
 
   render = () => {
-    const data = [, , 0.8];
+    const data = [, , 0.27];
     const transactions = this.state.transactions.transactions;
     let transactionsListItems = [];
     if (transactions) {
       transactionsListItems = transactions.map((transaction) => {
-        //console.log(transaction);
+        console.log(transaction);
         return (
           <View>
           { this.renderJSXDividers(transaction.date) }
-          <ListItem avatar>
-            <Left>
+          <ListItem style={{borderBottomWidth: 0}} avatar>
+            <Left style={{borderBottomWidth: 0}}>
               <Thumbnail source={{ uri: 'https://cdn4.iconfinder.com/data/icons/iconsweets/50/x_card_2.png' }} />
             </Left>
-            <Body>
+            <Body style={{borderBottomWidth: 0}}>
               <Text style={{fontWeight: 'bold'}} >{transaction.name}</Text>
-              <Text note>{transaction.category}</Text>
+              <Text note>5:25 pm</Text>
             </Body>
-            <Right>
+            <Right style={{borderBottomWidth: 0}}>
               { this.renderJSXAmount(transaction.amount) }
-              <Text note>{transaction.date}</Text>
             </Right>
           </ListItem>
           </View>
@@ -152,16 +151,6 @@ class Dashboard extends Component {
     return (
       <Container>
         <Content style={{ flex: 1 }}>
-          <Button onPress={() => {
-            this.props.logout(() => {
-              Actions.replace('Landing');
-            });
-          }}
-          >
-            <Text>
-              Log Out
-            </Text>
-          </Button>
           <View>
             <ProgressChart
               data={data}
@@ -196,6 +185,16 @@ class Dashboard extends Component {
           <List>
             {transactionsListItems}
           </List>
+          <Button onPress={() => {
+            this.props.logout(() => {
+              Actions.replace('Landing');
+            });
+          }}
+          >
+            <Text>
+              Log Out
+            </Text>
+          </Button>
         </Content>
       </Container>
     );
