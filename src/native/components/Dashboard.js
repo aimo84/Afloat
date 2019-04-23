@@ -118,6 +118,13 @@ class Dashboard extends Component {
 
   render = () => {
     const data = [, , 0.27];
+    const data2 = [
+      { name: 'Seoul', population: 21500000, color: 'rgba(131, 167, 234, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+      { name: 'Toronto', population: 2800000, color: '#F00', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+      { name: 'Beijing', population: 527612, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+      { name: 'New York', population: 8538000, color: '#ffffff', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+      { name: 'Moscow', population: 11920000, color: 'rgb(0, 0, 255)', legendFontColor: '#7F7F7F', legendFontSize: 15 }
+    ]
     const transactions = this.state.transactions.transactions;
     let transactionsListItems = [];
     if (transactions) {
@@ -181,7 +188,25 @@ class Dashboard extends Component {
           <View>
           <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:70, marginTop:-108, color: 'grey', fontSize: 23, fontFamily:'Avenir-Light'}} >from $3144.88</Text>
           </View>
-
+          <PieChart
+            data={data2}
+            width={screenWidth}
+            height={220}
+            chartConfig={{
+              backgroundColor: '#eae9ef',
+              backgroundGradientFrom: '#eae9ef',
+              backgroundGradientTo: '#eae9ef',
+              decimalPlaces: 2, // optional, defaults to 2dp
+              color: (opacity = 1) => `rgba(46,139,87, ${opacity})`,
+              style: {
+                borderRadius: 16
+              }
+            }}
+            accessor="population"
+            backgroundColor="transparent"
+            paddingLeft="15"
+            absolute
+          />
           <List>
             {transactionsListItems}
           </List>
