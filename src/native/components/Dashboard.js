@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import {
-  View, Segment,Picker, Form, Container, Content, H1, H2, H3, Header, List, ListItem, Button, Left, Body, Right, Thumbnail, Text, Icon, Switch,
+  View, Segment,Picker, Form, Container, Content, H1, H2, H3,
+  Header, List, ListItem, Button, Left, Body, Right, Thumbnail,
+  Text, Icon, Switch, Spinner, Separator,
 } from 'native-base';
 import {
   LineChart,
@@ -20,6 +22,7 @@ import Spacer from './Spacer';
 
 import { getTransactions } from '../../actions/bank';
 import { logout, getUserData } from '../../actions/member';
+global.lastDate = "date";
 
 const styles = StyleSheet.create({
   balanceText: {
@@ -82,16 +85,46 @@ class Dashboard extends Component {
     }
   }
 
+  formatDate(transactionDate){
+    var month = new Array();
+    month[1] = "January";
+    month[2] = "February";
+    month[3] = "March";
+    month[4] = "April";
+    month[5] = "May";
+    month[6] = "June";
+    month[7] = "July";
+    month[8] = "August";
+    month[9] = "September";
+    month[10] = "October";
+    month[11] = "November";
+    month[12] = "December";
+
+    var splitDate = String(transactionDate).split('-')
+    return month[splitDate[1].replace(/^0+/, '')] + " " + splitDate[2]
+  }
+
+
+  renderJSXDividers(transactionDate){
+    if (transactionDate != global.lastDate){
+      global.lastDate = transactionDate;
+      return (
+        <ListItem itemDivider>
+            <Text>{this.formatDate(transactionDate)}</Text>
+        </ListItem>
+      );
+    }
+  }
+
   render = () => {
     const transactions = this.state.transactions.transactions;
     let transactionsListItems = [];
     if (transactions) {
       transactionsListItems = transactions.map((transaction) => {
-        // printed out so you know what data you could potentially display in UI
-        // e.g. name, amount, date, etc
-        console.log(transaction);
-        //console.log('transaction printed');
+        //console.log(transaction);
         return (
+          <View>
+          { this.renderJSXDividers(transaction.date) }
           <ListItem avatar>
             <Left>
               <Thumbnail source={{ uri: 'https://cdn4.iconfinder.com/data/icons/iconsweets/50/x_card_2.png' }} />
@@ -105,6 +138,7 @@ class Dashboard extends Component {
               <Text note>{transaction.date}</Text>
             </Right>
           </ListItem>
+          </View>
         );
       });
     } else {
@@ -116,14 +150,6 @@ class Dashboard extends Component {
     }
     return (
       <Container>
-        <Segment>
-          <Button first last active>
-            <Text>My Account</Text>
-          </Button>
-          <Button>
-            <Text>Finances</Text>
-          </Button>
-        </Segment>
         <Content style={{ flex: 1 }}>
           <Button onPress={() => {
             this.props.logout(() => {
