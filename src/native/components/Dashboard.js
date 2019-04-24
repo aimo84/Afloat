@@ -51,14 +51,20 @@ const styles = StyleSheet.create({
   },
   redTransactionText:{
     color: 'red',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily:'AvenirNext-Heavy',
+    fontSize: 20,
+    textAlignVertical:'center'
   },
   greenTransactionText:{
     color: 'green',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily:'AvenirNext-Heavy',
+    fontSize: 20,
+    textAlignVertical:'center'
   },
   listDividerBackgroundColor:{
-    backgroundColor: 'rgb(234,233,239)'
+    backgroundColor: 'rgb(234,233,239)',
   },
   listDividerText:{
     fontWeight: 'bold',
@@ -95,10 +101,23 @@ const styles = StyleSheet.create({
     fontFamily:'Avenir-Light'},
   ListItemStyling:{
     borderBottomWidth: 0,
-    marginTop:-15},
+    marginTop:0},
   TransactionText:{
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+    fontSize: 17,
+    fontFamily:'AvenirNext-Heavy'
+  },
+  LeftNoteText:{
+    fontFamily:'Avenir-Light',
+    fontSize: 17
+  },
+  RightNoteText:{
+    fontFamily:'AvenirNext-Heavy',
+    fontSize: 20,
+    textAlignVertical:'center',
+    borderBottomWidth: 0,
+    marginTop: 5
+  },
 });
 
 
@@ -326,14 +345,14 @@ class Dashboard extends Component {
           <View>
           { this.renderJSXDividers(transaction.date) }
           <ListItem style={styles.ListItemStyling} avatar>
-            <Left style={{borderBottomWidth: 0}}>
+            <Left style={styles.ListItemStyling}>
               <Thumbnail source={{ uri: 'https://cdn4.iconfinder.com/data/icons/iconsweets/50/x_card_2.png' }} />
             </Left>
             <Body style={styles.ListItemStyling}>
               <Text style={styles.TransactionText} >{transaction.name}</Text>
-              <Text note>{transaction.category[0]}</Text>
+              <Text style = {styles.LeftNoteText} note>{transaction.category[0]}</Text>
             </Body>
-            <Right style={styles.ListItemStyling}>
+            <Right style={styles.RightNoteText}>
               { this.renderJSXAmount(transaction.amount) }
             </Right>
           </ListItem>
