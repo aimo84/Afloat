@@ -23,6 +23,16 @@ import Spacer from './Spacer';
 import { getTransactions } from '../../actions/bank';
 import { logout, getUserData } from '../../actions/member';
 global.lastDate = "date";
+global.pieDictionaryData = new Object();
+global.data2  = [
+  { name: 'Food/Drink', amount: 7134.37, color: '#393e46', legendFontColor: '#393e46', legendFontSize: 12 },
+  { name: 'Payment', amount: 47721, color: '#085f63', legendFontColor: '#085f63', legendFontSize: 12 },
+  { name: 'Recreation', amount: 471, color: '#ffb677', legendFontColor: '#ffb677', legendFontSize: 12 },
+  { name: 'Shops', amount: 3500, color: '#5e0a0a', legendFontColor: '#5e0a0a', legendFontSize: 12 },
+  { name: 'Transfer', amount: 5974.68, color: '#145374', legendFontColor: '#145374', legendFontSize: 12 },
+  { name: 'Travel', amount: 576.71, color: '#616f39', legendFontColor: '#616f39', legendFontSize: 12 },
+
+];
 
 const styles = StyleSheet.create({
   balanceText: {
@@ -104,7 +114,6 @@ class Dashboard extends Component {
     return month[splitDate[1].replace(/^0+/, '')] + " " + splitDate[2]
   }
 
-
   renderJSXDividers(transactionDate){
     if (transactionDate != global.lastDate){
       global.lastDate = transactionDate;
@@ -116,20 +125,35 @@ class Dashboard extends Component {
     }
   }
 
+  renderJSXPieChartData(transactions){
+    for (x in transactions){
+      if (transactions[x].category[0] in global.pieDictionaryData){
+        global.pieDictionaryData[transactions[x].category[0]] = global.pieDictionaryData[transactions[x].category[0]] + transactions[x].amount;
+      }else{
+        global.pieDictionaryData[transactions[x].category[0]] = transactions[x].amount;
+      }
+    }
+    console.log(pieDictionaryData);
+    // Object.entries(global.pieDictionaryData).forEach(([key, value]) => {
+    //   var pieChartObject = new Object();
+    //   pieChartObject.amount = value.toFixed(2);
+    //   pieChartObject.color = 'rgba(131, 167, 234, 1)';
+    //   pieChartObject.legendFontColor = '#7F7F7F';
+    //   pieChartObject.legendFontSize = 15;
+    //   pieChartObject.name = key;
+    //   global.data2.push(pieChartObject);
+    // });
+
+  }
+
   render = () => {
     const data = [, , 0.27];
-    const data2 = [
-      { name: 'Seoul', population: 21500000, color: 'rgba(131, 167, 234, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-      { name: 'Toronto', population: 2800000, color: '#F00', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-      { name: 'Beijing', population: 527612, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-      { name: 'New York', population: 8538000, color: '#ffffff', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-      { name: 'Moscow', population: 11920000, color: 'rgb(0, 0, 255)', legendFontColor: '#7F7F7F', legendFontSize: 15 }
-    ]
     const transactions = this.state.transactions.transactions;
     let transactionsListItems = [];
+    { this.renderJSXPieChartData(transactions) }
     if (transactions) {
       transactionsListItems = transactions.map((transaction) => {
-        console.log(transaction);
+        //console.log(transaction);
         return (
           <View>
           { this.renderJSXDividers(transaction.date) }
@@ -139,7 +163,7 @@ class Dashboard extends Component {
             </Left>
             <Body style={{borderBottomWidth: 0}}>
               <Text style={{fontWeight: 'bold'}} >{transaction.name}</Text>
-              <Text note>5:25 pm</Text>
+              <Text note>{transaction.category[0]}</Text>
             </Body>
             <Right style={{borderBottomWidth: 0}}>
               { this.renderJSXAmount(transaction.amount) }
@@ -189,7 +213,7 @@ class Dashboard extends Component {
           <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:70, marginTop:-108, color: 'grey', fontSize: 23, fontFamily:'Avenir-Light'}} >from $3144.88</Text>
           </View>
           <PieChart
-            data={data2}
+            data={global.data2}
             width={screenWidth}
             height={220}
             chartConfig={{
@@ -202,7 +226,7 @@ class Dashboard extends Component {
                 borderRadius: 16
               }
             }}
-            accessor="population"
+            accessor="amount"
             backgroundColor="transparent"
             paddingLeft="15"
             absolute
