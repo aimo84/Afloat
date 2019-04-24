@@ -3,8 +3,11 @@ import { StyleSheet } from 'react-native';
 import {
   View, Segment,Picker, Form, Container, Content, H1, H2, H3,
   Header, List, ListItem, Button, Left, Body, Right, Thumbnail,
-  Text, Icon, Switch, Spinner, Separator,
+  Text, Icon, Switch, Spinner, Separator,Tab, Tabs, ScrollableTab,
 } from 'native-base';
+//import TabOne from './TabOne';
+//import TabTwo from './TabTwo';
+//import Head from '../app/Header';
 import {
   LineChart,
   BarChart,
@@ -19,6 +22,8 @@ import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spacer from './Spacer';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
+
 
 import { getTransactions } from '../../actions/bank';
 import { logout, getUserData } from '../../actions/member';
@@ -33,6 +38,7 @@ global.data2  = [
   { name: 'Travel', amount: 576.71, color: '#616f39', legendFontColor: '#616f39', legendFontSize: 12 },
 
 ];
+const data = [, , 0.27];
 
 const styles = StyleSheet.create({
   balanceText: {
@@ -63,6 +69,17 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      entryItems : [
+        {
+          title:"Item 1"
+        },
+        {
+          title:"Item 2"
+        },
+        {
+          title:"Item 3"
+        }
+      ],
       selected: "key1",
       transactions: {},
     };
@@ -145,9 +162,71 @@ class Dashboard extends Component {
     // });
 
   }
+  _renderItem ({item, index}) {
+          // console.log(item);
+          if (index == 0){
+            return (
+                <View style={styles.slide}>
+                <View>
+                  <ProgressChart
+                    data={data}
+                    width={screenWidth}
+                    height={220}
+                  chartConfig={{
+                    backgroundColor: '#eae9ef',
+                    backgroundGradientFrom: '#eae9ef',
+                    backgroundGradientTo: '#eae9ef',
+                    decimalPlaces: 2, // optional, defaults to 2dp
+                    color: (opacity = 1) => `rgba(46,139,87, ${opacity})`,
+                    style: {
+                      borderRadius: 16
+                    }
+                  }}
+                  />
+                </View >
+                <Spacer size={10} />
 
+                <View>
+                <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:70, marginTop:-178, color: 'grey', fontSize: 23, fontFamily:'Avenir-Light'}} >Available</Text>
+                </View>
+
+                <View>
+                <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:80, marginTop:-145, fontWeight: 'bold', color: 'green', fontSize: 34, fontFamily:'AvenirNext-Heavy'}} >$762</Text>
+                </View>
+
+                <View>
+                <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:70, marginTop:-108, color: 'grey', fontSize: 23, fontFamily:'Avenir-Light'}} >from $3144.88</Text>
+                </View>
+                </View>
+            );
+          }else{
+            return (
+                <View style={styles.slide}>
+                  <PieChart
+                    data={global.data2}
+                    width={screenWidth}
+                    height={220}
+                    chartConfig={{
+                      backgroundColor: '#eae9ef',
+                      backgroundGradientFrom: '#eae9ef',
+                      backgroundGradientTo: '#eae9ef',
+                      decimalPlaces: 2, // optional, defaults to 2dp
+                      color: (opacity = 1) => `rgba(46,139,87, ${opacity})`,
+                      style: {
+                        borderRadius: 16
+                      }
+                    }}
+                    accessor="amount"
+                    backgroundColor="transparent"
+                    paddingLeft="15"
+                    absolute
+                  />
+                </View>
+            );
+
+          }
+  }
   render = () => {
-    const data = [, , 0.27];
     const transactions = this.state.transactions.transactions;
     let transactionsListItems = [];
     { this.renderJSXPieChartData(transactions) }
@@ -181,56 +260,14 @@ class Dashboard extends Component {
     }
     return (
       <Container>
-        <Content style={{ flex: 1 }}>
-          <View>
-            <ProgressChart
-              data={data}
-              width={screenWidth}
-              height={220}
-            chartConfig={{
-              backgroundColor: '#eae9ef',
-              backgroundGradientFrom: '#eae9ef',
-              backgroundGradientTo: '#eae9ef',
-              decimalPlaces: 2, // optional, defaults to 2dp
-              color: (opacity = 1) => `rgba(46,139,87, ${opacity})`,
-              style: {
-                borderRadius: 16
-              }
-            }}
+      <Carousel
+              ref={(c) => { this._carousel = c; }}
+              data={this.state.entryItems}
+              renderItem={this._renderItem}
+              sliderWidth={screenWidth}
+              itemWidth={screenWidth}
             />
-          </View >
-          <Spacer size={10} />
-
-          <View>
-          <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:70, marginTop:-178, color: 'grey', fontSize: 23, fontFamily:'Avenir-Light'}} >Available</Text>
-          </View>
-
-          <View>
-          <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:80, marginTop:-145, fontWeight: 'bold', color: 'green', fontSize: 34, fontFamily:'AvenirNext-Heavy'}} >$762</Text>
-          </View>
-
-          <View>
-          <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:70, marginTop:-108, color: 'grey', fontSize: 23, fontFamily:'Avenir-Light'}} >from $3144.88</Text>
-          </View>
-          <PieChart
-            data={global.data2}
-            width={screenWidth}
-            height={220}
-            chartConfig={{
-              backgroundColor: '#eae9ef',
-              backgroundGradientFrom: '#eae9ef',
-              backgroundGradientTo: '#eae9ef',
-              decimalPlaces: 2, // optional, defaults to 2dp
-              color: (opacity = 1) => `rgba(46,139,87, ${opacity})`,
-              style: {
-                borderRadius: 16
-              }
-            }}
-            accessor="amount"
-            backgroundColor="transparent"
-            paddingLeft="15"
-            absolute
-          />
+        <Content style={{ flex: 1 }}>
           <List>
             {transactionsListItems}
           </List>
