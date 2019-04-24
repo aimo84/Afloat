@@ -49,6 +49,56 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
   },
+  redTransactionText:{
+    color: 'red',
+    fontWeight: 'bold'
+  },
+  greenTransactionText:{
+    color: 'green',
+    fontWeight: 'bold'
+  },
+  listDividerBackgroundColor:{
+    backgroundColor: 'rgb(234,233,239)'
+  },
+  listDividerText:{
+    fontWeight: 'bold',
+    color: 'grey',
+    fontSize: 17,
+    fontFamily:'Avenir-Medium'
+  },
+  ProgressChartAvailableText:{
+    textAlignVertical: "center",
+    textAlign: "center",
+    marginRight:70,
+    marginTop:-170,
+    color: 'grey',
+    fontSize: 23,
+    fontFamily:'Avenir-Light'
+  },
+  ProgressChartAmountText:{
+    textAlignVertical: "center",
+    textAlign: "center",
+    marginRight:80,
+    marginTop:-142,
+    fontWeight: 'bold',
+    color: 'green',
+    fontSize: 34,
+    fontFamily:'AvenirNext-Heavy'
+  },
+  ProgressChartFromText:{
+    textAlignVertical: "center",
+    textAlign: "center",
+    marginRight:70,
+    marginTop:-106,
+    color: 'grey',
+    fontSize: 23,
+    fontFamily:'Avenir-Light'},
+  ListItemStyling:{
+    borderBottomWidth: 0,
+    marginTop:-15},
+  TransactionText:{
+    fontWeight: 'bold'
+  }
 });
 
 
@@ -102,13 +152,12 @@ class Dashboard extends Component {
   renderJSXAmount(transactionAmount){
     if (transactionAmount <= 0){
       return (
-        <Text style={{ color: 'red',fontWeight: 'bold'}}>${transactionAmount}</Text>
+        <Text style={styles.redTransactionText}>${transactionAmount}</Text>
       );
     }else{
       return (
-        <Text style={{ color: 'green',fontWeight: 'bold'}}>${transactionAmount}</Text>
+        <Text style={styles.greenTransactionText}>${transactionAmount}</Text>
       );
-
     }
   }
 
@@ -126,7 +175,6 @@ class Dashboard extends Component {
     month[10] = "October";
     month[11] = "November";
     month[12] = "December";
-
     var splitDate = String(transactionDate).split('-')
     return month[splitDate[1].replace(/^0+/, '')] + " " + splitDate[2]
   }
@@ -135,8 +183,8 @@ class Dashboard extends Component {
     if (transactionDate != global.lastDate){
       global.lastDate = transactionDate;
       return (
-        <ListItem style={{backgroundColor: 'rgb(234,233,239)'}} itemDivider>
-            <Text style={{fontWeight: 'bold', color: 'grey', fontSize: 17,fontFamily:'Avenir-Medium'}} >{this.formatDate(transactionDate)}</Text>
+        <ListItem style={styles.listDividerBackgroundColor} itemDivider>
+            <Text style={styles.listDividerText} >{this.formatDate(transactionDate)}</Text>
         </ListItem>
       );
     }
@@ -187,15 +235,15 @@ class Dashboard extends Component {
                 <Spacer size={10} />
 
                 <View>
-                <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:70, marginTop:-170, color: 'grey', fontSize: 23, fontFamily:'Avenir-Light'}} >Available</Text>
+                <Text style={styles.ProgressChartAvailableText} >Available</Text>
                 </View>
 
                 <View>
-                <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:80, marginTop:-142, fontWeight: 'bold', color: 'green', fontSize: 34, fontFamily:'AvenirNext-Heavy'}} >$762</Text>
+                <Text style={styles.ProgressChartAmountText} >$762</Text>
                 </View>
 
                 <View>
-                <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:70, marginTop:-106, color: 'grey', fontSize: 23, fontFamily:'Avenir-Light'}} >from $3144.88</Text>
+                <Text style={styles.ProgressChartFromText} >from $3144.88</Text>
                 </View>
                 </View>
             );
@@ -277,15 +325,15 @@ class Dashboard extends Component {
         return (
           <View>
           { this.renderJSXDividers(transaction.date) }
-          <ListItem style={{borderBottomWidth: 0, marginTop:-15}} avatar>
+          <ListItem style={styles.ListItemStyling} avatar>
             <Left style={{borderBottomWidth: 0}}>
               <Thumbnail source={{ uri: 'https://cdn4.iconfinder.com/data/icons/iconsweets/50/x_card_2.png' }} />
             </Left>
-            <Body style={{borderBottomWidth: 0, marginTop:-15}}>
-              <Text style={{fontWeight: 'bold'}} >{transaction.name}</Text>
+            <Body style={styles.ListItemStyling}>
+              <Text style={styles.TransactionText} >{transaction.name}</Text>
               <Text note>{transaction.category[0]}</Text>
             </Body>
-            <Right style={{borderBottomWidth: 0, marginTop:0}}>
+            <Right style={styles.ListItemStyling}>
               { this.renderJSXAmount(transaction.amount) }
             </Right>
           </ListItem>
