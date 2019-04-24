@@ -137,47 +137,6 @@ render = () => {
           </ListItem>
         </List>
       </Content>
-      <View>
-        <Text>
-        Bezier Line Chart
-        </Text>
-        <LineChart
-        data={{
-          labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-          datasets: [{
-            data: [
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100
-            ],
-            color: (opacity = 1) => `rgba(255,255,255, ${opacity})`, // optional
-            //strokeWidth: 5 // optional
-            //strokeWidth = 2;
-          }]
-        }}
-        width={Dimensions.get('window').width} // from react-native
-        height={220}
-        yAxisLabel={'$'}
-        chartConfig={{
-          backgroundColor: '#e20071',
-          backgroundGradientFrom: '#11267a',
-          backgroundGradientTo: '#253d93',
-          decimalPlaces: 2, // optional, defaults to 2dp
-          color: (opacity = 1) => `rgba(255,255,255, ${opacity})`,
-          style: {
-            borderRadius: 16
-          }
-        }}
-        bezier
-        style={{
-          marginVertical: 8,
-          borderRadius: 16
-        }}
-        />
-      </View>
     </Container>
 
   );
