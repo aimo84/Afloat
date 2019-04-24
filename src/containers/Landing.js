@@ -26,7 +26,7 @@ class Landing extends Component {
     const {
       member,
     } = this.props;
-    console.log(member);
+    // console.log(member);
     setTimeout(() => {
       if ('token' in member && member.token !== '') {
         if (member.bankSet) {

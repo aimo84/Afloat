@@ -12,7 +12,6 @@ import { getRecipes, getMeals, setError } from '../actions/recipes';
 import Cards from '../native/components/Cards';
 import all from './styles.js';
 
-
 class Entry extends Component {
   static propTypes = {
     match: PropTypes.shape({
@@ -37,15 +36,15 @@ class Entry extends Component {
   // componentDidMount = () => this.fetchRecipes();
 
   checkState = () => {
-    console.log(this.props);
+    // console.log(this.props);
   }
 
   onMessage = (data) => {
-    console.log(data);
+    // console.log(data);
   }
 
   _renderItemWithParallax({ item, index }) {
-    console.log(this);
+    // console.log(this);
     return (
       <Container style={all.cardContainer}>
         <Cards item={item} index={index} />
@@ -54,7 +53,7 @@ class Entry extends Component {
   }
 
   wp(percentage) {
-    console.log(this);
+    // console.log(this);
     const { width: viewportWidth } = Dimensions.get('window');
     const value = (percentage * viewportWidth) / 100;
     return Math.round(value);

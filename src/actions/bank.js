@@ -6,8 +6,8 @@ import config from '../constants/config';
 const ROOT_URL = `${config.ROOT_URL}/api`;
 
 export function addUserToBank(authToken, publicToken, accountId, cb) {
-  console.log('id in bank');
-  console.log(accountId);
+  // console.log('id in bank');
+  // console.log(accountId);
   return (dispatch) => {
     axios.post(`${ROOT_URL}/addBank`, { publicToken, accountId }, { headers: { authorization: `Token ${authToken}` } })
       .then((response) => {

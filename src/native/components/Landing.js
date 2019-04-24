@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Container, Content, Text, H1, Button,
+  Container, Content, Text, H1, Button,Thumbnail,Header
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 import Spacer from './Spacer';
@@ -15,35 +15,28 @@ class Landing extends React.Component {
   }
 
   render() {
+    const uri = "https://cdn1.iconfinder.com/data/icons/personal-business-finance-set-1/256/Personal__Business_Finance-06-512.png";
     return (
-      <Container>
-        <Content padder>
-          <Spacer size={30} />
-          <H1>
-              Welcome to our app
-          </H1>
-          <Spacer size={10} />
+      <Container style={{marginTop: '30%', alignItems: 'center'}}>
+      <Header />
+        <Content>
+          <Thumbnail square large source={{uri: uri}} />
+        </Content>
+        <H1>
+            Welcome to our app
+        </H1>
+        <Content >
           <Text>
-              Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-              tellus ac cursus commodo,
-              tortor mauris condimentum nibh, ut fermentum massa justo sit amet
-              risus. Etiam porta sem
-              malesuada magna mollis euismod. Donec sed odio dui.
-            {' '}
+              Get Your Pay Day Loan Today!
           </Text>
-          <Button onPress={() => this.onSignUpClick()}>
-            <Text>
+          <Button style={{width: '150%', marginTop: '10%'}} onPress={() => this.onSignUpClick()}>
+            <Text style={{alignItems: 'center'}}>
                 Sign Up
             </Text>
           </Button>
-          <Button onPress={() => this.onLogInClick()}>
+          <Button style={{width: '150%', marginTop: '10%'}} onPress={() => this.onLogInClick()}>
             <Text>
                 Log In
-            </Text>
-          </Button>
-          <Button>
-            <Text>
-                Check State
             </Text>
           </Button>
         </Content>

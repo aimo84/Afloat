@@ -7,11 +7,18 @@ import { store } from '../store/index';
 
 const ROOT_URL = `${config.ROOT_URL}/api`;
 /**
-  * Get this User's Details
+  * Get this User's Details - TODO still in development by Joe
   */
-export function getUserData(dispatch) {
+export function getUserData(param) {
+  console.log('getuserdata called');
   const state = store.getState();
-  return state;
+  const reject = 'ds';
+  // axios.get(`${ROOT_URL}/getUser`, { headers: { authorization: `Token ${authToken}` } })
+  //   .then((response) => {
+  //     cb(response.data);
+  //     const userDetails = response.data.user;
+  //     console.log(`userDetails ${userDetails}`);
+  //   });
 }
 
 export function signUp(formData) {
