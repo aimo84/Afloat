@@ -187,19 +187,19 @@ class Dashboard extends Component {
                 <Spacer size={10} />
 
                 <View>
-                <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:70, marginTop:-178, color: 'grey', fontSize: 23, fontFamily:'Avenir-Light'}} >Available</Text>
+                <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:70, marginTop:-170, color: 'grey', fontSize: 23, fontFamily:'Avenir-Light'}} >Available</Text>
                 </View>
 
                 <View>
-                <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:80, marginTop:-145, fontWeight: 'bold', color: 'green', fontSize: 34, fontFamily:'AvenirNext-Heavy'}} >$762</Text>
+                <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:80, marginTop:-142, fontWeight: 'bold', color: 'green', fontSize: 34, fontFamily:'AvenirNext-Heavy'}} >$762</Text>
                 </View>
 
                 <View>
-                <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:70, marginTop:-108, color: 'grey', fontSize: 23, fontFamily:'Avenir-Light'}} >from $3144.88</Text>
+                <Text style={{textAlignVertical: "center",textAlign: "center", marginRight:70, marginTop:-106, color: 'grey', fontSize: 23, fontFamily:'Avenir-Light'}} >from $3144.88</Text>
                 </View>
                 </View>
             );
-          }else{
+          } else if (index == 1){
             return (
                 <View style={styles.slide}>
                   <PieChart
@@ -223,8 +223,49 @@ class Dashboard extends Component {
                   />
                 </View>
             );
-
+          }else{
+            return (
+              <View style={styles.slide}>
+                <LineChart
+                data={{
+                  labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+                  datasets: [{
+                    data: [
+                      Math.random() * 100,
+                      Math.random() * 100,
+                      Math.random() * 100,
+                      Math.random() * 100,
+                      Math.random() * 100,
+                      Math.random() * 100
+                    ],
+                    color: (opacity = 1) => `rgba(255,255,255, ${opacity})`, // optional
+                    //strokeWidth: 5 // optional
+                    //strokeWidth = 2;
+                  }]
+                }}
+                width={Dimensions.get('window').width} // from react-native
+                height={220}
+                yAxisLabel={'$'}
+                chartConfig={{
+                  backgroundColor: '#e20071',
+                  backgroundGradientFrom: '#11267a',
+                  backgroundGradientTo: '#253d93',
+                  decimalPlaces: 2, // optional, defaults to 2dp
+                  color: (opacity = 1) => `rgba(255,255,255, ${opacity})`,
+                  style: {
+                    borderRadius: 16
+                  }
+                }}
+                bezier
+                style={{
+                  marginVertical: 8,
+                  borderRadius: 16
+                }}
+                />
+              </View>
+              );
           }
+
   }
   render = () => {
     const transactions = this.state.transactions.transactions;
@@ -236,15 +277,15 @@ class Dashboard extends Component {
         return (
           <View>
           { this.renderJSXDividers(transaction.date) }
-          <ListItem style={{borderBottomWidth: 0}} avatar>
+          <ListItem style={{borderBottomWidth: 0, marginTop:-15}} avatar>
             <Left style={{borderBottomWidth: 0}}>
               <Thumbnail source={{ uri: 'https://cdn4.iconfinder.com/data/icons/iconsweets/50/x_card_2.png' }} />
             </Left>
-            <Body style={{borderBottomWidth: 0}}>
+            <Body style={{borderBottomWidth: 0, marginTop:-15}}>
               <Text style={{fontWeight: 'bold'}} >{transaction.name}</Text>
               <Text note>{transaction.category[0]}</Text>
             </Body>
-            <Right style={{borderBottomWidth: 0}}>
+            <Right style={{borderBottomWidth: 0, marginTop:0}}>
               { this.renderJSXAmount(transaction.amount) }
             </Right>
           </ListItem>
@@ -266,6 +307,8 @@ class Dashboard extends Component {
               renderItem={this._renderItem}
               sliderWidth={screenWidth}
               itemWidth={screenWidth}
+              height={0}
+              marginTop={20}
             />
         <Content style={{ flex: 1 }}>
           <List>
