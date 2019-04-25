@@ -46,7 +46,7 @@ class SignUp extends React.Component {
     onFormSubmit(this.state)
       .then(() => {
         console.log('after component call');
-        Actions.replace('entry');
+        Actions.replace('home');
       })
       .catch(e => console.log(`Error: ${e}`));
   }

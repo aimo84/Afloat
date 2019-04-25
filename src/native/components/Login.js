@@ -49,7 +49,10 @@ class Login extends React.Component {
   handleSubmit = () => {
     const { onFormSubmit } = this.props;
     onFormSubmit(this.state)
-      .then(() => Actions.entry())
+      .then(() => {
+        console.log('replacing');
+        Actions.replace('home');
+      })
       .catch(e => console.log(`Error: ${e}`));
   }
 
