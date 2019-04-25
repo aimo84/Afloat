@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import {
@@ -41,6 +42,25 @@ global.data2  = [
 const data = [, , 0.27];
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    // alignItems: 'center',
+    // justifyContent: 'space-between',
+  },
+  contentContainer: {
+      flex: 1 // pushes the footer to the end of the screen
+  },
+  footer: {
+      height: 60,
+      backgroundColor: 'white',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingHorizontal: 15,
+      alignItems: 'center',
+  },
+  footerButtons: {
+    color: 'black',
+  },
   balanceText: {
     fontWeight: 'bold',
     fontSize: 26,
@@ -367,7 +387,7 @@ class Dashboard extends Component {
       );
     }
     return (
-      <Container>
+      <Container style={styles.container}>
       <Carousel
               ref={(c) => { this._carousel = c; }}
               data={this.state.entryItems}
@@ -392,6 +412,17 @@ class Dashboard extends Component {
             </Text>
           </Button>
         </Content>
+        <View style={styles.footer}>
+          <Button transparent style={styles.footerButtons}>
+            <Icon name="switch"/>
+          </Button>
+          <Button transparent>
+            <Icon name="add"/>
+          </Button>
+          <Button transparent>
+            <Icon name="person"/>
+          </Button>
+        </View>
       </Container>
     );
   }
