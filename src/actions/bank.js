@@ -34,9 +34,17 @@ export function transferAchToUser(authToken, amount, cb) {
   };
 }
 
-export function getTransactions(authToken, cb) {
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+export async function getTransactions(authToken, cb) {
+  // TODO: Find better way of beating this race condition
+  await sleep(5000);
   axios.get(`${ROOT_URL}/getTransactions`, { headers: { authorization: `Token ${authToken}` } })
     .then((response) => {
+      console.log('Got response');
       cb(response.data);
     });
 }

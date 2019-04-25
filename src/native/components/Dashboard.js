@@ -197,6 +197,7 @@ class Dashboard extends Component {
       (res) => {
         this.setState({ transactions: res });
         const { transactions } = this.state;
+        console.log("Got transactions");
       });
   }
 
@@ -377,7 +378,7 @@ $
     if (transactions) {
       transactionsListItems = // console.log(transaction);
                               transactions.map(transaction => (
-                                <View>
+                                <View key={JSON.stringify(transaction)}>
                                   { this.renderJSXDividers(transaction.date) }
                                   <ListItem style={styles.ListItemStyling} avatar>
                                     <Left style={styles.ListItemStyling}>
