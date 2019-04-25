@@ -38,16 +38,22 @@ const Index = (
         {...DefaultProps.navbarProps}
       >
         <Scene
-          back
-          key="Landing"
-          title="Landing"
-          renderLeftButton={<View />}
+          key="entry"
+          title="LOGO"
+          hideNavBar={false}
           {...DefaultProps.navbarProps}
-          component={Auth(LandingContainer)}
-          Layout={LandingComponent}
+          component={Auth(EntryContainer)}
+        />
+        <Scene
+          key="linkBank"
+          title="LINK BANK"
+          hideNavBar
+          {...DefaultProps.navbarProps}
+          component={Auth(LinkBank)}
         />
         <Scene
           back
+          hideNavBar={false}
           key="signUp"
           title="SIGN UP"
           {...DefaultProps.navbarProps}
@@ -56,6 +62,7 @@ const Index = (
         />
         <Scene
           back
+          hideNavBar={false}
           key="login"
           title="LOGIN"
           {...DefaultProps.navbarProps}
@@ -71,18 +78,11 @@ const Index = (
           hideNavBar
         >
           <Scene
-            key="entry"
-            title="ENTRY"
-            hideNavBar={false}
+            key="Landing"
+            title="Landing"
             {...DefaultProps.navbarProps}
-            component={Auth(EntryContainer)}
-          />
-          <Scene
-            key="linkBank"
-            title="LINK BANK"
-            hideNavBar
-            {...DefaultProps.navbarProps}
-            component={Auth(LinkBank)}
+            component={Auth(LandingContainer)}
+            Layout={LandingComponent}
           />
         </Stack>
       </Stack>

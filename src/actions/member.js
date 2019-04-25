@@ -9,10 +9,32 @@ const ROOT_URL = `${config.ROOT_URL}/api`;
 /**
   * Get this User's Details - TODO still in development by Joe
   */
-export function getUserData(param) {
-  console.log('getuserdata called');
-  const state = store.getState();
-  const reject = 'ds';
+export function getUserData(token, cb) {
+  return dispatch => new Promise(async (resolve, reject) => {
+    await statusMessage(dispatch, 'loading', true);
+
+    // TODO: Replace with local auth:
+    //       - Create user
+    //       - getUserData (store token locally)
+    //       - send login action with user details
+    axios.get(`${ROOT_URL}/getUser`, { headers: { authorization: `Token ${token}` } }).then((response) => {
+      const userDetails = response.data.user;
+      console.log('Got the request!');
+      console.log(userDetails);
+      dispatch({
+        type: 'UPDATE_USER',
+        data: userDetails,
+      });
+      if (cb) {
+        resolve(cb);
+      } else {
+        resolve({});
+      }
+    }).catch(reject);
+  }).catch(async (error) => {
+    await statusMessage(dispatch, 'loading', false);
+    throw error;
+  });
   // axios.get(`${ROOT_URL}/getUser`, { headers: { authorization: `Token ${authToken}` } })
   //   .then((response) => {
   //     cb(response.data);
@@ -48,7 +70,7 @@ export function signUp(formData) {
     axios.post(`${ROOT_URL}/signup`, {
       email, password, firstname, lastname,
     }, { headers: { authorization: '' } }).then((response) => {
-      getUserData(dispatch);
+      // getUserData(dispatch);
       const userDetails = response.data.user;
       return resolve(dispatch({
         type: 'USER_LOGIN',
@@ -58,6 +80,12 @@ export function signUp(formData) {
   }).catch(async (error) => {
     await statusMessage(dispatch, 'loading', false);
     throw error;
+  });
+}
+
+export function linkBank() {
+  return dispatch => dispatch({
+    type: 'BANK_SET',
   });
 }
 
@@ -79,7 +107,7 @@ export function login(formData) {
 
     axios.post(`${ROOT_URL}/signin`, { email, password },
       { headers: { authorization: '' } }).then((response) => {
-      getUserData(dispatch);
+      // getUserData(dispatch);
       const userDetails = response.data.user;
       return resolve(dispatch({
         type: 'USER_LOGIN',
@@ -162,7 +190,7 @@ export function updateProfile(formData) {
         }
 
         // Update Redux
-        await getUserData(dispatch);
+        // await getUserData(dispatch);
         await statusMessage(dispatch, 'loading', false);
         return resolve('Profile Updated');
       }).catch(reject);

@@ -11,7 +11,6 @@ import { getUserData } from '../../actions/member';
 
 
 const Profile = ({ member, logout }) => {
-  getUserData();
   return (
     <Container>
       <Content>

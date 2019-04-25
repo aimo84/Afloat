@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 import { Dimensions } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { getRecipes, getMeals, setError } from '../actions/recipes';
 import Cards from '../native/components/Cards';
 import all from './styles.js';
@@ -26,12 +27,16 @@ class Entry extends Component {
     match: null,
   }
 
+
   constructor(props) {
     super(props);
     this.state = {
       slider1ActiveSlide: 0,
     };
+
+    this._renderItemWithParallax = this._renderItemWithParallax.bind(this);
   }
+
 
   // componentDidMount = () => this.fetchRecipes();
 
@@ -44,10 +49,9 @@ class Entry extends Component {
   }
 
   _renderItemWithParallax({ item, index }) {
-    // console.log(this);
     return (
       <Container style={all.cardContainer}>
-        <Cards item={item} index={index} />
+        <Cards member={this.props.member} item={item} index={index} />
       </Container>
     );
   }
@@ -69,7 +73,8 @@ class Entry extends Component {
     const { slider1ActiveSlide } = this.state;
     const ENTRIES1 = [{ title: 'Quick' }, { title: 'Affordable' }, { title: 'Get Started' }];
     const { width: viewportWidth } = Dimensions.get('window');
-
+    console.log('PROPS -=--');
+    console.log(this.props);
     return (
 
       <Container style={{ marginTop: 22 }}>

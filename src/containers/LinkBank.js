@@ -7,9 +7,9 @@ import {
 import PropTypes from 'prop-types';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-
-
 import PlaidAuthenticator from 'react-native-plaid-link';
+import { getUserData } from '../actions/member';
+
 
 // eslint-disable-next-line
 import { addUserToBank } from '../actions/bank'
@@ -43,6 +43,8 @@ class LinkBank extends Component {
       // eslint-ignore-next-line
       this.props.addUserToBank(member.token, publicToken, accountId,
         () => {
+          console.log('getting user data');
+          console.log(member.token);
           Actions.replace('home');
         });
     }

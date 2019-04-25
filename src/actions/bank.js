@@ -12,8 +12,8 @@ export function addUserToBank(authToken, publicToken, accountId, cb) {
     axios.post(`${ROOT_URL}/addBank`, { publicToken, accountId }, { headers: { authorization: `Token ${authToken}` } })
       .then((response) => {
         if (response.status === 200) {
-          cb();
           dispatch({ type: 'BANK_SET', data: true });
+          cb();
         }
       });
   };
