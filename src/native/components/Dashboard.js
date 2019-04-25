@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import {
@@ -21,6 +22,7 @@ import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import FooterBar from './FooterBar';
 import Spacer from './Spacer';
 
 
@@ -424,6 +426,7 @@ $
             </Text>
           </Button>
         </Content>
+        <FooterBar/>
       </Container>
     );
   }
