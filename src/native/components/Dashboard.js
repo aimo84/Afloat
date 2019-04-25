@@ -59,6 +59,9 @@ const styles = StyleSheet.create({
       alignItems: 'center',
   },
   footerButtons: {
+    backgroundColor: 'white',
+  },
+  footerIcons: {
     color: 'black',
   },
   balanceText: {
@@ -413,14 +416,14 @@ class Dashboard extends Component {
           </Button>
         </Content>
         <View style={styles.footer}>
-          <Button transparent style={styles.footerButtons}>
-            <Icon name="switch"/>
+          <Button style={styles.footerButtons}>
+            <Icon name="switch" style={styles.footerIcons}/>
           </Button>
-          <Button transparent>
-            <Icon name="add"/>
+          <Button style={styles.footerButtons}>
+            <Icon name="add" style={styles.footerIcons}/>
           </Button>
-          <Button transparent>
-            <Icon name="person"/>
+          <Button style={styles.footerButtons}>
+            <Icon name="person" style={styles.footerIcons}/>
           </Button>
         </View>
       </Container>
