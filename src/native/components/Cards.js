@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-  View, Text, Button, Image,
+  View, Text, Image,
 } from 'react-native';
 import {
-  Content, Container,
+  Button,
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
 
@@ -80,28 +80,20 @@ class Cards extends React.Component {
             <Text style={{ textAlign: 'center', paddingTop: '10%' }}>
                   Create your account today!
             </Text>
-            <Button
-              buttonStyle={{
-                backgroundColor: '#1E6738',
-                borderRadius: 10,
-                borderWidth: 1,
-                borderColor: '#fff',
-                paddingTop: '20%',
-              }}
-              title="Login"
-              onPress={() => this.onLogInClick()}
-            />
-            <Button
-              buttonStyle={{
-                backgroundColor: '#1E6738',
-                borderRadius: 10,
-                borderWidth: 1,
-                borderColor: '#fff',
-                paddingTop: '20%',
-              }}
-              title="Sign Up"
-              onPress={() => this.onSignUpClick()}
-            />
+            <View style={{ paddingTop: '30%', paddingLeft: '18%' }}>
+              <Button style={{ width: '80%', justifyContent: 'center' }} onPress={() => this.onSignUpClick()}>
+                <Text style={{ color: 'white' }}>
+                Sign Up
+                </Text>
+              </Button>
+            </View>
+            <View style={{ paddingTop: '15%', width: '100%', paddingLeft: '18%' }}>
+              <Button style={{ width: '80%', justifyContent: 'center' }} onPress={() => this.onLogInClick()}>
+                <Text style={{ textAlign: 'center', color: 'white' }}>
+                Log In
+                </Text>
+              </Button>
+            </View>
           </View>
         );
         break;
