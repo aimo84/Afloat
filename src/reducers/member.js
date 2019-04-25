@@ -15,18 +15,30 @@ export default function userReducer(state = initialState, action) {
           error: null,
           token: action.data.token,
           email: action.data.email,
+          bankSet: action.data.bankSet,
           firstname: action.data.firstname,
           emailVerified: false,
         };
       }
       return initialState;
     }
-    case 'BANK_SET': {
+    case 'UPDATE_USER': {
       console.log('dispatch recieved');
+      console.log(action.data);
       if (action.data) {
         return {
           ...state,
-          bankSet: action.data,
+          bankSet: true,
+        };
+      }
+      return initialState;
+    }
+    case 'BANK_SET': {
+      console.log('setting bank');
+      if (1) {
+        return {
+          ...state,
+          bankSet: true,
         };
       }
       return initialState;
