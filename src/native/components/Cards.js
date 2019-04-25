@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import {
+  View, Text, Button, Image,
+} from 'react-native';
 import {
   Content, Container,
 } from 'native-base';
@@ -40,40 +42,71 @@ class Cards extends React.Component {
     // console.log(all);
     // eslint-disable-next-line
     const { item, index } = this.props;
-    // console.log('props');
-    // console.log(index);
-
-    if (index !== 2) {
-      return (
-        <View style={all.cardContainer}>
-          <Text>{item.title}</Text>
-          <Text>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-          when an unknown printer took a galley of type and scrambled it to make
-          a type specimen book.
-          It has survived not only five centuries, but also the leap into
-          electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s
-          with the release of Letraset
-          sheets containing Lorem Ipsum passages, and more recently with
-          desktop publishing software like
-          Aldus PageMaker including versions of Lorem Ipsum.
-          </Text>
-        </View>
-      );
+    // console.log('props')
+    console.log('index:');
+    console.log(index);
+    switch (index) {
+      case 0: {
+        return (
+          <View style={all.cardContainer}>
+            <Text style={{ textAlign: 'center', paddingTop: '10%' }}>
+            Connect your bank account
+            </Text>
+            <Image
+              style={{ width: '100%', height: '40%', marginTop: '30%' }}
+              source={{ uri: 'https://cdn.dribbble.com/users/1114591/screenshots/6393431/capture_d__cran_2019-02-11___16.55.18_4x.png' }}
+            />
+          </View>
+        );
+        break;
+      }
+      case 1: {
+        return (
+          <View style={all.cardContainer}>
+            <Text style={{ textAlign: 'center', paddingTop: '10%' }}>
+            Manage and access your income, when you need it.
+            </Text>
+            <Image
+              style={{ width: '100%', height: '40%', marginTop: '30%' }}
+              source={{ uri: 'https://cdn.dribbble.com/users/2170284/screenshots/6332421/payment.jpg' }}
+            />
+          </View>
+        );
+        break;
+      }
+      default: {
+        return (
+          <View style={all.cardContainer}>
+            <Text style={{ textAlign: 'center', paddingTop: '10%' }}>
+                  Create your account today!
+            </Text>
+            <Button
+              buttonStyle={{
+                backgroundColor: '#1E6738',
+                borderRadius: 10,
+                borderWidth: 1,
+                borderColor: '#fff',
+                paddingTop: '20%',
+              }}
+              title="Login"
+              onPress={() => this.onLogInClick()}
+            />
+            <Button
+              buttonStyle={{
+                backgroundColor: '#1E6738',
+                borderRadius: 10,
+                borderWidth: 1,
+                borderColor: '#fff',
+                paddingTop: '20%',
+              }}
+              title="Sign Up"
+              onPress={() => this.onSignUpClick()}
+            />
+          </View>
+        );
+        break;
+      }
     }
-    return (
-      <Container style={{ marginTop: '30%', alignItems: 'center' }}>
-        <Content>
-          <Text className="lastCardTitle">
-              Get Your Pay Day Loan Today!
-          </Text>
-          <Button primary title="Login" onPress={() => this.onLogInClick()} />
-          <Button primary title="Sign Up" onPress={() => this.onSignUpClick()} />
-        </Content>
-      </Container>
-    );
   }
 }
 
