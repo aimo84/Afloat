@@ -27,6 +27,7 @@ import EntryContainer from '../../containers/Entry';
 import LinkBank from '../../containers/LinkBank';
 
 import DashboardComponent from '../components/Dashboard';
+import MakeTransactionComponent from '../components/MakeTransaction';
 
 const Index = (
   <Stack hideNavBar>
@@ -101,6 +102,15 @@ const Index = (
           {...DefaultProps.navbarProps}
         >
           <Scene key="home" component={Auth(DashboardComponent)} />
+        </Stack>
+
+        <Stack
+          key="makeTransaction"
+          title="Make a Transaction"
+          icon={() => <Icon name="add-circle" {...DefaultProps.icons} />}
+          {...DefaultProps.navbarProps}
+        >
+          <Scene key="settings" component={Auth(MakeTransactionComponent)} />
         </Stack>
 
         <Stack
