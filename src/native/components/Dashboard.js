@@ -342,9 +342,9 @@ class Dashboard extends Component {
     { this.renderJSXPieChartData(transactions) }
     if (transactions) {
       transactionsListItems = transactions.map((transaction) => {
-        //console.log(transaction);
+        // console.log(transaction);
         return (
-          <View>
+          <View key={ transaction.transaction_id } >
           { this.renderJSXDividers(transaction.date) }
           <ListItem style={styles.ListItemStyling} avatar>
             <Left style={styles.ListItemStyling}>
