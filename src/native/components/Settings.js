@@ -16,7 +16,7 @@ import {
   StackedBarChart,
 } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
-import BottomBar from './BottomBar';
+import FooterBar from './FooterBar';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -139,7 +139,7 @@ render = () => {
           </ListItem>
         </List>
       </Content>
-      <BottomBar />
+      <FooterBar />
     </Container>
 
   );

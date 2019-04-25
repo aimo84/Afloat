@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spacer from './Spacer';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import BottomBar from './BottomBar';
+import FooterBar from './FooterBar';
 
 
 import { getTransactions } from '../../actions/bank';
@@ -43,28 +43,6 @@ global.data2  = [
 const data = [, , 0.27];
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'space-between',
-  },
-  contentContainer: {
-      flex: 1 // pushes the footer to the end of the screen
-  },
-  footer: {
-      height: 60,
-      backgroundColor: 'white',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      paddingHorizontal: 15,
-      alignItems: 'center',
-  },
-  footerButtons: {
-    backgroundColor: 'white',
-  },
-  footerIcons: {
-    color: 'black',
-  },
   balanceText: {
     fontWeight: 'bold',
     fontSize: 26,
@@ -416,18 +394,7 @@ class Dashboard extends Component {
             </Text>
           </Button>
         </Content>
-        {/* <View style={styles.footer}>
-          <Button style={styles.footerButtons}>
-            <Icon name="switch" style={styles.footerIcons}/>
-          </Button>
-          <Button style={styles.footerButtons}>
-            <Icon name="add" style={styles.footerIcons}/>
-          </Button>
-          <Button style={styles.footerButtons}>
-            <Icon name="person" style={styles.footerIcons}/>
-          </Button>
-        </View> */}
-        <BottomBar/>
+        <FooterBar/>
       </Container>
     );
   }
