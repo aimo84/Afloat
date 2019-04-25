@@ -13,9 +13,11 @@ import {
   PieChart,
   ProgressChart,
   ContributionGraph,
-  StackedBarChart
+  StackedBarChart,
 } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
+import BottomBar from './BottomBar';
+
 const screenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
@@ -137,6 +139,7 @@ render = () => {
           </ListItem>
         </List>
       </Content>
+      <BottomBar />
     </Container>
 
   );

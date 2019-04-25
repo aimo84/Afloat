@@ -87,41 +87,32 @@ const Index = (
           />
         </Stack>
       </Stack>
-      <Tabs
-        key="mainTab"
-        swipeEnabled
-        type="replace"
-        showLabel={false}
-        {...DefaultProps.tabProps}
+      <Stack
+        key="mainHome"
+        title="Transactions"
+        icon={() => <Icon name="switch" {...DefaultProps.icons} />}
+        {...DefaultProps.navbarProps}
       >
+        <Scene key="home" component={Auth(DashboardComponent)} />
+      </Stack>
 
-        <Stack
-          key="mainHome"
-          title="Transactions"
-          icon={() => <Icon name="switch" {...DefaultProps.icons} />}
-          {...DefaultProps.navbarProps}
-        >
-          <Scene key="home" component={Auth(DashboardComponent)} />
-        </Stack>
+      <Stack
+        key="makeTransaction"
+        title="Make a Transaction"
+        icon={() => <Icon name="add-circle" {...DefaultProps.icons} />}
+        {...DefaultProps.navbarProps}
+      >
+        <Scene key="settings" component={Auth(MakeTransactionComponent)} />
+      </Stack>
 
-        <Stack
-          key="makeTransaction"
-          title="Make a Transaction"
-          icon={() => <Icon name="add-circle" {...DefaultProps.icons} />}
-          {...DefaultProps.navbarProps}
-        >
-          <Scene key="settings" component={Auth(MakeTransactionComponent)} />
-        </Stack>
-
-        <Stack
-          key="mainSettings"
-          title="Settings"
-          icon={() => <Icon name="person" {...DefaultProps.icons} />}
-          {...DefaultProps.navbarProps}
-        >
-          <Scene key="settings" component={SettingsContainer} Layout={Auth(SettingsComponent)} />
-        </Stack>
-      </Tabs>
+      <Stack
+        key="mainSettings"
+        title="Settings"
+        icon={() => <Icon name="person" {...DefaultProps.icons} />}
+        {...DefaultProps.navbarProps}
+      >
+        <Scene key="settings" component={SettingsContainer} Layout={Auth(SettingsComponent)} />
+      </Stack>
     </Scene>
 
     <Scene

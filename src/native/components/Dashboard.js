@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spacer from './Spacer';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import BottomBar from './BottomBar';
 
 
 import { getTransactions } from '../../actions/bank';
@@ -415,7 +416,7 @@ class Dashboard extends Component {
             </Text>
           </Button>
         </Content>
-        <View style={styles.footer}>
+        {/* <View style={styles.footer}>
           <Button style={styles.footerButtons}>
             <Icon name="switch" style={styles.footerIcons}/>
           </Button>
@@ -425,7 +426,8 @@ class Dashboard extends Component {
           <Button style={styles.footerButtons}>
             <Icon name="person" style={styles.footerIcons}/>
           </Button>
-        </View>
+        </View> */}
+        <BottomBar/>
       </Container>
     );
   }
