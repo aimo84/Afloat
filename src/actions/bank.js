@@ -20,12 +20,14 @@ export function addUserToBank(authToken, publicToken, accountId, cb) {
 }
 
 export function transferAchToUser(authToken, amount, cb) {
+  console.log(authToken);
   return (dispatch) => {
     axios.post(`${ROOT_URL}/transferToUser`, { amount }, { headers: { authorization: `Token ${authToken}` } })
       .then((response) => {
         // console.log(response);
         if (response.status === 200) {
           // cb();
+          console.log('reached');
           dispatch({ type: 'USER_TRANSFER', amount: response.data.amount });
         }
       });
@@ -36,6 +38,14 @@ export function getTransactions(authToken, cb) {
   axios.get(`${ROOT_URL}/getTransactions`, { headers: { authorization: `Token ${authToken}` } })
     .then((response) => {
       cb(response.data);
+    });
+}
+
+export function enrollSubscription(authToken, cb) {
+  console.log(authToken);
+  axios.post(`${ROOT_URL}/enrollSubscription`, { }, { headers: { authorization: `Token ${authToken}` } })
+    .then((response) => {
+      // cb(response.data);
     });
 }
 

@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import Spacer from './Spacer';
 
 
-import { getTransactions, transferAchToUser } from '../../actions/bank';
+import { getTransactions, transferAchToUser, enrollSubscription } from '../../actions/bank';
 import { logout } from '../../actions/member';
 
 
@@ -101,6 +101,14 @@ class Transactions extends Component {
           >
             <Text>
               Initiate Transfer to USER
+            </Text>
+          </Button>
+          <Button onPress={() => {
+            enrollSubscription(member.token);
+          }}
+          >
+            <Text>
+              Enroll Subscription
             </Text>
           </Button>
         </Content>
