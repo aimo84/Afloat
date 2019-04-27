@@ -16,9 +16,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#F8F8F8',
   },
+  contentView: {
+    marginHorizontal: 40,
+  },
   form: {
-    alignItems: 'center',
-    alignContent: 'center',
+    // alignItems: 'center',
+    // alignContent: 'center',
+    paddingHorizontal: 40,
     paddingVertical: 90,
     marginBottom: 90,
     backgroundColor: '#FFFFFF',
@@ -38,10 +42,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   button: {
-    height: 75,
+    height: 80,
   },
   slider: {
-    width: '90%',
+    // width: '90%',
   },
   sliderTrack: {
     backgroundColor: '#c2c3c4',
@@ -53,14 +57,16 @@ const styles = StyleSheet.create({
   smallNoticeText: {
     fontSize: 17,
     color: '#8b8e8b',
+    marginBottom: 7,
   },
   bigNoticeText: {
     fontSize: 24,
     fontWeight: 'bold',
+    marginBottom: 10,
   },
   noticeView: {
-    alignItems: 'center',
-    alignContent: 'center',
+    // alignItems: 'center',
+    // alignContent: 'center',
   },
 });
 
@@ -137,20 +143,22 @@ class MakeTransaction extends Component {
             onValueChange={amount => this.setState({ amount })}
           />
         </Form>
-        <View style={styles.noticeView}>
-          <Text style={styles.smallNoticeText}>
+        <View style={styles.contentView}>
+          <View style={styles.noticeView}>
+            <Text style={styles.smallNoticeText}>
               Deducted from your paycheck:
-          </Text>
-          <Text style={styles.bigNoticeText}>
+            </Text>
+            <Text style={styles.bigNoticeText}>
               Apr 30
-          </Text>
-          <View style={{ height: 18 }} />
-          <Text style={styles.smallNoticeText}>
+            </Text>
+            <View style={{ height: 18 }} />
+            <Text style={styles.smallNoticeText}>
               Deposited in your bank account:
-          </Text>
-          <Text style={styles.bigNoticeText}>
+            </Text>
+            <Text style={styles.bigNoticeText}>
               Tommorow
-          </Text>
+            </Text>
+          </View>
         </View>
         {/* </Content> */}
         <View style={styles.bottom}>
