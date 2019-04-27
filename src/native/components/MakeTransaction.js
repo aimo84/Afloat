@@ -13,19 +13,32 @@ import { transferAchToUser } from '../../actions/bank';
 import FooterBar from './FooterBar';
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#F8F8F8',
+  },
   form: {
     alignItems: 'center',
     alignContent: 'center',
-    marginTop: 70,
+    paddingVertical: 90,
+    marginBottom: 90,
+    backgroundColor: '#FFFFFF',
   },
   amount: {
     fontSize: 70,
-    color: '#A7D09F',
+    color: '#489e48',
     fontWeight: 'bold',
+    marginBottom: 18,
+  },
+  payMeText: {
+    fontSize: 24,
+    color: '#489e48',
   },
   bottom: {
     flex: 1,
     justifyContent: 'flex-end',
+  },
+  button: {
+    height: 75,
   },
   slider: {
     width: '90%',
@@ -38,12 +51,34 @@ const styles = StyleSheet.create({
     height: 20,
   },
   smallNoticeText: {
-    fontSize: 25,
+    fontSize: 17,
+    color: '#8b8e8b',
   },
   bigNoticeText: {
-    fontSize: 38,
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  noticeView: {
+    alignItems: 'center',
+    alignContent: 'center',
   },
 });
+
+const stylesSlider = StyleSheet.create({
+  track: {
+    height: 4,
+    borderRadius: 2,
+  },
+  thumb: {
+    width: 30,
+    height: 30,
+    borderRadius: 30 / 2,
+    backgroundColor: 'white',
+    borderColor: '#30a935',
+    borderWidth: 2,
+  },
+});
+
 // Joe: Inspiration taken from login.js file
 class MakeTransaction extends Component {
   static propTypes = {
@@ -79,10 +114,10 @@ class MakeTransaction extends Component {
   render = () => {
     // const { amount } = this.state;
     return (
-      <Container>
-        <Content padder>
-          <Form style={styles.form}>
-            {/* <Item stackedLabel>
+      <Container style={styles.container}>
+        {/* <Content> */}
+        <Form style={styles.form}>
+          {/* <Item stackedLabel>
               <Input
                 autoCapitalize="none"
                 placeholder="Get paid"
@@ -91,49 +126,47 @@ class MakeTransaction extends Component {
                 onChangeText={v => this.handleChange('amount', v)}
               />
             </Item> */}
-            <Slider
-              value={this.state.amount}
-              minimumValue={0}
-              maximumValue={100}
-              step={1}
-              minimumTrackTintColor="#c2c3c4"
-              maximumTrackTintColor="#c2c3c4"
-              style={styles.slider}
-              trackStyle={styles.sliderTrack}
-              thumbStyle={styles.sliderThumb}
-              onValueChange={amount => this.setState({ amount })}
-            />
-            {/* <View padder>
-              <Button block onPress={this.handleSubmit}>
-                <Text>
-                  {'Submit'}
-                </Text>
-              </Button>
-            </View> */}
-          </Form>
+          <Text style={styles.payMeText}>
+                 Pay me
+          </Text>
           <Text style={styles.amount}>
                  $
             {this.state.amount}
           </Text>
+          <Slider
+            value={this.state.amount}
+            minimumValue={0}
+            maximumValue={100}
+            step={1}
+            minimumTrackTintColor="#c2c3c4"
+            maximumTrackTintColor="#c2c3c4"
+            style={styles.slider}
+            trackStyle={styles.sliderTrack}
+            thumbStyle={styles.sliderThumb}
+            onValueChange={amount => this.setState({ amount })}
+          />
+        </Form>
+        <View style={styles.noticeView}>
           <Text style={styles.smallNoticeText}>
               Deducted from your paycheck:
           </Text>
           <Text style={styles.bigNoticeText}>
               Apr 30
           </Text>
-          <Text style={styles.slider.smallNoticeText}>
+          <View style={{ height: 18 }} />
+          <Text style={styles.smallNoticeText}>
               Deposited in your bank account:
           </Text>
           <Text style={styles.bigNoticeText}>
-              Tommorow:
+              Tommorow
           </Text>
-        </Content>
+        </View>
+        {/* </Content> */}
         <View style={styles.bottom}>
-          <Button full success onPress={this.handleSubmit}>
+          <Button full success onPress={this.handleSubmit} style={styles.button}>
             <Text>Submit</Text>
           </Button>
         </View>
-        <FooterBar />
       </Container>
 
     );
