@@ -99,6 +99,7 @@ const Index = (
       <Stack
         key="makeTransaction"
         title="Get Paid Early"
+        back
         icon={() => <Icon name="add-circle" {...DefaultProps.icons} />}
         {...DefaultProps.navbarProps}
       >
@@ -108,6 +109,7 @@ const Index = (
       <Stack
         key="mainSettings"
         title="Settings"
+        back
         icon={() => <Icon name="person" {...DefaultProps.icons} />}
         {...DefaultProps.navbarProps}
       >
