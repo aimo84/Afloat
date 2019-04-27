@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   amount: {
-    fontSize: 70,
+    fontSize: 75,
     color: '#489e48',
     fontWeight: 'bold',
     marginBottom: 18,
@@ -66,16 +66,16 @@ const styles = StyleSheet.create({
 
 const stylesSlider = StyleSheet.create({
   track: {
-    height: 4,
+    height: 12,
     borderRadius: 2,
   },
   thumb: {
-    width: 30,
-    height: 30,
-    borderRadius: 30 / 2,
+    width: 48,
+    height: 48,
+    borderRadius: 48 / 2,
     backgroundColor: 'white',
-    borderColor: '#30a935',
-    borderWidth: 2,
+    borderColor: 'black',
+    borderWidth: 0.3,
   },
 });
 
@@ -117,15 +117,6 @@ class MakeTransaction extends Component {
       <Container style={styles.container}>
         {/* <Content> */}
         <Form style={styles.form}>
-          {/* <Item stackedLabel>
-              <Input
-                autoCapitalize="none"
-                placeholder="Get paid"
-                value={amount}
-                keyboardType="number-pad"
-                onChangeText={v => this.handleChange('amount', v)}
-              />
-            </Item> */}
           <Text style={styles.payMeText}>
                  Pay me
           </Text>
@@ -138,11 +129,11 @@ class MakeTransaction extends Component {
             minimumValue={0}
             maximumValue={100}
             step={1}
-            minimumTrackTintColor="#c2c3c4"
-            maximumTrackTintColor="#c2c3c4"
+            minimumTrackTintColor="#efefef"
+            maximumTrackTintColor="#efefef"
             style={styles.slider}
-            trackStyle={styles.sliderTrack}
-            thumbStyle={styles.sliderThumb}
+            trackStyle={stylesSlider.track}
+            thumbStyle={stylesSlider.thumb}
             onValueChange={amount => this.setState({ amount })}
           />
         </Form>
