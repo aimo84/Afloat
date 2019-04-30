@@ -9,8 +9,8 @@ import {
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Slider from 'react-native-slider';
+import { Actions } from 'react-native-router-flux';
 import { transferAchToUser } from '../../actions/bank';
-import FooterBar from './FooterBar';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,11 +20,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     paddingVertical: 90,
+    paddingHorizontal: 20,
     marginBottom: 90,
     backgroundColor: '#FFFFFF',
   },
   amount: {
-    fontSize: 75,
+    fontSize: 83,
     color: '#489e48',
     fontWeight: 'bold',
     marginBottom: 18,
@@ -70,8 +71,8 @@ const stylesSlider = StyleSheet.create({
     borderRadius: 2,
   },
   thumb: {
-    width: 48,
-    height: 48,
+    width: 31,
+    height: 31,
     borderRadius: 48 / 2,
     backgroundColor: 'white',
     borderColor: 'black',
@@ -106,8 +107,8 @@ class MakeTransaction extends Component {
 
   handleSubmit = () => {
     const { member } = this.props;
-    console.log(this.state.amount);
-    this.props.transferAchToUser(member.token, 200);
+    this.props.transferAchToUser(member.token, this.state.amount);
+    Actions.replace('home');
   }
 
   // eslint-disable-next-line arrow-body-style
