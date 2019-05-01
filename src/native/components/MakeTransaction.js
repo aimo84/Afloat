@@ -10,73 +10,90 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Slider from 'react-native-slider';
 import { Actions } from 'react-native-router-flux';
+import { ScaledSheet } from 'react-native-size-matters';
 import { transferAchToUser } from '../../actions/bank';
 
-const styles = StyleSheet.create({
+const scaledStyles = ScaledSheet.create({
   container: {
     backgroundColor: '#F8F8F8',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+  },
+  amount: {
+    fontSize: '65@ms',
+    color: '#489e48',
+    fontWeight: 'bold',
+    marginBottom: '18@s',
   },
   form: {
     alignItems: 'center',
     alignContent: 'center',
-    paddingVertical: 90,
-    paddingHorizontal: 20,
-    marginBottom: 90,
+    paddingVertical: '70@vs',
+    paddingHorizontal: '12@s',
     backgroundColor: '#FFFFFF',
   },
-  amount: {
-    fontSize: 83,
-    color: '#489e48',
-    fontWeight: 'bold',
-    marginBottom: 18,
-  },
   payMeText: {
-    fontSize: 24,
+    fontSize: '22@ms',
     color: '#489e48',
-  },
-  bottom: {
-    flex: 1,
-    justifyContent: 'flex-end',
   },
   button: {
-    height: 75,
+    height: '68@vs',
   },
   slider: {
-    width: '90%',
+    width: '85%',
   },
-  sliderTrack: {
-    backgroundColor: '#c2c3c4',
+  inputBox: {
+    alignSelf: 'stretch',
+    height: '45@ms',
+    padding: '6@ms',
+    flexDirection: 'row',
   },
-  sliderThumb: {
-    width: 35,
-    height: 20,
+  textInput: {
+    paddingHorizontal: '10@s',
+    flex: 1,
+    borderRadius: '25@ms',
+    backgroundColor: 'white',
+    borderWidth: 0.25,
+    borderColor: '#545454',
+  },
+  chatBox: {
+    maxWidth: '270@s',
+    margin: '5@s',
+    borderRadius: '8@ms',
+    padding: '10@ms',
+  },
+  chatText: {
+    fontSize: '15@ms0.3',
   },
   smallNoticeText: {
-    fontSize: 17,
+    fontSize: '18@s',
     color: '#8b8e8b',
   },
   bigNoticeText: {
-    fontSize: 24,
+    fontSize: '23@s',
     fontWeight: 'bold',
   },
   noticeView: {
     alignItems: 'center',
     alignContent: 'center',
   },
+  submitButtonText: {
+    fontSize: '18@ms',
+  },
 });
 
-const stylesSlider = StyleSheet.create({
+const stylesSlider = ScaledSheet.create({
   track: {
-    height: 12,
-    borderRadius: 2,
+    height: '8@vs',
+    borderRadius: '2@s',
   },
   thumb: {
-    width: 31,
-    height: 31,
+    width: '31@s',
+    height: '31@s',
     borderRadius: 48 / 2,
     backgroundColor: 'white',
     borderColor: 'black',
-    borderWidth: 0.3,
+    borderWidth: '0.3@s',
   },
 });
 
@@ -115,13 +132,13 @@ class MakeTransaction extends Component {
   render = () => {
     // const { amount } = this.state;
     return (
-      <Container style={styles.container}>
-        {/* <Content> */}
-        <Form style={styles.form}>
-          <Text style={styles.payMeText}>
+      <Container style={scaledStyles.container}>
+        {/* <View style={scaledStyles.wrapper}> */}
+        <Form style={scaledStyles.form}>
+          <Text style={scaledStyles.payMeText}>
                  Pay me
           </Text>
-          <Text style={styles.amount}>
+          <Text style={scaledStyles.amount}>
                  $
             {this.state.amount}
           </Text>
@@ -132,33 +149,34 @@ class MakeTransaction extends Component {
             step={1}
             minimumTrackTintColor="#efefef"
             maximumTrackTintColor="#efefef"
-            style={styles.slider}
+            style={scaledStyles.slider}
             trackStyle={stylesSlider.track}
             thumbStyle={stylesSlider.thumb}
             onValueChange={amount => this.setState({ amount })}
           />
         </Form>
-        <View style={styles.noticeView}>
-          <Text style={styles.smallNoticeText}>
+        <View style={scaledStyles.noticeView}>
+          <Text style={scaledStyles.smallNoticeText}>
               Deducted from your paycheck:
           </Text>
-          <Text style={styles.bigNoticeText}>
+          <Text style={scaledStyles.bigNoticeText}>
               Apr 30
           </Text>
           <View style={{ height: 18 }} />
-          <Text style={styles.smallNoticeText}>
+          <Text style={scaledStyles.smallNoticeText}>
               Deposited in your bank account:
           </Text>
-          <Text style={styles.bigNoticeText}>
+          <Text style={scaledStyles.bigNoticeText}>
               Tommorow
           </Text>
         </View>
         {/* </Content> */}
-        <View style={styles.bottom}>
-          <Button full success onPress={this.handleSubmit} style={styles.button}>
-            <Text>Submit</Text>
+        <View style={scaledStyles.bottom}>
+          <Button full success onPress={this.handleSubmit} style={scaledStyles.button}>
+            <Text style={scaledStyles.submitButtonText}>Submit</Text>
           </Button>
         </View>
+        {/* </View> */}
       </Container>
 
     );
