@@ -2,9 +2,8 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
 import {
-  View, Text, Form, Item, Input, Button, Container, Content,
+  View, Text, Form, Button, Container,
 } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -13,7 +12,7 @@ import { Actions } from 'react-native-router-flux';
 import { ScaledSheet } from 'react-native-size-matters';
 import { transferAchToUser } from '../../actions/bank';
 
-const scaledStyles = ScaledSheet.create({
+const styles = ScaledSheet.create({
   container: {
     backgroundColor: '#F8F8F8',
     justifyContent: 'space-between',
@@ -41,29 +40,6 @@ const scaledStyles = ScaledSheet.create({
   },
   slider: {
     width: '85%',
-  },
-  inputBox: {
-    alignSelf: 'stretch',
-    height: '45@ms',
-    padding: '6@ms',
-    flexDirection: 'row',
-  },
-  textInput: {
-    paddingHorizontal: '10@s',
-    flex: 1,
-    borderRadius: '25@ms',
-    backgroundColor: 'white',
-    borderWidth: 0.25,
-    borderColor: '#545454',
-  },
-  chatBox: {
-    maxWidth: '270@s',
-    margin: '5@s',
-    borderRadius: '8@ms',
-    padding: '10@ms',
-  },
-  chatText: {
-    fontSize: '15@ms0.3',
   },
   smallNoticeText: {
     fontSize: '18@s',
@@ -132,13 +108,13 @@ class MakeTransaction extends Component {
   render = () => {
     // const { amount } = this.state;
     return (
-      <Container style={scaledStyles.container}>
-        {/* <View style={scaledStyles.wrapper}> */}
-        <Form style={scaledStyles.form}>
-          <Text style={scaledStyles.payMeText}>
+      <Container style={styles.container}>
+        {/* <View style={styles.wrapper}> */}
+        <Form style={styles.form}>
+          <Text style={styles.payMeText}>
                  Pay me
           </Text>
-          <Text style={scaledStyles.amount}>
+          <Text style={styles.amount}>
                  $
             {this.state.amount}
           </Text>
@@ -149,31 +125,31 @@ class MakeTransaction extends Component {
             step={1}
             minimumTrackTintColor="#efefef"
             maximumTrackTintColor="#efefef"
-            style={scaledStyles.slider}
+            style={styles.slider}
             trackStyle={stylesSlider.track}
             thumbStyle={stylesSlider.thumb}
             onValueChange={amount => this.setState({ amount })}
           />
         </Form>
-        <View style={scaledStyles.noticeView}>
-          <Text style={scaledStyles.smallNoticeText}>
+        <View style={styles.noticeView}>
+          <Text style={styles.smallNoticeText}>
               Deducted from your paycheck:
           </Text>
-          <Text style={scaledStyles.bigNoticeText}>
+          <Text style={styles.bigNoticeText}>
               Apr 30
           </Text>
           <View style={{ height: 18 }} />
-          <Text style={scaledStyles.smallNoticeText}>
+          <Text style={styles.smallNoticeText}>
               Deposited in your bank account:
           </Text>
-          <Text style={scaledStyles.bigNoticeText}>
+          <Text style={styles.bigNoticeText}>
               Tommorow
           </Text>
         </View>
         {/* </Content> */}
-        <View style={scaledStyles.bottom}>
-          <Button full success onPress={this.handleSubmit} style={scaledStyles.button}>
-            <Text style={scaledStyles.submitButtonText}>Submit</Text>
+        <View style={styles.bottom}>
+          <Button full success onPress={this.handleSubmit} style={styles.button}>
+            <Text style={styles.submitButtonText}>Submit</Text>
           </Button>
         </View>
         {/* </View> */}
