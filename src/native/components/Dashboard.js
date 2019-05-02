@@ -382,7 +382,7 @@ $
                                   { this.renderJSXDividers(transaction.date) }
                                   <ListItem style={styles.ListItemStyling} avatar>
                                     <Left style={styles.ListItemStyling}>
-                                      <Thumbnail source={{ uri: 'https://cdn4.iconfinder.com/data/icons/iconsweets/50/x_card_2.png' }} />
+                                      <Thumbnail small square source={{ uri: transaction.uri }} />
                                     </Left>
                                     <Body style={styles.ListItemStyling}>
                                       <Text style={styles.TransactionText}>{transaction.name}</Text>
