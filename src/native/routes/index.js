@@ -28,6 +28,7 @@ import LinkBank from '../../containers/LinkBank';
 
 import DashboardComponent from '../components/Dashboard';
 import MakeTransactionComponent from '../components/MakeTransaction';
+import LoanHistoryComponent from '../components/LoanHistory';
 
 const Index = (
   <Stack hideNavBar>
@@ -104,6 +105,16 @@ const Index = (
         {...DefaultProps.navbarProps}
       >
         <Scene key="settings" component={Auth(MakeTransactionComponent)} />
+      </Stack>
+
+      <Stack
+        key="mainLoanPage"
+        title="Get Paid Early"
+        back
+        icon={() => <Icon name="add-circle" {...DefaultProps.icons} />}
+        {...DefaultProps.navbarProps}
+      >
+        <Scene key="mainLoanPage" component={Auth(LoanHistoryComponent)} />
       </Stack>
 
       <Stack

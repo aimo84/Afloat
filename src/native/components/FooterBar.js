@@ -47,13 +47,17 @@ class FooterBar extends Component {
     Actions.mainSettings();
   }
 
+  onLoanHistoryPressed = () => {
+    Actions.mainLoanPage();
+  }
+
   render = () => (
     <View style={styles.footer}>
       <Button style={styles.footerButtons} onPress={this.onDashboardPressed}>
         <Icon name="md-menu" style={styles.footerIcons} />
       </Button>
-      <Button style={styles.footerButtons} onPress={this.onMakeTransactionPressed}>
-        <Icon name="md-add" style={styles.footerIcons} />
+      <Button style={styles.footerButtons} onPress={this.onLoanHistoryPressed}>
+        <Icon name="md-stats" style={styles.footerIcons} />
       </Button>
       <Button style={styles.footerButtons} onPress={this.onSettingsPressed}>
         <Icon name="ios-settings" style={styles.footerIcons} />
