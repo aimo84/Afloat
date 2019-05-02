@@ -367,7 +367,7 @@ $
           renderItem={this._renderItem}
           sliderWidth={screenWidth}
           itemWidth={screenWidth}
-          height={verticalScale(70)}
+          height={verticalScale(50)}
           marginTop={20}
         />
         <Content style={{ flex: 1 }}>
