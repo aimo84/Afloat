@@ -118,12 +118,12 @@ export default ScaledSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    height: '90%',
+    height: '50%',
     width: '315@s',
     marginLeft: '5%',
     paddingRight: '5%',
     paddingLeft: '5%',
-    paddingTop: '10%',
+    paddingTop: '20@vs',
   },
   name: {
     fontFamily: 'Lato_black',
@@ -138,7 +138,7 @@ export default ScaledSheet.create({
   balance: {
     fontWeight: 'bold',
     fontFamily: 'Lato_regular',
-    fontSize: viewportWidth * 0.16,
+    fontSize: viewportWidth * 0.13,
     color: 'white',
   },
   nonActiveText: {
@@ -146,5 +146,9 @@ export default ScaledSheet.create({
     fontSize: viewportWidth * 0.05,
     color: '#324251',
     textAlign: 'center',
+  },
+  spacer: {
+    display: 'flex',
+    height: '10@vs'
   }
 });

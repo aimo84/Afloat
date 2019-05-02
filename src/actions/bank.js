@@ -27,7 +27,7 @@ export function transferAchToUser(authToken, amount, cb) {
         // console.log(response);
         if (response.status === 200) {
           // cb();
-          console.log('reached');
+          console.log(response.data.amount);
           dispatch({ type: 'USER_TRANSFER', amount: response.data.amount });
         }
       });

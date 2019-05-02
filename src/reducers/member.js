@@ -55,7 +55,7 @@ export default function userReducer(state = initialState, action) {
     case 'USER_TRANSFER': {
       return {
         ...state,
-        outstandingAmount: action.amount,
+        outstandingBalance: action.amount,
       };
     }
     case 'USER_DETAILS_UPDATE': {

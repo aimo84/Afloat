@@ -102,11 +102,11 @@ class Dashboard extends Component {
 
   componentWillMount() {
     const { member } = this.props;
-    getUserData(member);
-    console.log('dispatched member');
-    if (!member.bankSet) {
-      Actions.replace('linkBank');
-    }
+    // getUserData(member);
+    // console.log('dispatched member');
+    // if (!member.bankSet) {
+    //   Actions.replace('linkBank');
+    // }
     // console.log('Trying to get member');
     // const { member } = this.props;
     // console.log(member);
@@ -115,11 +115,18 @@ class Dashboard extends Component {
 
   componentDidMount = () => {
     const { member } = this.props;
+    getUserData(member);
+    console.log('dispatched member');
+    if (!member.bankSet) {
+      Actions.replace('linkBank');
+    }
+
     getTransactions(member.token,
       (res) => {
         this.setState({ transactions: res });
         const { transactions } = this.state;
         console.log("Got transactions");
+        console.log(member)
       });
 
     getBalance(member.token,
@@ -215,7 +222,7 @@ $
                 <Text style={styles.name}>
                   Hello {member.firstname},
                 </Text>
-                <View style={{ display: 'flex', height: 20 }}>
+                <View style={styles.spacer}>
                 </View>
                 <Text style={styles.balance}>
                   ${item.balance.toFixed(2)}
@@ -223,7 +230,7 @@ $
                 <Text style={styles.balanceTitle}>
                   Current Bank Balance
                 </Text>
-                <View style={{ display: 'flex', height: 20 }}>
+                <View style={styles.spacer}>
                 </View>
                 <Text style={styles.nonActiveText}>
                   [Name] helps you stay on top of your bills and keep your account positive. Borrow $250 now and pay us back interest-free automatically next paycheck.
@@ -360,7 +367,7 @@ $
           renderItem={this._renderItem}
           sliderWidth={screenWidth}
           itemWidth={screenWidth}
-          height={0}
+          height={verticalScale(70)}
           marginTop={20}
         />
         <Content style={{ flex: 1 }}>
