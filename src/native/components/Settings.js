@@ -17,6 +17,7 @@ import {
 } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
 import FooterBar from './FooterBar';
+import { Actions } from 'react-native-router-flux';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -37,6 +38,7 @@ const styles = StyleSheet.create({
   },
 });
 
+
 class Settings extends Component {
   // TODO check if match propType is required, if not req. remove it
   static propTypes = {
@@ -51,6 +53,10 @@ class Settings extends Component {
   static defaultProps = {
     match: null,
   }
+  goToOtherScreen () {
+        //Actions.makeTransaction();
+        console.log('Connected');
+  };
 
 render = () => {
   const { member } = this.props;
@@ -65,7 +71,7 @@ render = () => {
       </Header>
       <Content>
         <List>
-          <ListItem avatar>
+          <ListItem onPress={() => this.goToOtherScreen()} avatar>
             <Left>
               <Thumbnail source={{ uri: 'https://cdn4.iconfinder.com/data/icons/iconsweets/50/email.png' }} />
             </Left>
