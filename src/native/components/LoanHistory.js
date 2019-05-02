@@ -109,7 +109,6 @@ class LoanHistory extends Component {
     // const { amount } = this.state;
     return (
       <Container style={styles.container}>
-        {/* <View style={styles.wrapper}> */}
         <Form style={styles.form}>
           <Text style={styles.payMeText}>
                  Loan History
@@ -118,41 +117,7 @@ class LoanHistory extends Component {
                  $
             {this.state.amount}
           </Text>
-          <Slider
-            value={this.state.amount}
-            minimumValue={0}
-            maximumValue={100}
-            step={1}
-            minimumTrackTintColor="#efefef"
-            maximumTrackTintColor="#efefef"
-            style={styles.slider}
-            trackStyle={stylesSlider.track}
-            thumbStyle={stylesSlider.thumb}
-            onValueChange={amount => this.setState({ amount })}
-          />
         </Form>
-        <View style={styles.noticeView}>
-          <Text style={styles.smallNoticeText}>
-              Deducted from your paycheck:
-          </Text>
-          <Text style={styles.bigNoticeText}>
-              Apr 30
-          </Text>
-          <View style={{ height: 18 }} />
-          <Text style={styles.smallNoticeText}>
-              Deposited in your bank account:
-          </Text>
-          <Text style={styles.bigNoticeText}>
-              Tommorow
-          </Text>
-        </View>
-        {/* </Content> */}
-        <View style={styles.bottom}>
-          <Button full success onPress={this.handleSubmit} style={styles.button}>
-            <Text style={styles.submitButtonText}>Submit</Text>
-          </Button>
-        </View>
-        {/* </View> */}
       </Container>
 
     );
