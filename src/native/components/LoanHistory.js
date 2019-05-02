@@ -11,6 +11,7 @@ import Slider from 'react-native-slider';
 import { Actions } from 'react-native-router-flux';
 import { ScaledSheet } from 'react-native-size-matters';
 import { transferAchToUser } from '../../actions/bank';
+import FooterBar from './FooterBar';
 
 const styles = ScaledSheet.create({
   container: {
@@ -118,6 +119,7 @@ class LoanHistory extends Component {
             {this.state.amount}
           </Text>
         </Form>
+        <FooterBar />
       </Container>
 
     );
