@@ -38,7 +38,6 @@ class MakeTransaction extends Component {
 
   handleSubmit = () => {
     const { member } = this.props;
-    console.log(this.state.amount);
     this.props.transferAchToUser(member.token, 200);
   }
 

@@ -39,12 +39,12 @@ class LinkBank extends Component {
       const publicToken = data.metadata.public_token;
       const accountId = data.metadata.account_id;
       console.log('account id');
-      console.log(accountId);
+      // console.log(accountId);
       // eslint-ignore-next-line
       this.props.addUserToBank(member.token, publicToken, accountId,
         () => {
           console.log('getting user data');
-          console.log(member.token);
+          // console.log(member.token);
           Actions.replace('home');
         });
     }

@@ -20,7 +20,6 @@ export function addUserToBank(authToken, publicToken, accountId, cb) {
 }
 
 export function transferAchToUser(authToken, amount, cb) {
-  console.log(authToken);
   return (dispatch) => {
     axios.post(`${ROOT_URL}/transferToUser`, { amount }, { headers: { authorization: `Token ${authToken}` } })
       .then((response) => {
@@ -34,19 +33,23 @@ export function transferAchToUser(authToken, amount, cb) {
   };
 }
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+// function sleep(ms) {
+//   return new Promise(resolve => setTimeout(resolve, ms));
+// }
 
 
-export async function getTransactions(authToken, cb) {
+export function getTransactions(authToken) {
   // TODO: Find better way of beating this race condition
-  await sleep(5000);
-  axios.get(`${ROOT_URL}/getTransactions`, { headers: { authorization: `Token ${authToken}` } })
-    .then((response) => {
-      console.log('Got response');
-      cb(response.data);
-    });
+  // await sleep(5000);
+  console.log('get transactions called');
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/getTransactions`, { headers: { authorization: `Token ${authToken}` } })
+      .then((response) => {
+        console.log('FETCH TRANSACTIONS');
+        // cb(response.data);
+        dispatch({ type: 'FETCH_TRANSACTIONS', data: response.data });
+      });
+  };
 }
 
 export function enrollSubscription(authToken, cb) {

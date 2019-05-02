@@ -193,12 +193,7 @@ class Dashboard extends Component {
 
   componentDidMount() {
     const { member } = this.props;
-    getTransactions(member.token,
-      (res) => {
-        this.setState({ transactions: res });
-        const { transactions } = this.state;
-        console.log("Got transactions");
-      });
+    this.props.getTransactions(member.token);
   }
 
   renderJSXAmount(transactionAmount) {
@@ -255,7 +250,6 @@ $
         global.pieDictionaryData[transactions[x].category[0]] = transactions[x].amount;
       }
     }
-    console.log(pieDictionaryData);
     // Object.entries(global.pieDictionaryData).forEach(([key, value]) => {
     //   var pieChartObject = new Object();
     //   pieChartObject.amount = value.toFixed(2);
@@ -372,7 +366,7 @@ $
   }
 
   render = () => {
-    const transactions = this.state.transactions.transactions;
+    const transactions = this.props.transactions;
     let transactionsListItems = [];
     { this.renderJSXPieChartData(transactions); }
     if (transactions) {
@@ -435,6 +429,12 @@ $
 
 const mapDispatchToProps = {
   logout,
+  getTransactions,
 };
 
-export default connect(null, mapDispatchToProps)(Dashboard);
+const mapStateToProps = state => (
+  {
+    transactions: state.bank.transactions.transactions
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
