@@ -49,6 +49,14 @@ export async function getTransactions(authToken, cb) {
     });
 }
 
+export function getBalance(authToken, cb) {
+  // TODO: Find better way of beating this race condition
+  axios.get(`${ROOT_URL}/getBalance`, { headers: { authorization: `Token ${authToken}` } })
+    .then((response) => {
+      cb(response.data.balance);
+    });
+}
+
 export function enrollSubscription(authToken, cb) {
   console.log(authToken);
   axios.post(`${ROOT_URL}/enrollSubscription`, { }, { headers: { authorization: `Token ${authToken}` } })
