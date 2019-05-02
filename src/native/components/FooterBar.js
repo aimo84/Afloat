@@ -36,7 +36,9 @@ class FooterBar extends Component {
   }
 
   onDashboardPressed = () => {
-    Actions.mainHome();
+    //Actions.mainHome();
+    Actions.replace('mainHome');
+
   }
 
   onMakeTransactionPressed = () => {
@@ -48,7 +50,9 @@ class FooterBar extends Component {
   }
 
   onLoanHistoryPressed = () => {
-    Actions.mainLoanPage();
+    //Actions.mainLoanPage();
+    Actions.replace('mainLoanPage');
+
   }
 
   render = () => (
