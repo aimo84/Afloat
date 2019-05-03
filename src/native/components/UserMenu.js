@@ -60,9 +60,7 @@ render = () => {
             style={styles.UserIconImage}
             source={{uri: 'https://i.pinimg.com/originals/af/25/49/af25490494d3338afef00869c59fdd37.png'}}
           />
-          <Text style={{fontWeight: 'bold',
-          fontFamily: 'AvenirNext-Heavy',
-          fontSize: 24}}> Deven Orie </Text>
+          <Text style={styles.UserNameStyling}> Deven Orie </Text>
       </View>
         <List>
           <ListItem avatar>
@@ -70,9 +68,7 @@ render = () => {
               <Icon name="md-person" style={styles.footerIcons} />
             </Left>
             <Body >
-              <Text style={{fontWeight: 'bold',
-              fontFamily: 'Avenir-Light',
-              fontSize: 20}}  >Profile</Text>
+              <Text style={styles.UserMenuItems} >Profile</Text>
             </Body>
           </ListItem>
           <ListItem onPress={() => Actions.mainSettings()} avatar>
@@ -80,9 +76,7 @@ render = () => {
               <Icon name="md-settings" style={styles.footerIcons} />
             </Left>
             <Body>
-              <Text style={{fontWeight: 'bold',
-              fontFamily: 'Avenir-Light',
-              fontSize: 20}}>Settings</Text>
+              <Text style={styles.UserMenuItems} >Settings</Text>
             </Body>
           </ListItem>
           <ListItem onPress={() => this.logout()} avatar>
@@ -90,9 +84,7 @@ render = () => {
               <Icon name="md-log-out" style={styles.footerIcons} />
             </Left>
             <Body>
-              <Text style={{fontWeight: 'bold',
-              fontFamily: 'Avenir-Light',
-              fontSize: 20}}>Log Out</Text>
+              <Text style={styles.UserMenuItems} >Log Out</Text>
             </Body>
           </ListItem>
         </List>

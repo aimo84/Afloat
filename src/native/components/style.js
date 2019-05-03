@@ -198,7 +198,7 @@ export default ScaledSheet.create({
   },
   slideLoanHistory: {
     flex: 1,
-    backgroundColor: '#b23a3a',
+    backgroundColor: '#c13f3f',
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: {
@@ -214,5 +214,29 @@ export default ScaledSheet.create({
     paddingRight: '5%',
     paddingLeft: '5%',
     paddingTop: '20@vs',
+  },
+  UserIconStylingView: {
+    height: 150,
+    alignItems:'center',
+    justifyContent:'center',
+    marginVertical: 25
+  },
+  UserIconImage:{
+    width: 120,
+    height: 120,
+    alignItems:'center',
+    justifyContent:'center',
+    borderRadius:60,
+    marginVertical: 10
+  },
+  UserNameStyling:{
+    fontWeight: 'bold',
+    fontFamily: 'AvenirNext-Heavy',
+    fontSize: 24
+  },
+  UserMenuItems:{
+    fontWeight: 'bold',
+    fontFamily: 'Avenir-Light',
+    fontSize: 20
   },
 });
