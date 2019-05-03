@@ -130,6 +130,7 @@ const Index = (
       </Stack>
 
       <Stack
+        back
         key="mainSettings"
         title="Settings"
         icon={() => <Icon name="person" {...DefaultProps.icons} />}

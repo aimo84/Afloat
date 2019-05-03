@@ -68,25 +68,28 @@ render = () => {
   const { member } = this.props;
   console.log('settings page render(), member object:');
   console.log(member);
-
   return (
     <Container>
 
       <Content>
-      <View style={{height: 150, alignItems:'center', justifyContent:'center'}}>
+      <View style={{height: 150, alignItems:'center', justifyContent:'center', marginVertical: 25}}>
           <Image
-            style={{width: 120, height: 120, alignItems:'center', justifyContent:'center', borderRadius:60}}
-            source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
+            style={{width: 120, height: 120, alignItems:'center', justifyContent:'center', borderRadius:60, marginVertical: 10}}
+            source={{uri: 'https://i.pinimg.com/originals/af/25/49/af25490494d3338afef00869c59fdd37.png'}}
           />
-          <Text > Deven Orie </Text>
+          <Text style={{fontWeight: 'bold',
+          fontFamily: 'AvenirNext-Heavy',
+          fontSize: 24}}> Deven Orie </Text>
       </View>
         <List>
           <ListItem avatar>
             <Left>
               <Icon name="md-person" style={styles.footerIcons} />
             </Left>
-            <Body>
-              <Text>Profile</Text>
+            <Body >
+              <Text style={{fontWeight: 'bold',
+              fontFamily: 'Avenir-Light',
+              fontSize: 20}}  >Profile</Text>
             </Body>
           </ListItem>
           <ListItem onPress={() => Actions.mainSettings()} avatar>
@@ -94,7 +97,9 @@ render = () => {
               <Icon name="md-settings" style={styles.footerIcons} />
             </Left>
             <Body>
-              <Text>Settings</Text>
+              <Text style={{fontWeight: 'bold',
+              fontFamily: 'Avenir-Light',
+              fontSize: 20}}>Settings</Text>
             </Body>
           </ListItem>
           <ListItem onPress={() => this.logout()} avatar>
@@ -102,7 +107,9 @@ render = () => {
               <Icon name="md-log-out" style={styles.footerIcons} />
             </Left>
             <Body>
-              <Text>Log Out</Text>
+              <Text style={{fontWeight: 'bold',
+              fontFamily: 'Avenir-Light',
+              fontSize: 20}}>Log Out</Text>
             </Body>
           </ListItem>
         </List>
