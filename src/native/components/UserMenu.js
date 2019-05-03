@@ -42,12 +42,8 @@ class UserMenu extends Component {
 
 logout(){
   // this.props.logout(() => {
-  //   Actions.replace('entry');
+    Actions.replace('entry');
   // });
-  //Actions.replace();
-  this.props.navigation.popToTop();
-
-  //onsole.log(this.state.entryItems.balance);
 }
 
 render = () => {
