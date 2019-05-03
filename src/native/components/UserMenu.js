@@ -69,11 +69,12 @@ render = () => {
             style={{width: 120, height: 120, alignItems:'center', justifyContent:'center', borderRadius:60}}
             source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
           />
+          <Text > Deven Orie </Text>
       </View>
         <List>
           <ListItem avatar>
             <Left>
-              <Thumbnail source={{ uri: 'https://cdn4.iconfinder.com/data/icons/iconsweets/50/email.png' }} />
+              <Icon name="md-person" style={styles.footerIcons} />
             </Left>
             <Body>
               <Text>Profile</Text>
@@ -84,7 +85,7 @@ render = () => {
           </ListItem>
           <ListItem onPress={() => Actions.mainSettings()} avatar>
             <Left>
-              <Thumbnail source={{ uri: 'http://arenda-kmy.ru/images/iconmonstr-phone-icon.png' }} />
+              <Icon name="md-settings" style={styles.footerIcons} />
             </Left>
             <Body>
               <Text>Settings</Text>
