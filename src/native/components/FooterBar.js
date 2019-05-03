@@ -46,7 +46,7 @@ class FooterBar extends Component {
   }
 
   onSettingsPressed = () => {
-    Actions.replace('mainSettings');
+    Actions.replace('mainUserMenu');
   }
 
   onLoanHistoryPressed = () => {
