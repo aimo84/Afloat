@@ -12,6 +12,7 @@ import { Actions } from 'react-native-router-flux';
 import { ScaledSheet } from 'react-native-size-matters';
 import { transferAchToUser } from '../../actions/bank';
 import FooterBar from './FooterBar';
+import { Header, Content, List, ListItem, Left, Body, Right, Thumbnail } from 'native-base';
 
 const styles = ScaledSheet.create({
   container: {
@@ -21,7 +22,7 @@ const styles = ScaledSheet.create({
   },
   amount: {
     fontSize: '65@ms',
-    color: '#489e48',
+    color: '#ebebeb',
     fontWeight: 'bold',
     marginBottom: '18@s',
   },
@@ -30,11 +31,11 @@ const styles = ScaledSheet.create({
     alignContent: 'center',
     paddingVertical: '70@vs',
     paddingHorizontal: '12@s',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#cd4d17',
   },
   payMeText: {
     fontSize: '22@ms',
-    color: '#489e48',
+    color: '#ebebeb',
   },
   button: {
     height: '68@vs',
@@ -89,15 +90,15 @@ class LoanHistory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      amount: 30,
+      amount: 124,
     };
   }
 
-  handleChange = (name, val) => {
-    this.setState({
-      [name]: val,
-    });
-  }
+  // handleChange = (name, val) => {
+  //   this.setState({
+  //     [name]: val,
+  //   });
+  // }
 
   handleSubmit = () => {
     const { member } = this.props;
@@ -111,14 +112,55 @@ class LoanHistory extends Component {
     return (
       <Container style={styles.container}>
         <Form style={styles.form}>
-          <Text style={styles.payMeText}>
-                 Loan History
-          </Text>
-          <Text style={styles.amount}>
-                 $
-            {this.state.amount}
-          </Text>
+          <Text style={styles.payMeText}> Amount Owed </Text>
+          <Text style={styles.amount}> ${this.state.amount}  </Text>
         </Form>
+        <Content>
+          <List>
+            <ListItem itemDivider>
+              <Text > Pending </Text>
+            </ListItem>
+            <ListItem avatar>
+              <Left>
+                <Thumbnail source={{ uri: 'https://www.iconsdb.com/icons/preview/red/down-xxl.png' }} />
+              </Left>
+              <Body>
+                <Text>Loan</Text>
+              </Body>
+              <Right>
+                <Text note>$245</Text>
+              </Right>
+            </ListItem>
+            <ListItem itemDivider>
+              <Text > Processed 5/20/19 </Text>
+            </ListItem>
+            <ListItem avatar>
+              <Left>
+                <Thumbnail source={{ uri: 'https://www.iconsdb.com/icons/preview/green/up-xxl.png' }} />
+              </Left>
+              <Body>
+                <Text>Deposit</Text>
+              </Body>
+              <Right>
+                <Text note>$245</Text>
+              </Right>
+            </ListItem>
+            <ListItem itemDivider>
+              <Text > Processed 4/4/19 </Text>
+            </ListItem>
+            <ListItem avatar>
+              <Left>
+                <Thumbnail source={{ uri: 'https://www.iconsdb.com/icons/preview/red/down-xxl.png' }} />
+              </Left>
+              <Body>
+                <Text>Loan</Text>
+              </Body>
+              <Right>
+                <Text note>$245</Text>
+              </Right>
+            </ListItem>
+          </List>
+        </Content>
         <FooterBar />
       </Container>
 
