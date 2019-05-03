@@ -3,7 +3,7 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import {
-  View, Text, Form, Button, Container,
+  View, Text, Form, Button, Container,Image,
 } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -14,6 +14,7 @@ import { transferAchToUser } from '../../actions/bank';
 import FooterBar from './FooterBar';
 import { Header, Content, List, ListItem, Left, Body, Right, Thumbnail } from 'native-base';
 import styles from './style.js';
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
 const stylesSlider = ScaledSheet.create({
   track: {
@@ -66,52 +67,63 @@ class LoanHistory extends Component {
     // const { amount } = this.state;
     return (
       <Container style={styles.container}>
-        <Form style={styles.form}>
-          <Text style={styles.payMeText}> Amount Owed </Text>
-          <Text style={styles.amount}> ${this.state.amount}  </Text>
-        </Form>
+      <View style={styles.slideLoanHistory}>
+        <View>
+          <Text style={styles.name}>
+            Amount Owed:
+          </Text>
+          <View style={styles.spacer}>
+          </View>
+          <Text style={styles.balance}>
+             ${this.state.amount}
+          </Text>
+          <Text style={styles.balanceTitle}>
+            Subscription Renews 05/01
+          </Text>
+        </View>
+      </View>
         <Content>
           <List>
-            <ListItem itemDivider>
-              <Text > Pending </Text>
+            <ListItem style={styles.listDividerBackgroundColor} itemDivider>
+              <Text style={styles.listDividerText} > Pending </Text>
             </ListItem>
-            <ListItem avatar>
-              <Left>
-                <Thumbnail source={{ uri: 'https://www.iconsdb.com/icons/preview/red/down-xxl.png' }} />
+            <ListItem style={styles.ListItemStyling} avatar>
+              <Left style={styles.ListItemStyling} >
+                <Thumbnail small source={{ uri: 'https://www.iconsdb.com/icons/preview/red/down-xxl.png' }} />
               </Left>
-              <Body>
-                <Text>Loan</Text>
+              <Body style={styles.ListItemStyling} >
+                <Text style={styles.TransactionText} >Loan</Text>
               </Body>
               <Right>
-                <Text note>$245</Text>
+                <Text style={styles.RightNoteText} note>$44</Text>
               </Right>
             </ListItem>
-            <ListItem itemDivider>
-              <Text > Processed 5/20/19 </Text>
+            <ListItem style={styles.listDividerBackgroundColor} itemDivider>
+              <Text style={styles.listDividerText} > Processed 5/20/19 </Text>
             </ListItem>
-            <ListItem avatar>
-              <Left>
-                <Thumbnail source={{ uri: 'https://www.iconsdb.com/icons/preview/green/up-xxl.png' }} />
+            <ListItem style={styles.ListItemStyling} avatar>
+              <Left style={styles.ListItemStyling} >
+                <Thumbnail small source={{ uri: 'https://www.iconsdb.com/icons/preview/green/up-xxl.png' }} />
               </Left>
-              <Body>
-                <Text>Deposit</Text>
+              <Body style={styles.ListItemStyling} >
+                <Text style={styles.TransactionText} >Deposit</Text>
               </Body>
               <Right>
-                <Text note>$245</Text>
+                <Text style={styles.RightNoteText} note>$180</Text>
               </Right>
             </ListItem>
-            <ListItem itemDivider>
-              <Text > Processed 4/4/19 </Text>
+            <ListItem style={styles.listDividerBackgroundColor} itemDivider>
+              <Text style={styles.listDividerText} > Processed 4/4/19 </Text>
             </ListItem>
-            <ListItem avatar>
-              <Left>
-                <Thumbnail source={{ uri: 'https://www.iconsdb.com/icons/preview/red/down-xxl.png' }} />
+            <ListItem style={styles.ListItemStyling} avatar>
+              <Left style={styles.ListItemStyling} >
+                <Thumbnail small source={{ uri: 'https://www.iconsdb.com/icons/preview/red/down-xxl.png' }} />
               </Left>
-              <Body>
-                <Text>Loan</Text>
+              <Body style={styles.ListItemStyling} >
+                <Text style={styles.TransactionText} >Loan</Text>
               </Body>
               <Right>
-                <Text note>$245</Text>
+                <Text style={styles.RightNoteText} note>$315</Text>
               </Right>
             </ListItem>
           </List>

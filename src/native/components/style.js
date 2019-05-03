@@ -105,6 +105,8 @@ export default ScaledSheet.create({
     textAlignVertical: 'center',
     borderBottomWidth: 0,
     marginTop: 5,
+    fontWeight: 'bold',
+
   },
   slide: {
     flex: 1,
@@ -193,5 +195,24 @@ export default ScaledSheet.create({
   },
   submitButtonText: {
     fontSize: '18@ms',
+  },
+  slideLoanHistory: {
+    flex: 1,
+    backgroundColor: '#b23a3a',
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    height: '50%',
+    width: '315@s',
+    marginLeft: '5%',
+    paddingRight: '5%',
+    paddingLeft: '5%',
+    paddingTop: '20@vs',
   },
 });
