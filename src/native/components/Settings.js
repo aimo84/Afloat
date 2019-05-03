@@ -51,7 +51,8 @@ class Settings extends Component {
   static defaultProps = {
     match: null,
   }
-
+  // <Text style={styles.editName}>Deven Orie</Text>
+  // <FontAwesome name="pencil" style={styles.editIcon} />
 render = () => {
   const { member } = this.props;
   console.log('settings page render(), member object:');
@@ -59,10 +60,7 @@ render = () => {
 
   return (
     <Container>
-      <Header>
-        <Text style={styles.editName}>Deven Orie</Text>
-        <FontAwesome name="pencil" style={styles.editIcon} />
-      </Header>
+
       <Content>
         <List>
           <ListItem avatar>
@@ -139,7 +137,6 @@ render = () => {
           </ListItem>
         </List>
       </Content>
-      <FooterBar />
     </Container>
 
   );

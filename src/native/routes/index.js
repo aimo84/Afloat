@@ -122,7 +122,7 @@ const Index = (
 
       <Stack
         key="mainUserMenu"
-        title="User Menu"
+        title="Home"
         icon={() => <Icon name="add-circle" {...DefaultProps.icons} />}
         {...DefaultProps.navbarProps}
       >
