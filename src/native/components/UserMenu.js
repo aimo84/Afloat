@@ -22,23 +22,7 @@ import { AppRegistry, Image } from 'react-native';
 import { logout, getUserData } from '../../actions/member';
 
 const screenWidth = Dimensions.get('window').width;
-
-const styles = StyleSheet.create({
-  nameView: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  editName: {
-    fontWeight: 'bold',
-    fontSize: 22,
-    marginRight: 6,
-  },
-  editIcon: {
-    fontWeight: 'bold',
-    fontSize: 19,
-    color: '#777c84',
-  },
-});
+import styles from './style.js';
 
 
 class UserMenu extends Component {
@@ -70,11 +54,10 @@ render = () => {
   console.log(member);
   return (
     <Container>
-
       <Content>
-      <View style={{height: 150, alignItems:'center', justifyContent:'center', marginVertical: 25}}>
+      <View style={styles.UserIconStylingView}>
           <Image
-            style={{width: 120, height: 120, alignItems:'center', justifyContent:'center', borderRadius:60, marginVertical: 10}}
+            style={styles.UserIconImage}
             source={{uri: 'https://i.pinimg.com/originals/af/25/49/af25490494d3338afef00869c59fdd37.png'}}
           />
           <Text style={{fontWeight: 'bold',
