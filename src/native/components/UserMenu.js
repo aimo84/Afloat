@@ -18,6 +18,7 @@ import {
 import { Dimensions } from 'react-native';
 import FooterBar from './FooterBar';
 import { Actions } from 'react-native-router-flux';
+import { AppRegistry, Image } from 'react-native';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -61,11 +62,14 @@ render = () => {
 
   return (
     <Container>
-      <Header>
-        <Text style={styles.editName}>Deven Orie</Text>
-        <FontAwesome name="pencil" style={styles.editIcon} />
-      </Header>
+
       <Content>
+      <View style={{height: 150, alignItems:'center', justifyContent:'center'}}>
+          <Image
+            style={{width: 120, height: 120, alignItems:'center', justifyContent:'center', borderRadius:60}}
+            source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}
+          />
+      </View>
         <List>
           <ListItem avatar>
             <Left>
