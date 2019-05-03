@@ -150,5 +150,48 @@ export default ScaledSheet.create({
   spacer: {
     display: 'flex',
     height: '10@vs'
-  }
+  },
+  container: {
+    backgroundColor: '#F8F8F8',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+  },
+  amount: {
+    fontSize: '65@ms',
+    color: '#ebebeb',
+    fontWeight: 'bold',
+    marginBottom: '18@s',
+  },
+  form: {
+    alignItems: 'center',
+    alignContent: 'center',
+    paddingVertical: '70@vs',
+    paddingHorizontal: '12@s',
+    backgroundColor: '#cd4d17',
+  },
+  payMeText: {
+    fontSize: '22@ms',
+    color: '#ebebeb',
+  },
+  button: {
+    height: '68@vs',
+  },
+  slider: {
+    width: '85%',
+  },
+  smallNoticeText: {
+    fontSize: '18@s',
+    color: '#8b8e8b',
+  },
+  bigNoticeText: {
+    fontSize: '23@s',
+    fontWeight: 'bold',
+  },
+  noticeView: {
+    alignItems: 'center',
+    alignContent: 'center',
+  },
+  submitButtonText: {
+    fontSize: '18@ms',
+  },
 });
