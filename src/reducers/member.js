@@ -18,6 +18,9 @@ export default function userReducer(state = initialState, action) {
           bankSet: action.data.bankSet,
           firstname: action.data.firstname,
           emailVerified: false,
+          active: action.data.active,
+          outstandingBalance: action.data.outstandingBalance,
+          subscriptionEnrolled: action.data.subscriptionEnrolled,
         };
       }
       return initialState;
@@ -52,7 +55,7 @@ export default function userReducer(state = initialState, action) {
     case 'USER_TRANSFER': {
       return {
         ...state,
-        outstandingAmount: action.amount,
+        outstandingBalance: action.amount,
       };
     }
     case 'USER_DETAILS_UPDATE': {

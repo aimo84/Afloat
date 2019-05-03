@@ -36,16 +36,21 @@ class FooterBar extends Component {
   }
 
   onDashboardPressed = () => {
+<<<<<<< HEAD
     //Actions.mainHome();
     Actions.replace('mainHome');
 
+=======
+    Actions.replace('mainHome');
+>>>>>>> d759d6d5adcf6de8292dabe1e251691bd6587e8a
   }
 
   onMakeTransactionPressed = () => {
-    Actions.makeTransaction();
+    Actions.replace('makeTransaction');
   }
 
   onSettingsPressed = () => {
+<<<<<<< HEAD
     Actions.replace('mainUserMenu');
   }
 
@@ -53,6 +58,9 @@ class FooterBar extends Component {
     //Actions.mainLoanPage();
     Actions.replace('mainLoanPage');
 
+=======
+    Actions.replace('mainSettings');
+>>>>>>> d759d6d5adcf6de8292dabe1e251691bd6587e8a
   }
 
   render = () => (
