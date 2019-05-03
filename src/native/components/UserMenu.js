@@ -44,7 +44,9 @@ logout(){
   // this.props.logout(() => {
   //   Actions.replace('entry');
   // });
-  Actions.replace('entry');
+  //Actions.replace();
+  this.props.navigation.popToTop();
+
   //onsole.log(this.state.entryItems.balance);
 }
 
@@ -53,7 +55,7 @@ render = () => {
   console.log('settings page render(), member object:');
   console.log(member);
   return (
-    <Container>
+    <Container style={{backgroundColor: 'white'}}>
       <Content>
       <View style={styles.UserIconStylingView}>
           <Image

@@ -154,7 +154,7 @@ export default ScaledSheet.create({
     height: '10@vs'
   },
   container: {
-    backgroundColor: '#F8F8F8',
+    backgroundColor: 'white',
     justifyContent: 'space-between',
     alignItems: 'stretch',
   },

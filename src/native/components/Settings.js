@@ -59,7 +59,7 @@ render = () => {
   console.log(member);
 
   return (
-    <Container>
+    <Container style={{backgroundColor: 'white'}} >
 
       <Content>
         <List>
