@@ -19,6 +19,7 @@ import { Dimensions } from 'react-native';
 import FooterBar from './FooterBar';
 import { Actions } from 'react-native-router-flux';
 import { AppRegistry, Image } from 'react-native';
+import { logout, getUserData } from '../../actions/member';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -55,6 +56,14 @@ class UserMenu extends Component {
     match: null,
   }
 
+logout(){
+  // this.props.logout(() => {
+  //   Actions.replace('entry');
+  // });
+  Actions.replace('entry');
+  //onsole.log(this.state.entryItems.balance);
+}
+
 render = () => {
   const { member } = this.props;
   console.log('settings page render(), member object:');
@@ -79,9 +88,6 @@ render = () => {
             <Body>
               <Text>Profile</Text>
             </Body>
-            <Right>
-              <Icon name="arrow-forward" />
-            </Right>
           </ListItem>
           <ListItem onPress={() => Actions.mainSettings()} avatar>
             <Left>
@@ -90,9 +96,14 @@ render = () => {
             <Body>
               <Text>Settings</Text>
             </Body>
-            <Right>
-              <Icon name="arrow-forward" />
-            </Right>
+          </ListItem>
+          <ListItem onPress={() => this.logout()} avatar>
+            <Left>
+              <Icon name="md-log-out" style={styles.footerIcons} />
+            </Left>
+            <Body>
+              <Text>Log Out</Text>
+            </Body>
           </ListItem>
         </List>
       </Content>
@@ -104,6 +115,7 @@ render = () => {
 }
 
 const mapDispatchToProps = {
+  logout,
 };
 
 export default connect(null, mapDispatchToProps)(UserMenu);

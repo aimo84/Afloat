@@ -377,17 +377,6 @@ $
           <List style={{ flex: 1 }}>
             {transactionsListItems}
           </List>
-          <Button onPress={() => {
-            // this.props.logout(() => {
-            //   Actions.replace('entry');
-            // });
-            console.log(this.state.entryItems.balance)
-          }}
-          >
-            <Text>
-              Log Out
-            </Text>
-          </Button>
         </Content>
         <FooterBar/>
       </Container>
