@@ -4704,6 +4704,13 @@ expo@^32.0.6:
     uuid-js "^0.7.5"
     whatwg-fetch "^2.0.4"
 
+expokit@^32.1.1:
+  version "32.1.1"
+  resolved "https://registry.yarnpkg.com/expokit/-/expokit-32.1.1.tgz#55e763d4fa26eb3627d06fcb12d0e3c87d767c2c"
+  integrity sha512-mUorcCKpI11afzPolBJhpq1trnUcDq5lYoDc/uTOQEJwdFqF8oDa608p50LbNPxC6/583+PrwIgQmiKqKO3VIA==
+  dependencies:
+    jsc-android "^224109.1.0"
+
 express@^4.16.2:
   version "4.16.4"
   resolved "https://registry.yarnpkg.com/express/-/express-4.16.4.tgz#fddef61926109e24c515ea97fd2f1bdbf62df12e"
@@ -6722,6 +6729,11 @@ jsbn@~0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
 
+jsc-android@^224109.1.0:
+  version "224109.1.0"
+  resolved "https://registry.yarnpkg.com/jsc-android/-/jsc-android-224109.1.0.tgz#9749ec92f1e284b3c09befe7c47cc6e60b1f0cdf"
+  integrity sha512-mhALFynePc/wJsUt9BJuH13mSK/dGWtBO/pcYwVV1I0A7iduyqy3fSoAt1b0yI+/B3TzlGyue/gqjPxsqG1HRQ==
+
 jsdom@^11.5.1:
   version "11.12.0"
   resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-11.12.0.tgz#1a80d40ddd378a1de59656e9e6dc5a3ba8657bc8"
@@ -7114,6 +7126,16 @@ lottie-ios@^2.5.0:
 lottie-react-native@2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/lottie-react-native/-/lottie-react-native-2.5.0.tgz#0711b8b34bec7741552c24b71efd3d4cab347571"
+  dependencies:
+    invariant "^2.2.2"
+    lottie-ios "^2.5.0"
+    prop-types "^15.5.10"
+    react-native-safe-module "^1.1.0"
+
+lottie-react-native@2.5.11:
+  version "2.5.11"
+  resolved "https://registry.yarnpkg.com/lottie-react-native/-/lottie-react-native-2.5.11.tgz#95771a0eadf75847a50f627ec43740dcbe5c5870"
+  integrity sha512-RIDBEQJQy8lxqTyulpd3xaxmlibYy1j+4iVekX3AjjA2imrM5EIggCNxZhnjqu4HuTYC1/KylaQihIfWCRwuRw==
   dependencies:
     invariant "^2.2.2"
     lottie-ios "^2.5.0"
