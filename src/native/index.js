@@ -29,6 +29,8 @@ export default class App extends React.Component {
       Roboto: require('native-base/Fonts/Roboto.ttf'),
       Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
       Ionicons: require('@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/Ionicons.ttf'),
+      Lato_regular: require('../fonts/lato/Lato-Regular.ttf'),
+      Lato_black: require('../fonts/lato/Lato-Black.ttf'),
     });
 
     this.setState({ loading: false });

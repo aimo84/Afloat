@@ -26,7 +26,7 @@ export function transferAchToUser(authToken, amount, cb) {
         // console.log(response);
         if (response.status === 200) {
           // cb();
-          console.log('reached');
+          console.log(response.data.amount);
           dispatch({ type: 'USER_TRANSFER', amount: response.data.amount });
         }
       });
@@ -52,6 +52,14 @@ export function getTransactions(authToken) {
         console.log(error);
       });
   };
+}
+
+export function getBalance(authToken, cb) {
+  // TODO: Find better way of beating this race condition
+  axios.get(`${ROOT_URL}/getBalance`, { headers: { authorization: `Token ${authToken}` } })
+    .then((response) => {
+      cb(response.data.balance);
+    });
 }
 
 export function enrollSubscription(authToken, cb) {

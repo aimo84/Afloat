@@ -1,11 +1,14 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
+import Image from 'react-native-scalable-image';
 import {
   View, Segment, Picker, Form, Container, Content, H1, H2, H3,
   Header, List, ListItem, Button, Left, Body, Right, Thumbnail,
   Text, Icon, Switch, Spinner, Separator, Tab, Tabs, ScrollableTab,
 } from 'native-base';
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+
 // import TabOne from './TabOne';
 // import TabTwo from './TabTwo';
 // import Head from '../app/Header';
@@ -24,9 +27,9 @@ import { connect } from 'react-redux';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import FooterBar from './FooterBar';
 import Spacer from './Spacer';
+import styles from './style.js';
 
-
-import { getTransactions } from '../../actions/bank';
+import { getTransactions, getBalance } from '../../actions/bank';
 import { logout, getUserData } from '../../actions/member';
 
 global.lastDate = 'date';
@@ -56,88 +59,6 @@ const data = [, , 0.27];
 
 const screenWidth = Dimensions.get('window').width;
 
-const styles = StyleSheet.create({
-  balanceText: {
-    fontWeight: 'bold',
-    fontSize: 26,
-  },
-  dayText: {
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-  redTransactionText: {
-    color: 'red',
-    fontWeight: 'bold',
-    fontFamily: 'AvenirNext-Heavy',
-    fontSize: 20,
-    textAlignVertical: 'center',
-  },
-  greenTransactionText: {
-    color: 'green',
-    fontWeight: 'bold',
-    fontFamily: 'AvenirNext-Heavy',
-    fontSize: 20,
-    textAlignVertical: 'center',
-  },
-  listDividerBackgroundColor: {
-    backgroundColor: 'rgb(234,233,239)',
-  },
-  listDividerText: {
-    fontWeight: 'bold',
-    color: 'grey',
-    fontSize: 17,
-    fontFamily: 'Avenir-Medium',
-  },
-  ProgressChartAvailableText: {
-    textAlignVertical: 'center',
-    textAlign: 'center',
-    marginRight: 70,
-    marginTop: -170,
-    color: 'grey',
-    fontSize: 23,
-    fontFamily: 'Avenir-Light',
-  },
-  ProgressChartAmountText: {
-    textAlignVertical: 'center',
-    textAlign: 'center',
-    marginRight: 80,
-    marginTop: -142,
-    fontWeight: 'bold',
-    color: 'green',
-    fontSize: 34,
-    fontFamily: 'AvenirNext-Heavy',
-  },
-  ProgressChartFromText: {
-    textAlignVertical: 'center',
-    textAlign: 'center',
-    marginRight: 70,
-    marginTop: -106,
-    color: 'grey',
-    fontSize: 23,
-    fontFamily: 'Avenir-Light',
-  },
-  ListItemStyling: {
-    borderBottomWidth: 0,
-    marginTop: 0,
-  },
-  TransactionText: {
-    fontWeight: 'bold',
-    fontSize: 17,
-    fontFamily: 'AvenirNext-Heavy',
-  },
-  LeftNoteText: {
-    fontFamily: 'Avenir-Light',
-    fontSize: 17,
-  },
-  RightNoteText: {
-    fontFamily: 'AvenirNext-Heavy',
-    fontSize: 20,
-    textAlignVertical: 'center',
-    borderBottomWidth: 0,
-    marginTop: 5,
-  },
-});
-
 
 class Dashboard extends Component {
   static propTypes = {
@@ -159,6 +80,7 @@ class Dashboard extends Component {
       entryItems: [
         {
           title: 'Item 1',
+          balance: 0,
         },
         {
           title: 'Item 2',
@@ -180,20 +102,42 @@ class Dashboard extends Component {
 
   componentWillMount() {
     const { member } = this.props;
-    getUserData(member);
-    console.log('dispatched member');
-    if (!member.bankSet) {
-      Actions.replace('linkBank');
-    }
+    // getUserData(member);
+    // console.log('dispatched member');
+    // if (!member.bankSet) {
+    //   Actions.replace('linkBank');
+    // }
     // console.log('Trying to get member');
     // const { member } = this.props;
     // console.log(member);
     // getUserData(member.token);
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     const { member } = this.props;
-    this.props.getTransactions(member.token);
+    getUserData(member);
+    console.log('dispatched member');
+    if (!member.bankSet) {
+      Actions.replace('linkBank');
+    }
+
+    getTransactions(member.token,
+      (res) => {
+        this.setState({ transactions: res });
+        const { transactions } = this.state;
+        console.log("Got transactions");
+        console.log(member)
+      });
+
+    getBalance(member.token,
+      (res) => {
+        console.log('reached balance update')
+        const entryItems = this.state.entryItems.slice() //copy the array
+        entryItems[0].balance = res; //execute the manipulations
+        this.setState({ entryItems })
+        console.log(this.state.entryItems);
+      }
+    );
   }
 
   renderJSXAmount(transactionAmount) {
@@ -261,106 +205,125 @@ $
     // });
   }
 
-  _renderItem({ item, index }) {
+  _renderItem = ({ item, index }) => {
+    const { member } = this.props;
+    let { balance } = this.state;
+
     // console.log(item);
     if (index == 0) {
-      return (
-        <View style={styles.slide}>
-          <View>
-            <ProgressChart
-              data={data}
-              width={screenWidth}
-              height={220}
-              chartConfig={{
-                backgroundColor: '#eae9ef',
-                backgroundGradientFrom: '#eae9ef',
-                backgroundGradientTo: '#eae9ef',
-                decimalPlaces: 2, // optional, defaults to 2dp
-                color: (opacity = 1) => `rgba(46,139,87, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
-              }}
-            />
-          </View>
-          <Spacer size={10} />
 
-          <View>
-            <Text style={styles.ProgressChartAvailableText}>Available</Text>
-          </View>
+      if (!member.active){
+        console.log('this is balance');
+        console.log(member.active);
+          return (
+            <View style={styles.slide}>
+              <View>
+                <Text style={styles.name}>
+                  Hello {member.firstname},
+                </Text>
+                <View style={styles.spacer}>
+                </View>
+                <Text style={styles.balance}>
+                  ${item.balance.toFixed(2)}
+                </Text>
+                <Text style={styles.balanceTitle}>
+                  Current Bank Balance
+                </Text>
+                <View style={styles.spacer}>
+                </View>
+                <Text style={styles.nonActiveText}>
+                  [Name] helps you stay on top of your bills and keep your account positive. Borrow $250 now and pay us back interest-free automatically next paycheck.
+                </Text>
+                <View style={{ display: 'flex', height: 1, justifyContent: 'start', alignItems: 'center'}} >
+                <Image width={scale(130)} style={{opacity: 0.6}} source={require('../../images/monyCircle.png')} />
+                </View>
+              </View>
+            </View>
+          );
+      }
 
-          <View>
-            <Text style={styles.ProgressChartAmountText}>$762</Text>
-          </View>
 
-          <View>
-            <Text style={styles.ProgressChartFromText}>from $3144.88</Text>
-          </View>
-        </View>
-      );
     } if (index == 1) {
+      // return (
+      //   <View style={styles.slide}>
+      //     <PieChart
+      //       data={global.data2}
+      //       width={screenWidth}
+      //       height={220}
+      //       chartConfig={{
+      //         backgroundColor: '#eae9ef',
+      //         backgroundGradientFrom: '#eae9ef',
+      //         backgroundGradientTo: '#eae9ef',
+      //         decimalPlaces: 2, // optional, defaults to 2dp
+      //         color: (opacity = 1) => `rgba(46,139,87, ${opacity})`,
+      //         style: {
+      //           borderRadius: 16,
+      //         },
+      //       }}
+      //       accessor="amount"
+      //       backgroundColor="transparent"
+      //       paddingLeft="15"
+      //       absolute
+      //     />
+      //   </View>
+      // );
       return (
         <View style={styles.slide}>
-          <PieChart
-            data={global.data2}
-            width={screenWidth}
-            height={220}
-            chartConfig={{
-              backgroundColor: '#eae9ef',
-              backgroundGradientFrom: '#eae9ef',
-              backgroundGradientTo: '#eae9ef',
-              decimalPlaces: 2, // optional, defaults to 2dp
-              color: (opacity = 1) => `rgba(46,139,87, ${opacity})`,
-              style: {
-                borderRadius: 16,
-              },
-            }}
-            accessor="amount"
-            backgroundColor="transparent"
-            paddingLeft="15"
-            absolute
-          />
+          <View style={styles.name}>
+            <Text>
+              Hello {member.firstname}
+            </Text>
+          </View>
         </View>
       );
     }
+    // return (
+    //   <View style={styles.slide}>
+    //     <LineChart
+    //       data={{
+    //         labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+    //         datasets: [{
+    //           data: [
+    //             Math.random() * 100,
+    //             Math.random() * 100,
+    //             Math.random() * 100,
+    //             Math.random() * 100,
+    //             Math.random() * 100,
+    //             Math.random() * 100,
+    //           ],
+    //           color: (opacity = 1) => `rgba(255,255,255, ${opacity})`, // optional
+    //           // strokeWidth: 5 // optional
+    //           // strokeWidth = 2;
+    //         }],
+    //       }}
+    //       width={Dimensions.get('window').width} // from react-native
+    //       height={220}
+    //       yAxisLabel="$"
+    //       chartConfig={{
+    //         backgroundColor: '#e20071',
+    //         backgroundGradientFrom: '#11267a',
+    //         backgroundGradientTo: '#253d93',
+    //         decimalPlaces: 2, // optional, defaults to 2dp
+    //         color: (opacity = 1) => `rgba(255,255,255, ${opacity})`,
+    //         style: {
+    //           borderRadius: 16,
+    //         },
+    //       }}
+    //       bezier
+    //       style={{
+    //         marginVertical: 8,
+    //         borderRadius: 16,
+    //       }}
+    //     />
+    //   </View>
+    // );
     return (
       <View style={styles.slide}>
-        <LineChart
-          data={{
-            labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-            datasets: [{
-              data: [
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-                Math.random() * 100,
-              ],
-              color: (opacity = 1) => `rgba(255,255,255, ${opacity})`, // optional
-              // strokeWidth: 5 // optional
-              // strokeWidth = 2;
-            }],
-          }}
-          width={Dimensions.get('window').width} // from react-native
-          height={220}
-          yAxisLabel="$"
-          chartConfig={{
-            backgroundColor: '#e20071',
-            backgroundGradientFrom: '#11267a',
-            backgroundGradientTo: '#253d93',
-            decimalPlaces: 2, // optional, defaults to 2dp
-            color: (opacity = 1) => `rgba(255,255,255, ${opacity})`,
-            style: {
-              borderRadius: 16,
-            },
-          }}
-          bezier
-          style={{
-            marginVertical: 8,
-            borderRadius: 16,
-          }}
-        />
+        <View style={styles.name}>
+          <Text>
+            Hello {member.firstname}
+          </Text>
+        </View>
       </View>
     );
   }
@@ -381,7 +344,7 @@ $
                                   { this.renderJSXDividers(transaction.date) }
                                   <ListItem style={styles.ListItemStyling} avatar>
                                     <Left style={styles.ListItemStyling}>
-                                      <Thumbnail source={{ uri: 'https://cdn4.iconfinder.com/data/icons/iconsweets/50/x_card_2.png' }} />
+                                      <Thumbnail small square source={{ uri: transaction.uri }} />
                                     </Left>
                                     <Body style={styles.ListItemStyling}>
                                       <Text style={styles.TransactionText}>{transaction.name}</Text>
@@ -401,24 +364,28 @@ $
       );
     }
     return (
-      <Container>
+      <Container style={{backgroundColor: 'white'}}>
         <Carousel
           ref={(c) => { this._carousel = c; }}
           data={this.state.entryItems}
           renderItem={this._renderItem}
           sliderWidth={screenWidth}
           itemWidth={screenWidth}
-          height={0}
+          height={verticalScale(50)}
           marginTop={20}
         />
         <Content style={{ flex: 1 }}>
-          <List>
+          <Text>
+            {this.state.balance}
+          </Text>
+          <List style={{ flex: 1 }}>
             {transactionsListItems}
           </List>
           <Button onPress={() => {
-            this.props.logout(() => {
-              Actions.replace('entry');
-            });
+            // this.props.logout(() => {
+            //   Actions.replace('entry');
+            // });
+            console.log(this.state.entryItems.balance)
           }}
           >
             <Text>

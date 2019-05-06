@@ -89,6 +89,16 @@ export function linkBank() {
   });
 }
 
+export function getIcon() {
+  return new Promise((resolve) => {
+    axios.get(`${ROOT_URL}/getIconForTransaction`).then((response) => {
+      resolve(response);
+    }).catch(() => {
+      console.log('error homie');
+    });
+  });
+}
+
 /**
   * Login to Firebase with Email/Password
   */
