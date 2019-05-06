@@ -120,22 +120,21 @@ class Dashboard extends Component {
     if (!member.bankSet) {
       Actions.replace('linkBank');
     }
-
-    getTransactions(member.token,
-      (res) => {
-        this.setState({ transactions: res });
-        const { transactions } = this.state;
-        console.log("Got transactions");
-        console.log(member)
-      });
+    this.props.getTransactions(member.token);
+    // getTransactions(member.token,
+    //   (res) => {
+    //     this.setState({ transactions: res });
+    //     const { transactions } = this.state;
+    //     console.log("Got transactions");
+    //     console.log(member)
+    //   });
 
     getBalance(member.token,
       (res) => {
         console.log('reached balance update')
         const entryItems = this.state.entryItems.slice() //copy the array
         entryItems[0].balance = res; //execute the manipulations
-        this.setState({ entryItems })
-        console.log(this.state.entryItems);
+        this.setState({ entryItems });
       }
     );
   }
@@ -214,7 +213,6 @@ $
 
       if (!member.active){
         console.log('this is balance');
-        console.log(member.active);
           return (
             <View style={styles.slide}>
               <View>
@@ -333,7 +331,6 @@ $
     let transactionsListItems = [];
     { this.renderJSXPieChartData(transactions); }
     console.log('printing transactions in render');
-    console.log(transactions);
     // console.log(Object.keys(transactions).length);
     // console.log(Object.keys(transactions).length <= 2);
     // Check that transactions are not null and that transactions are not an empty list
@@ -382,10 +379,10 @@ $
             {transactionsListItems}
           </List>
           <Button onPress={() => {
-            // this.props.logout(() => {
-            //   Actions.replace('entry');
-            // });
-            console.log(this.state.entryItems.balance)
+            this.props.logout(() => {
+              Actions.replace('entry');
+            });
+            // console.log(this.state.entryItems.balance)
           }}
           >
             <Text>

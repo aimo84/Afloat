@@ -38,8 +38,9 @@ class Transactions extends Component {
     getTransactions(member.token,
       (res) => {
         this.setState({ transactions: res });
+        // eslint-disable-next-line no-unused-vars
         const { transactions } = this.state;
-        console.log(transactions);
+        // console.log(transactions);
       });
   }
 
