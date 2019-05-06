@@ -229,7 +229,7 @@ $
               </View>
             </View>
           );
-      } else if (item.active){
+      } else if (item.active && item.outstandingBalance === 0){
         return (
           <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
             <View style={styles.slide}>
@@ -245,7 +245,7 @@ $
                 </View>
                 <View style={{flexGrow: 1, justifyContent: 'center'}}>
                 <Text style={styles.nonActiveText}>
-                Borrow
+                Balance running low? Borrow up to $300 interest-free
                 </Text>
                 <View style={styles.spacer}>
                 </View>
@@ -254,7 +254,7 @@ $
                 }}
                 >
                   <Text style={{ color: '#21D0A5', textAlign: 'center', width: 300,}}>
-                    Borrow Now
+                    Borrow now
                   </Text>
                 </Button>
 
