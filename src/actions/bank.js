@@ -58,11 +58,16 @@ export function getBalance(authToken, cb) {
 }
 
 export function enrollSubscription(authToken, cb) {
-  console.log(authToken);
-  axios.post(`${ROOT_URL}/enrollSubscription`, { }, { headers: { authorization: `Token ${authToken}` } })
-    .then((response) => {
-      // cb(response.data);
-    });
+  return (dispatch) => {
+    axios.post(`${ROOT_URL}/enrollSubscription`, { }, { headers: { authorization: `Token ${authToken}` } })
+      .then((response) => {
+        console.log('response');
+        cb();
+        if (response.status === 200) {
+          dispatch({ type: 'USER_ENROLLED' });
+        }
+      });
+  };
 }
 
 export default function dummy() {

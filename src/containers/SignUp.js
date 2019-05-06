@@ -20,7 +20,7 @@ class SignUp extends Component {
     const { onFormSubmit } = this.props;
     console.log('container reached');
     return onFormSubmit(data)
-      .catch((err) => { this.setState({ errorMessage: err }); throw err; });
+      .catch((err) => { this.setState({ errorMessage: 'Error Signing Up' }); throw err; });
   }
 
   render = () => {

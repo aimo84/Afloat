@@ -94,7 +94,8 @@ const Index = (
       </Stack>
       <Stack
         key="mainHome"
-        title="Transactions"
+        title="Dashboard"
+        navigationBarStyle={{ fontSize: 30 }}
         icon={() => <Icon name="switch" {...DefaultProps.icons} />}
         {...DefaultProps.navbarProps}
       >

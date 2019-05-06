@@ -36,17 +36,13 @@ export default ScaledSheet.create({
     fontSize: 18,
   },
   redTransactionText: {
-    color: 'red',
-    fontWeight: 'bold',
-    fontFamily: 'AvenirNext-Heavy',
-    fontSize: 20,
+    fontFamily: 'Lato_regular',
+    fontSize: 17,
     textAlignVertical: 'center',
   },
   greenTransactionText: {
-    color: 'green',
-    fontWeight: 'bold',
-    fontFamily: 'AvenirNext-Heavy',
-    fontSize: 20,
+    fontFamily: 'Lato_regular',
+    fontSize: 17,
     textAlignVertical: 'center',
   },
   listDividerBackgroundColor: {
@@ -91,24 +87,23 @@ export default ScaledSheet.create({
     marginTop: 0,
   },
   TransactionText: {
-    fontWeight: 'bold',
     fontSize: 17,
-    fontFamily: 'AvenirNext-Heavy',
+    fontFamily: 'Lato_black',
   },
   LeftNoteText: {
-    fontFamily: 'Avenir-Light',
+    fontFamily: 'Lato_regular',
     fontSize: 17,
   },
   RightNoteText: {
-    fontFamily: 'AvenirNext-Heavy',
-    fontSize: 20,
+    fontFamily: 'Lato_regular',
+    fontSize: 17,
     textAlignVertical: 'center',
     borderBottomWidth: 0,
-    marginTop: 5,
-    fontWeight: 'bold',
-
   },
   slide: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     flex: 1,
     backgroundColor: '#21D0A5',
     borderRadius: 10,
@@ -120,11 +115,11 @@ export default ScaledSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    height: '50%',
+    height: '40%',
     width: '315@s',
     marginLeft: '5%',
     paddingRight: '5%',
-    paddingLeft: '5%',
+    paddingLeft: '20@s',
     paddingTop: '20@vs',
   },
   name: {
@@ -142,11 +137,13 @@ export default ScaledSheet.create({
     fontFamily: 'Lato_regular',
     fontSize: viewportWidth * 0.13,
     color: 'white',
+    width: '200@s',
   },
   nonActiveText: {
     fontFamily: 'Lato_regular',
     fontSize: viewportWidth * 0.05,
     color: '#324251',
+    width: '250@vs',
     textAlign: 'center',
   },
   spacer: {
@@ -239,4 +236,34 @@ export default ScaledSheet.create({
     fontFamily: 'Avenir-Light',
     fontSize: 20
   },
-});
+  transactionHeader: {
+    marginLeft: '3%',
+    fontSize: viewportWidth * 0.07,
+    fontWeight: 'bold',
+    fontFamily: 'Roboto',
+    fontWeight: 'bold',
+  },
+  loadingText: {
+    fontWeight: 'bold',
+    fontSize: viewportWidth * 0.04
+  },
+  modalContainer: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalBody: {
+    backgroundColor: 'white',
+    width: '80%',
+    height:'60%',
+    borderRadius: 10,
+    backgroundColor: 'white',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontFamily: 'Roboto',
+    fontSize: viewportWidth * 0.05,
+}});
