@@ -47,7 +47,9 @@ export function getTransactions(authToken) {
       .then((response) => {
         console.log('FETCH TRANSACTIONS');
         // cb(response.data);
-        dispatch({ type: 'FETCH_TRANSACTIONS', data: response.data });
+        dispatch({ type: 'FETCH_TRANSACTIONS', data: response.data.transactions });
+      }).catch((error) => {
+        console.log(error);
       });
   };
 }

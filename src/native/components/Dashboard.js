@@ -369,7 +369,12 @@ $
     const transactions = this.props.transactions;
     let transactionsListItems = [];
     { this.renderJSXPieChartData(transactions); }
-    if (transactions) {
+    console.log('printing transactions in render');
+    console.log(transactions);
+    // console.log(Object.keys(transactions).length);
+    // console.log(Object.keys(transactions).length <= 2);
+    // Check that transactions are not null and that transactions are not an empty list
+    if (transactions && Object.keys(transactions).length >= 2) {
       transactionsListItems = // console.log(transaction);
                               transactions.map(transaction => (
                                 <View key={JSON.stringify(transaction)}>
@@ -432,9 +437,12 @@ const mapDispatchToProps = {
   getTransactions,
 };
 
-const mapStateToProps = state => (
-  {
-    transactions: state.bank.transactions.transactions
-});
+const mapStateToProps = state => {
+  // console.log('here are transactions');
+  // console.log(state.bank);
+  // console.log(state.bank.transactions);
+  return {
+    transactions: state.bank.transactions
+}};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
