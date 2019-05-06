@@ -150,6 +150,92 @@ export default ScaledSheet.create({
     display: 'flex',
     height: '10@vs'
   },
+  container: {
+    backgroundColor: 'white',
+    justifyContent: 'space-between',
+    alignItems: 'stretch',
+  },
+  amount: {
+    fontSize: '65@ms',
+    color: '#ebebeb',
+    fontWeight: 'bold',
+    marginBottom: '18@s',
+  },
+  form: {
+    alignItems: 'center',
+    alignContent: 'center',
+    paddingVertical: '70@vs',
+    paddingHorizontal: '12@s',
+    backgroundColor: '#cd4d17',
+  },
+  payMeText: {
+    fontSize: '22@ms',
+    color: '#ebebeb',
+  },
+  button: {
+    height: '68@vs',
+  },
+  slider: {
+    width: '85%',
+  },
+  smallNoticeText: {
+    fontSize: '18@s',
+    color: '#8b8e8b',
+  },
+  bigNoticeText: {
+    fontSize: '23@s',
+    fontWeight: 'bold',
+  },
+  noticeView: {
+    alignItems: 'center',
+    alignContent: 'center',
+  },
+  submitButtonText: {
+    fontSize: '18@ms',
+  },
+  slideLoanHistory: {
+    flex: 1,
+    backgroundColor: '#c13f3f',
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    height: '50%',
+    width: '315@s',
+    marginLeft: '5%',
+    paddingRight: '5%',
+    paddingLeft: '5%',
+    paddingTop: '20@vs',
+  },
+  UserIconStylingView: {
+    height: 150,
+    alignItems:'center',
+    justifyContent:'center',
+    marginVertical: 25
+  },
+  UserIconImage:{
+    width: 120,
+    height: 120,
+    alignItems:'center',
+    justifyContent:'center',
+    borderRadius:60,
+    marginVertical: 10
+  },
+  UserNameStyling:{
+    fontWeight: 'bold',
+    fontFamily: 'AvenirNext-Heavy',
+    fontSize: 24
+  },
+  UserMenuItems:{
+    fontWeight: 'bold',
+    fontFamily: 'Avenir-Light',
+    fontSize: 20
+  },
   transactionHeader: {
     marginLeft: '3%',
     fontSize: viewportWidth * 0.07,
@@ -180,5 +266,4 @@ export default ScaledSheet.create({
   modalTitle: {
     fontFamily: 'Roboto',
     fontSize: viewportWidth * 0.05,
-  }
-});
+}});
