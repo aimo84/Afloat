@@ -2,27 +2,16 @@
 import React, { Component } from 'react';
 import Animation from 'lottie-react-native';
 import Image from 'react-native-scalable-image';
+import { Animated } from 'react-native';
 import {
   View, Segment, Picker, Form, Container, Content, H1, H2, H3,
   Header, List, ListItem, Button, Left, Body, Right, Thumbnail,
   Text, Icon, Switch, Spinner, Separator, Tab, Tabs, ScrollableTab,
 } from 'native-base';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+import Modal from "react-native-modal";
+import { enrollSubscription } from '../../actions/bank';
 
-
-let anim = {"v":"4.5.9","fr":29.9700012207031,"ip":0,"op":150.000006109625,"w":60,"h":60,"ddd":0,"assets":[{"id":"comp_2","layers":[{"ddd":0,"ind":0,"ty":4,"nm":"Dot 8","ks":{"o":{"a":0,"k":33},"r":{"a":0,"k":0},"p":{"a":1,"k":[{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":75,"s":[15.5,44,0],"e":[10.812,28.25,0],"to":[-0.00000190734863,-10,0],"ti":[0,8.75,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":90.569,"s":[10.812,28.25,0],"e":[18.125,13.75,0],"to":[0,-8.4999885559082,0],"ti":[0,7.37499237060547,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":106.221,"s":[18.125,13.75,0],"e":[11.375,-4.5,0],"to":[0,-9.375,0],"ti":[0,8.49999809265137,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":124.638,"s":[11.375,-4.5,0],"e":[18.125,-19.5,0],"to":[0,-8.75,0],"ti":[0,6.75,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":140.361,"s":[18.125,-19.5,0],"e":[18.125,-19.5,0],"to":[0,-8,0],"ti":[-0.41666665673256,0,0]},{"t":147.000005987433}]},"a":{"a":0,"k":[0,0,0]},"s":{"a":0,"k":[100,100,100]}},"ao":0,"shapes":[{"ty":"gr","it":[{"ty":"st","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"w":{"a":0,"k":2},"lc":1,"lj":1,"ml":4,"nm":"Stroke 1","mn":"ADBE Vector Graphic - Stroke"},{"ty":"fl","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill"},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Shape 1","np":2,"mn":"ADBE Vector Group"},{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[5.27,5.27]},"p":{"a":0,"k":[0,0]},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse"},{"ty":"fl","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill"},{"ty":"tr","p":{"a":0,"k":[-0.365,8.885],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":2,"mn":"ADBE Vector Group"}],"ip":47.0000019143492,"op":197.000008023974,"st":47.0000019143492,"bm":0,"sr":1},{"ddd":0,"ind":1,"ty":4,"nm":"Dot 3","ks":{"o":{"a":0,"k":100},"r":{"a":0,"k":0},"p":{"a":1,"k":[{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":28,"s":[15.5,44,0],"e":[10.812,28.25,0],"to":[-0.00000190734863,-10,0],"ti":[0,8.75,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":44.65,"s":[10.812,28.25,0],"e":[18.125,13.75,0],"to":[0,-8.4999885559082,0],"ti":[0,7.37499237060547,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":61.39,"s":[18.125,13.75,0],"e":[11.375,-4.5,0],"to":[0,-9.375,0],"ti":[0,8.49999809265137,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":81.085,"s":[11.375,-4.5,0],"e":[18.125,-19.5,0],"to":[0,-8.75,0],"ti":[0,6.75,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":97.9,"s":[18.125,-19.5,0],"e":[18.125,-19.5,0],"to":[0,-8,0],"ti":[-0.41666665673256,0,0]},{"t":105.000004276738}]},"a":{"a":0,"k":[0,0,0]},"s":{"a":0,"k":[100,100,100]}},"ao":0,"shapes":[{"ty":"gr","it":[{"ty":"st","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"w":{"a":0,"k":2},"lc":1,"lj":1,"ml":4,"nm":"Stroke 1","mn":"ADBE Vector Graphic - Stroke"},{"ty":"fl","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill"},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Shape 1","np":2,"mn":"ADBE Vector Group"},{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[5.27,5.27]},"p":{"a":0,"k":[0,0]},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse"},{"ty":"fl","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill"},{"ty":"tr","p":{"a":0,"k":[-0.365,8.885],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":2,"mn":"ADBE Vector Group"}],"ip":0,"op":150.000006109625,"st":0,"bm":0,"sr":1},{"ddd":0,"ind":2,"ty":4,"nm":"Dot 7","ks":{"o":{"a":0,"k":33},"r":{"a":0,"k":0},"p":{"a":1,"k":[{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":26,"s":[44,45.25,0],"e":[39.312,29.5,0],"to":[-0.00000190734863,-10,0],"ti":[0,8.75,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":52.598,"s":[39.312,29.5,0],"e":[46.625,15,0],"to":[0,-8.4999885559082,0],"ti":[0,7.37499237060547,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":79.338,"s":[46.625,15,0],"e":[39.875,-3.25,0],"to":[0,-9.375,0],"ti":[0,8.49999809265137,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":110.798,"s":[39.875,-3.25,0],"e":[46.625,-18.25,0],"to":[0,-8.75,0],"ti":[0,6.75,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":137.659,"s":[46.625,-18.25,0],"e":[46.625,-18.25,0],"to":[0,-8,0],"ti":[-0.41666665673256,0,0]},{"t":149.000006068894}]},"a":{"a":0,"k":[0,0,0]},"s":{"a":0,"k":[100,100,100]}},"ao":0,"shapes":[{"ty":"gr","it":[{"ty":"st","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"w":{"a":0,"k":2},"lc":1,"lj":1,"ml":4,"nm":"Stroke 1","mn":"ADBE Vector Graphic - Stroke"},{"ty":"fl","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill"},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Shape 1","np":2,"mn":"ADBE Vector Group"},{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[5.27,5.27]},"p":{"a":0,"k":[0,0]},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse"},{"ty":"fl","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill"},{"ty":"tr","p":{"a":0,"k":[-0.365,8.885],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":2,"mn":"ADBE Vector Group"}],"ip":16.0000006516934,"op":166.000006761319,"st":16.0000006516934,"bm":0,"sr":1},{"ddd":0,"ind":3,"ty":4,"nm":"Dot 2","ks":{"o":{"a":0,"k":100},"r":{"a":0,"k":0},"p":{"a":1,"k":[{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":44,"s":[44,45.25,0],"e":[39.312,29.5,0],"to":[-0.00000190734863,-10,0],"ti":[0,8.75,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":65.191,"s":[39.312,29.5,0],"e":[46.625,15,0],"to":[0,-8.4999885559082,0],"ti":[0,7.37499237060547,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":86.496,"s":[46.625,15,0],"e":[39.875,-3.25,0],"to":[0,-9.375,0],"ti":[0,8.49999809265137,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":111.563,"s":[39.875,-3.25,0],"e":[46.625,-18.25,0],"to":[0,-8.75,0],"ti":[0,6.75,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":132.964,"s":[46.625,-18.25,0],"e":[46.625,-18.25,0],"to":[0,-8,0],"ti":[-0.41666665673256,0,0]},{"t":142.000005783779}]},"a":{"a":0,"k":[0,0,0]},"s":{"a":0,"k":[100,100,100]}},"ao":0,"shapes":[{"ty":"gr","it":[{"ty":"st","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"w":{"a":0,"k":2},"lc":1,"lj":1,"ml":4,"nm":"Stroke 1","mn":"ADBE Vector Graphic - Stroke"},{"ty":"fl","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill"},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Shape 1","np":2,"mn":"ADBE Vector Group"},{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[5.27,5.27]},"p":{"a":0,"k":[0,0]},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse"},{"ty":"fl","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill"},{"ty":"tr","p":{"a":0,"k":[-0.365,8.885],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":2,"mn":"ADBE Vector Group"}],"ip":34.0000013848484,"op":184.000007494474,"st":34.0000013848484,"bm":0,"sr":1},{"ddd":0,"ind":4,"ty":4,"nm":"Dot 6","ks":{"o":{"a":0,"k":33},"r":{"a":0,"k":0},"p":{"a":1,"k":[{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":63,"s":[30,51.25,0],"e":[25.312,35.5,0],"to":[-0.00000190734863,-10,0],"ti":[0,8.75,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":75.863,"s":[25.312,35.5,0],"e":[32.625,21,0],"to":[0,-8.4999885559082,0],"ti":[0,7.37499237060547,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":88.794,"s":[32.625,21,0],"e":[25.875,2.75,0],"to":[0,-9.375,0],"ti":[0,8.49999809265137,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":104.009,"s":[25.875,2.75,0],"e":[32.625,-12.25,0],"to":[0,-8.75,0],"ti":[0,6.75,0]},{"t":117.000004765508}]},"a":{"a":0,"k":[0,0,0]},"s":{"a":0,"k":[100,100,100]}},"ao":0,"shapes":[{"ty":"gr","it":[{"ty":"st","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"w":{"a":0,"k":2},"lc":1,"lj":1,"ml":4,"nm":"Stroke 1","mn":"ADBE Vector Graphic - Stroke"},{"ty":"fl","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill"},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Shape 1","np":2,"mn":"ADBE Vector Group"},{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[5.27,5.27]},"p":{"a":0,"k":[0,0]},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse"},{"ty":"fl","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill"},{"ty":"tr","p":{"a":0,"k":[-0.365,8.885],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":2,"mn":"ADBE Vector Group"}],"ip":63.0000025660426,"op":213.000008675668,"st":63.0000025660426,"bm":0,"sr":1},{"ddd":0,"ind":5,"ty":4,"nm":"Dot 4","ks":{"o":{"a":0,"k":100},"r":{"a":0,"k":0},"p":{"a":1,"k":[{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":69,"s":[30,51.25,0],"e":[25.312,35.5,0],"to":[-0.00000190734863,-10,0],"ti":[0,8.75,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":74.716,"s":[25.312,35.5,0],"e":[32.625,21,0],"to":[0,-8.4999885559082,0],"ti":[0,7.37499237060547,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":80.464,"s":[32.625,21,0],"e":[25.875,2.75,0],"to":[0,-9.375,0],"ti":[0,8.49999809265137,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":87.226,"s":[25.875,2.75,0],"e":[32.625,-12.25,0],"to":[0,-8.75,0],"ti":[0,6.75,0]},{"t":93.0000037879676}]},"a":{"a":0,"k":[0,0,0]},"s":{"a":0,"k":[100,100,100]}},"ao":0,"shapes":[{"ty":"gr","it":[{"ty":"st","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"w":{"a":0,"k":2},"lc":1,"lj":1,"ml":4,"nm":"Stroke 1","mn":"ADBE Vector Graphic - Stroke"},{"ty":"fl","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill"},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Shape 1","np":2,"mn":"ADBE Vector Group"},{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[5.27,5.27]},"p":{"a":0,"k":[0,0]},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse"},{"ty":"fl","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill"},{"ty":"tr","p":{"a":0,"k":[-0.365,8.885],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":2,"mn":"ADBE Vector Group"}],"ip":69.0000028104276,"op":219.000008920053,"st":69.0000028104276,"bm":0,"sr":1},{"ddd":0,"ind":6,"ty":4,"nm":"Dot 5","ks":{"o":{"a":0,"k":33},"r":{"a":0,"k":0},"p":{"a":1,"k":[{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":14,"s":[30,51.25,0],"e":[25.312,35.5,0],"to":[-0.00000190734863,-10,0],"ti":[0,8.75,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":26.863,"s":[25.312,35.5,0],"e":[32.625,21,0],"to":[0,-8.4999885559082,0],"ti":[0,7.37499237060547,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":39.794,"s":[32.625,21,0],"e":[25.875,2.75,0],"to":[0,-9.375,0],"ti":[0,8.49999809265137,0]},{"i":{"x":0.833,"y":0.833},"o":{"x":0.167,"y":0.167},"n":"0p833_0p833_0p167_0p167","t":55.009,"s":[25.875,2.75,0],"e":[32.625,-12.25,0],"to":[0,-8.75,0],"ti":[0,6.75,0]},{"t":68.0000027696968}]},"a":{"a":0,"k":[0,0,0]},"s":{"a":0,"k":[100,100,100]}},"ao":0,"shapes":[{"ty":"gr","it":[{"ty":"st","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"w":{"a":0,"k":2},"lc":1,"lj":1,"ml":4,"nm":"Stroke 1","mn":"ADBE Vector Graphic - Stroke"},{"ty":"fl","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill"},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Shape 1","np":2,"mn":"ADBE Vector Group"},{"ty":"gr","it":[{"d":1,"ty":"el","s":{"a":0,"k":[5.27,5.27]},"p":{"a":0,"k":[0,0]},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse"},{"ty":"fl","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"r":1,"nm":"Fill 1","mn":"ADBE Vector Graphic - Fill"},{"ty":"tr","p":{"a":0,"k":[-0.365,8.885],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":2,"mn":"ADBE Vector Group"}],"ip":14.0000005702317,"op":164.000006679857,"st":14.0000005702317,"bm":0,"sr":1}]}],"layers":[{"ddd":0,"ind":0,"ty":1,"nm":"White Solid 1","td":1,"ks":{"o":{"a":0,"k":100},"r":{"a":0,"k":0},"p":{"a":0,"k":[30,30,0]},"a":{"a":0,"k":[30,30,0]},"s":{"a":0,"k":[100,100,100]}},"ao":0,"hasMask":true,"masksProperties":[{"inv":false,"mode":"a","pt":{"a":0,"k":{"i":[[12.703,0],[0,-12.703],[-12.703,0],[0,12.703]],"o":[[-12.703,0],[0,12.703],[12.703,0],[0,-12.703]],"v":[[30,7],[7,30],[30,53],[53,30]],"c":true}},"o":{"a":0,"k":100},"x":{"a":0,"k":0},"nm":"Mask 1"}],"sw":60,"sh":60,"sc":"#ffffff","ip":0,"op":150.000006109625,"st":0,"bm":0,"sr":1},{"ddd":0,"ind":1,"ty":0,"nm":"Pre-comp 1","tt":1,"refId":"comp_2","ks":{"o":{"a":0,"k":100},"r":{"a":0,"k":0},"p":{"a":0,"k":[30,30,0]},"a":{"a":0,"k":[30,30,0]},"s":{"a":0,"k":[100,100,100]}},"ao":0,"w":60,"h":60,"ip":0,"op":150.000006109625,"st":0,"bm":0,"sr":1},{"ddd":0,"ind":2,"ty":4,"nm":"Circle","ks":{"o":{"a":0,"k":100},"r":{"a":0,"k":0},"p":{"a":0,"k":[30,30,0]},"a":{"a":0,"k":[0,0,0]},"s":{"a":1,"k":[{"i":{"x":[0,0,1],"y":[1,1,1]},"o":{"x":[1,1,0.167],"y":[0,0,0.167]},"n":["0_1_1_0","0_1_1_0","1_1_0p167_0p167"],"t":0,"s":[0,0,100],"e":[100,100,100]},{"i":{"x":[0,0,0.833],"y":[0,0,0.833]},"o":{"x":[1,1,0.167],"y":[1,1,0.167]},"n":["0_0_1_1","0_0_1_1","0p833_0p833_0p167_0p167"],"t":15,"s":[100,100,100],"e":[100,100,100]},{"i":{"x":[0,0,0.833],"y":[1,1,0.833]},"o":{"x":[1,1,0],"y":[0,0,0]},"n":["0_1_1_0","0_1_1_0","0p833_0p833_0_0"],"t":129,"s":[100,100,100],"e":[0,0,100]},{"t":149.000006068894}]}},"ao":0,"shapes":[{"ty":"gr","it":[{"d":2,"ty":"el","s":{"a":0,"k":[50,50]},"p":{"a":0,"k":[0,0]},"nm":"Ellipse Path 1","mn":"ADBE Vector Shape - Ellipse"},{"ty":"st","c":{"a":0,"k":[1,1,1,1]},"o":{"a":0,"k":100},"w":{"a":0,"k":2},"lc":1,"lj":1,"ml":4,"nm":"Stroke 1","mn":"ADBE Vector Graphic - Stroke"},{"ty":"tr","p":{"a":0,"k":[0,0],"ix":2},"a":{"a":0,"k":[0,0],"ix":1},"s":{"a":0,"k":[100,100],"ix":3},"r":{"a":0,"k":0,"ix":6},"o":{"a":0,"k":100,"ix":7},"sk":{"a":0,"k":0,"ix":4},"sa":{"a":0,"k":0,"ix":5},"nm":"Transform"}],"nm":"Ellipse 1","np":2,"mn":"ADBE Vector Group"}],"ip":0,"op":150.000006109625,"st":0,"bm":0,"sr":1}]}
-
-// import TabOne from './TabOne';
-// import TabTwo from './TabTwo';
-// import Head from '../app/Header';
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
@@ -35,29 +24,9 @@ import styles from './style.js';
 import { getTransactions, getBalance } from '../../actions/bank';
 import { logout, getUserData } from '../../actions/member';
 
+
 global.lastDate = 'date';
 global.pieDictionaryData = new Object();
-global.data2 = [
-  {
-    name: 'Food/Drink', amount: 7134.37, color: '#393e46', legendFontColor: '#393e46', legendFontSize: 12,
-  },
-  {
-    name: 'Payment', amount: 47721, color: '#085f63', legendFontColor: '#085f63', legendFontSize: 12,
-  },
-  {
-    name: 'Recreation', amount: 471, color: '#ffb677', legendFontColor: '#ffb677', legendFontSize: 12,
-  },
-  {
-    name: 'Shops', amount: 3500, color: '#5e0a0a', legendFontColor: '#5e0a0a', legendFontSize: 12,
-  },
-  {
-    name: 'Transfer', amount: 5974.68, color: '#145374', legendFontColor: '#145374', legendFontSize: 12,
-  },
-  {
-    name: 'Travel', amount: 576.71, color: '#616f39', legendFontColor: '#616f39', legendFontSize: 12,
-  },
-
-];
 const data = [, , 0.27];
 
 const screenWidth = Dimensions.get('window').width;
@@ -76,6 +45,9 @@ class Dashboard extends Component {
   static defaultProps = {
     match: null,
   }
+  static navigationOptions = {
+  headerTitleStyle: { fontSize: 30 }
+  }
 
   constructor(props) {
     super(props);
@@ -84,6 +56,8 @@ class Dashboard extends Component {
         {
           title: 'Item 1',
           balance: 0,
+          active: false,
+          outstandingBalance: 0
         },
         {
           title: 'Item 2',
@@ -94,6 +68,12 @@ class Dashboard extends Component {
       ],
       selected: 'key1',
       transactions: {},
+      slider1ActiveSlide: 0,
+      isModalVisible: false,
+      isConfirmModalVisible: false,
+      baseModalVisible: false,
+      confirmTextModal: false,
+      progress: new Animated.Value(0),
     };
   }
 
@@ -105,21 +85,11 @@ class Dashboard extends Component {
 
   componentWillMount() {
     const { member } = this.props;
-    // getUserData(member);
-    // console.log('dispatched member');
-    // if (!member.bankSet) {
-    //   Actions.replace('linkBank');
-    // }
-    // console.log('Trying to get member');
-    // const { member } = this.props;
-    // console.log(member);
-    // getUserData(member.token);
   }
 
   componentDidMount = () => {
     this.animation.play();
     const { member } = this.props;
-    getUserData(member);
     console.log('dispatched member');
     if (!member.bankSet) {
       Actions.replace('linkBank');
@@ -142,6 +112,15 @@ class Dashboard extends Component {
         console.log(this.state.entryItems);
       }
     );
+
+    this.props.getUserData(member.token, (res) => {
+      const entryItems = this.state.entryItems.slice() //copy the array
+      entryItems[0].active = res.active; //execute the manipulations
+      entryItems[0].outstandingBalance = res.outstandingBalance;
+      this.setState({ entryItems })
+      console.log(this.state.entryItems);
+    });
+
   }
 
   renderJSXAmount(transactionAmount) {
@@ -149,14 +128,14 @@ class Dashboard extends Component {
       return (
         <Text style={styles.redTransactionText}>
 $
-          {transactionAmount}
+          {(transactionAmount*-1).toFixed(2)}
         </Text>
       );
     }
     return (
       <Text style={styles.greenTransactionText}>
-$
-        {transactionAmount}
+-$
+        {transactionAmount.toFixed(2)}
       </Text>
     );
   }
@@ -199,15 +178,6 @@ $
       }
     }
     console.log(pieDictionaryData);
-    // Object.entries(global.pieDictionaryData).forEach(([key, value]) => {
-    //   var pieChartObject = new Object();
-    //   pieChartObject.amount = value.toFixed(2);
-    //   pieChartObject.color = 'rgba(131, 167, 234, 1)';
-    //   pieChartObject.legendFontColor = '#7F7F7F';
-    //   pieChartObject.legendFontSize = 15;
-    //   pieChartObject.name = key;
-    //   global.data2.push(pieChartObject);
-    // });
   }
 
   _renderItem = ({ item, index }) => {
@@ -217,17 +187,54 @@ $
     // console.log(item);
     if (index == 0) {
 
-      if (!member.active){
-        console.log('this is balance');
-        console.log(member.active);
+      if (!item.active){
           return (
+            <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
+              <View style={styles.slide}>
+                <View>
+
+                  <Text style={styles.balance}>
+                    ${item.balance.toFixed(2)}
+                  </Text>
+                  <Text style={styles.balanceTitle}>
+                    Current Bank Balance
+                  </Text>
+                  <View style={styles.spacer}>
+                  </View>
+                  <View style={{flexGrow: 1, justifyContent: 'center'}}>
+                  <Text style={styles.nonActiveText}>
+                  [Name] has you covered in case your balance runs low. Get a $300 interest-free loan now and pay us back when your paycheck arrives.
+                  </Text>
+                  <View style={styles.spacer}>
+                  </View>
+                  <Button style={{display: 'flex',  alignSelf: 'center', backgroundColor: 'white', width: 300, borderRadius: 35}} onPress={() => {
+                    this.toggleBaseModal();
+                    setTimeout(()=> this.toggleModal(), 500);
+
+                  }}
+                  >
+                    <Text style={{ color: '#21D0A5', textAlign: 'center', width: 300,}}>
+                      Get Started
+                    </Text>
+                  </Button>
+
+                  </View>
+                  <View style={{width: scale(270), justifyContent: 'center', alignSelf: 'flex-end'}} >
+                  <Image width={scale(130)} style={{opacity: 0.6, alignSelf: 'center'}} source={require('../../images/monyCircleCropped.png')} />
+                  </View>
+
+                </View>
+              </View>
+              <View style={styles.spacer}>
+              </View>
+            </View>
+          );
+      } else if (item.active){
+        return (
+          <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
             <View style={styles.slide}>
               <View>
-                <Text style={styles.name}>
-                  Hello {member.firstname},
-                </Text>
-                <View style={styles.spacer}>
-                </View>
+
                 <Text style={styles.balance}>
                   ${item.balance.toFixed(2)}
                 </Text>
@@ -236,106 +243,100 @@ $
                 </Text>
                 <View style={styles.spacer}>
                 </View>
+                <View style={{flexGrow: 1, justifyContent: 'center'}}>
                 <Text style={styles.nonActiveText}>
-                  [Name] helps you stay on top of your bills and keep your account positive. Borrow $250 now and pay us back interest-free automatically next paycheck.
+                Borrow
                 </Text>
-                <View style={{ display: 'flex', height: 1, justifyContent: 'flex-start', alignItems: 'center'}} >
-                <Image width={scale(130)} style={{opacity: 0.6}} source={require('../../images/monyCircle.png')} />
+                <View style={styles.spacer}>
                 </View>
+                <Button style={{display: 'flex',  alignSelf: 'center', backgroundColor: 'white', width: 300, borderRadius: 35}} onPress={() => {
+                  this.toggleModal();
+                }}
+                >
+                  <Text style={{ color: '#21D0A5', textAlign: 'center', width: 300,}}>
+                    Borrow Now
+                  </Text>
+                </Button>
+
+                </View>
+                <View style={{width: scale(270), justifyContent: 'center', alignSelf: 'flex-end'}} >
+                <Image width={scale(130)} style={{opacity: 0.6, alignSelf: 'center'}} source={require('../../images/monyCircleCropped.png')} />
+                </View>
+
               </View>
             </View>
-          );
+            <View style={styles.spacer}>
+            </View>
+          </View>
+        );
+      }
+      else {
+        <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
+          <View style={styles.slide}>
+            {member.outstandingBalance}
+          </View>
+        </View>
       }
 
 
     } if (index == 1) {
-      // return (
-      //   <View style={styles.slide}>
-      //     <PieChart
-      //       data={global.data2}
-      //       width={screenWidth}
-      //       height={220}
-      //       chartConfig={{
-      //         backgroundColor: '#eae9ef',
-      //         backgroundGradientFrom: '#eae9ef',
-      //         backgroundGradientTo: '#eae9ef',
-      //         decimalPlaces: 2, // optional, defaults to 2dp
-      //         color: (opacity = 1) => `rgba(46,139,87, ${opacity})`,
-      //         style: {
-      //           borderRadius: 16,
-      //         },
-      //       }}
-      //       accessor="amount"
-      //       backgroundColor="transparent"
-      //       paddingLeft="15"
-      //       absolute
-      //     />
-      //   </View>
-      // );
+
       return (
-        <View style={styles.slide}>
-          <View style={styles.name}>
-            <Text>
-              Hello {member.firstname}
-            </Text>
+        <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
+          <View style={styles.slide}>
+
+          </View>
+          <View style={styles.spacer}>
           </View>
         </View>
       );
     }
-    // return (
-    //   <View style={styles.slide}>
-    //     <LineChart
-    //       data={{
-    //         labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-    //         datasets: [{
-    //           data: [
-    //             Math.random() * 100,
-    //             Math.random() * 100,
-    //             Math.random() * 100,
-    //             Math.random() * 100,
-    //             Math.random() * 100,
-    //             Math.random() * 100,
-    //           ],
-    //           color: (opacity = 1) => `rgba(255,255,255, ${opacity})`, // optional
-    //           // strokeWidth: 5 // optional
-    //           // strokeWidth = 2;
-    //         }],
-    //       }}
-    //       width={Dimensions.get('window').width} // from react-native
-    //       height={220}
-    //       yAxisLabel="$"
-    //       chartConfig={{
-    //         backgroundColor: '#e20071',
-    //         backgroundGradientFrom: '#11267a',
-    //         backgroundGradientTo: '#253d93',
-    //         decimalPlaces: 2, // optional, defaults to 2dp
-    //         color: (opacity = 1) => `rgba(255,255,255, ${opacity})`,
-    //         style: {
-    //           borderRadius: 16,
-    //         },
-    //       }}
-    //       bezier
-    //       style={{
-    //         marginVertical: 8,
-    //         borderRadius: 16,
-    //       }}
-    //     />
-    //   </View>
-    // );
+
     return (
-      <View style={styles.slide}>
-        <View style={styles.name}>
-          <Text>
-            Hello {member.firstname}
-          </Text>
+      <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
+        <View style={styles.slide}>
+
+        </View>
+        <View style={styles.spacer}>
         </View>
       </View>
     );
   }
 
+  toggleModal = () => {
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+  };
+
+  toggleConfirmModal = () => {
+    this.setState({ isConfirmModalVisible: !this.state.isConfirmModalVisible });
+    // this.setState({ confirmTextModal: !this.state.confirmTextModal });
+  };
+
+  toggleBaseModal = () => {
+    this.setState({ baseModalVisible: !this.state.baseModalVisible });
+  };
+
+  toggleConfirmTextModal = () => {
+    const { member } = this.props;
+    this.setState({ confirmTextModal: !this.state.confirmTextModal });
+    this.props.getUserData(member.token, () => {});
+  };
+
+  closeAllModals = () => {
+    this.setState({
+      isModalVisible: false,
+      isConfirmModalVisible: false,
+      baseModalVisible: false,
+      confirmTextModal: false,
+      });
+  }
+
   render = () => {
     const transactions = this.state.transactions.transactions;
     let transactionsListItems = [];
+    const { slider1ActiveSlide } = this.state;
+    const { member } = this.props;
+
     { this.renderJSXPieChartData(transactions); }
     if (transactions) {
       transactionsListItems = // console.log(transaction);
@@ -358,53 +359,130 @@ $
                               ));
     } else {
       transactionsListItems = (
-        <ListItem>
-          <Text>No transactions</Text>
-        </ListItem>
+        <View style={{flex:1, height: verticalScale(150), display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', alignSelf: 'center'}}>
+          <Animation
+            ref={animation => {
+              this.animation = animation;
+            }}
+            style={{
+              width: 180,
+              height: 180
+            }}
+            loop={true}
+            source={require('../../images/loading.json')}
+            resizeMode="cover"
+          />
+          <Text style={styles.loadingText}>
+            Retrieving Transactions
+          </Text>
+        </View>
       );
     }
     return (
       <Container style={{backgroundColor: 'white'}}>
+        <Content style={{ flex: 1 }}>
         <Carousel
           ref={(c) => { this._carousel = c; }}
           data={this.state.entryItems}
           renderItem={this._renderItem}
           sliderWidth={screenWidth}
           itemWidth={screenWidth}
-          height={verticalScale(50)}
+          height={verticalScale(280)}
           marginTop={20}
+          onSnapToItem={index => this.setState({ slider1ActiveSlide: index })}
         />
-        <Content style={{ flex: 1 }}>
-          <Text>
-            {this.state.balance}
+        <Pagination
+          dotsLength={this.state.entryItems.length}
+          activeDotIndex={slider1ActiveSlide}
+            // containerStyle={styles.paginationContainer}
+          dotColor='#21D0A5'
+            // dotStyle={styles.paginationDot}
+          inactiveDotColor="#000000"
+          inactiveDotOpacity={0.4}
+          inactiveDotScale={0.6}
+          carouselRef={this._slider1Ref}
+          tappableDots={!!this._slider1Ref}
+        />
+          <Text style={styles.transactionHeader}>
+            Transactions
           </Text>
           <List style={{ flex: 1 }}>
             {transactionsListItems}
           </List>
-          <View>
-          <Animation
-            ref={animation => {
-              this.animation = animation;
+
+        <Modal
+        backdropOpacity={0.2}
+        isVisible={this.state.baseModalVisible}
+        >
+        <Modal
+        onSwipeComplete={() => this.setState({ isModalVisible: false })}
+        swipeDirection={['up']}
+        backdropOpacity={0.0}
+        isVisible={this.state.isModalVisible}
+        >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalBody}>
+            <Text style={styles.modalTitle}>Say Goodbye to Bank Overdraft Fees</Text>
+            <Button style={{display: 'flex',  alignSelf: 'center', backgroundColor: '#21D0A5', width: scale(200), borderRadius: 35}} onPress={() => {
+              this.props.enrollSubscription(member.token, () => {
+                this.toggleConfirmModal()
+              });
+              this.toggleModal();
             }}
-            style={{
-              width: 80,
-              height: 80,
-            }}
-            loop={true}
-            source={anim}
-          />
+            >
+              <Text style={{ color: 'white', textAlign: 'center', width: scale(200)}}>
+                Enroll Now
+              </Text>
+            </Button>
+          </View>
         </View>
-          <Button onPress={() => {
-            // this.props.logout(() => {
-            //   Actions.replace('entry');
-            // });
-            console.log(this.state.entryItems.balance)
+      </Modal>
+      <Modal
+      onSwipeComplete={() => this.setState({ isConfirmModalVisible: false })}
+      isVisible={this.state.isConfirmModalVisible}
+      backdropOpacity={0.0}
+      onModalShow={() => {
+        Animated.timing(this.state.progress, {
+          toValue: 1,
+          duration: 4500,
+          useNativeDriver: true,
+        }).start(() => {this.toggleConfirmTextModal()});
+      }}>
+        <View style={styles.modalContainer}>
+        <Animation
+          ref={animation => {
+            this.confetti = animation;
           }}
-          >
-            <Text>
-              Log Out
-            </Text>
-          </Button>
+          style={{
+            width: 380,
+            height: 380
+          }}
+          loop={false}
+          source={require('../../images/confetti.json')}
+          progress={this.state.progress}
+          resizeMode="cover"
+        />
+        </View>
+        <Modal
+        backdropOpacity={0.0}
+        isVisible={this.state.confirmTextModal}
+        >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalBody}>
+            <Text style={styles.modalTitle}>Thanks for Enrolling</Text>
+            <Button style={{display: 'flex',  alignSelf: 'center', backgroundColor: '#21D0A5', width: scale(200), borderRadius: 35}} onPress={() => {
+              this.closeAllModals();
+            }}
+            >
+              <Text style={{ color: 'white', textAlign: 'center', width: scale(200)}}>
+                Borrow now
+              </Text>
+            </Button>
+          </View>
+        </View>
+      </Modal>
+      </Modal>
+      </Modal>
         </Content>
         <FooterBar/>
       </Container>
@@ -414,6 +492,8 @@ $
 
 const mapDispatchToProps = {
   logout,
+  enrollSubscription,
+  getUserData,
 };
 
 export default connect(null, mapDispatchToProps)(Dashboard);
