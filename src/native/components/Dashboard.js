@@ -331,8 +331,6 @@ $
     let transactionsListItems = [];
     { this.renderJSXPieChartData(transactions); }
     console.log('printing transactions in render');
-    // console.log(Object.keys(transactions).length);
-    // console.log(Object.keys(transactions).length <= 2);
     // Check that transactions are not null and that transactions are not an empty list
     if (transactions && Object.keys(transactions).length >= 2) {
       transactionsListItems = // console.log(transaction);
