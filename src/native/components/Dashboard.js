@@ -21,7 +21,7 @@ import FooterBar from './FooterBar';
 import Spacer from './Spacer';
 import styles from './style.js';
 
-import { getTransactions, getBalance } from '../../actions/bank';
+import { getTransactions, getBalance, transferAchToApp } from '../../actions/bank';
 import { logout, getUserData } from '../../actions/member';
 
 
@@ -74,6 +74,7 @@ class Dashboard extends Component {
       baseModalVisible: false,
       confirmTextModal: false,
       progress: new Animated.Value(0),
+      confirmRepaymentModal: false,
     };
   }
 
@@ -250,7 +251,18 @@ $
                 <View style={styles.spacer}>
                 </View>
                 <Button style={{display: 'flex',  alignSelf: 'center', backgroundColor: 'white', width: 300, borderRadius: 35}} onPress={() => {
-                  this.toggleModal();
+                  Actions.makeTransaction({ updateUser: () => {
+                    console.log('PASSED PROPS');
+                    this.props.getUserData(member.token, (res) => {
+                      console.log('entered callback')
+                      const entryItems = this.state.entryItems.slice() //copy the array
+                      entryItems[0].active = res.active; //execute the manipulations
+                      entryItems[0].outstandingBalance = res.outstandingBalance;
+                      this.setState({ entryItems })
+                      console.log('repayment callback here')
+                      console.log(entryItems);
+                    });
+                  }});
                 }}
                 >
                   <Text style={{ color: '#21D0A5', textAlign: 'center', width: 300,}}>
@@ -271,11 +283,50 @@ $
         );
       }
       else {
-        <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
-          <View style={styles.slide}>
-            {member.outstandingBalance}
+        return (
+          <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
+            <View style={styles.slide}>
+              <View>
+
+                <Text style={styles.balance}>
+                  ${item.balance.toFixed(2)}
+                </Text>
+                <Text style={styles.balanceTitle}>
+                  Current Bank Balance
+                </Text>
+                <View style={styles.spacer}>
+                </View>
+                <Text style={styles.balance}>
+                  ${item.outstandingBalance.toFixed(2)}
+                </Text>
+                <Text style={styles.balanceTitle}>
+                  Current Loan Outstanding
+                </Text>
+                <View style={styles.spacer}>
+                </View>
+                <View style={{flexGrow: 1, justifyContent: 'center'}}>
+                <Text style={styles.nonActiveText}>
+                Repay your loan early at any time or we'll automatically do it next paycheck.
+                </Text>
+                <View style={styles.spacer}>
+                </View>
+                <Button style={{display: 'flex',  alignSelf: 'center', backgroundColor: 'white', width: 300, borderRadius: 35}} onPress={() => {
+                  this.toggleConfirmRepaymentModal()
+                }}
+                >
+                  <Text style={{ color: '#21D0A5', textAlign: 'center', width: 300,}}>
+                    Repay now
+                  </Text>
+                </Button>
+
+                </View>
+
+              </View>
+            </View>
+            <View style={styles.spacer}>
+            </View>
           </View>
-        </View>
+        );
       }
 
 
@@ -319,7 +370,13 @@ $
   toggleConfirmTextModal = () => {
     const { member } = this.props;
     this.setState({ confirmTextModal: !this.state.confirmTextModal });
-    this.props.getUserData(member.token, () => {});
+    this.props.getUserData(member.token, (res) => {
+      const entryItems = this.state.entryItems.slice() //copy the array
+      entryItems[0].active = res.active; //execute the manipulations
+      entryItems[0].outstandingBalance = res.outstandingBalance;
+      this.setState({ entryItems })
+      console.log(this.state.entryItems);
+    });
   };
 
   closeAllModals = () => {
@@ -329,6 +386,10 @@ $
       baseModalVisible: false,
       confirmTextModal: false,
       });
+  }
+
+  toggleConfirmRepaymentModal = () => {
+    this.setState({ confirmRepaymentModal: !this.state.confirmRepaymentModal});
   }
 
   render = () => {
@@ -416,7 +477,7 @@ $
         >
         <Modal
         onSwipeComplete={() => this.setState({ isModalVisible: false })}
-        swipeDirection={['up']}
+        swipeDirection={['down']}
         backdropOpacity={0.0}
         isVisible={this.state.isModalVisible}
         >
@@ -483,6 +544,34 @@ $
       </Modal>
       </Modal>
       </Modal>
+      <Modal
+      backdropOpacity={0.2}
+      isVisible={this.state.confirmRepaymentModal}
+      swipeDirection={['down']}
+      onSwipeComplete={() => this.setState({ confirmRepaymentModal: false })}
+
+      >
+      <View style={styles.modalContainer}>
+        <View style={styles.modalBody}>
+          <Text style={styles.modalTitle}>Confirm paying back loan</Text>
+          <Button style={{display: 'flex',  alignSelf: 'center', backgroundColor: '#21D0A5', width: scale(200), borderRadius: 35}} onPress={() => {
+            this.props.transferAchToApp(member.token, (res) => {
+              const entryItems = this.state.entryItems.slice() //copy the array
+              entryItems[0].outstandingBalance = 0;
+              this.setState({ entryItems })
+              console.log('REPAYHERE')
+              console.log(this.state.entryItems);
+            });
+            this.toggleConfirmRepaymentModal();
+          }}
+          >
+            <Text style={{ color: 'white', textAlign: 'center', width: scale(200)}}>
+              Confirm
+            </Text>
+          </Button>
+        </View>
+      </View>
+    </Modal>
         </Content>
         <FooterBar/>
       </Container>
@@ -494,6 +583,7 @@ const mapDispatchToProps = {
   logout,
   enrollSubscription,
   getUserData,
+  transferAchToApp,
 };
 
 export default connect(null, mapDispatchToProps)(Dashboard);

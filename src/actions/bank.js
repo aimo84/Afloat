@@ -26,9 +26,23 @@ export function transferAchToUser(authToken, amount, cb) {
       .then((response) => {
         // console.log(response);
         if (response.status === 200) {
-          // cb();
+          cb();
           console.log(response.data.amount);
           dispatch({ type: 'USER_TRANSFER', amount: response.data.amount });
+        }
+      });
+  };
+}
+
+
+export function transferAchToApp(authToken, cb) {
+  return (dispatch) => {
+    axios.post(`${ROOT_URL}/transferToApp`, { }, { headers: { authorization: `Token ${authToken}` } })
+      .then((response) => {
+        // console.log(response);
+        if (response.status === 200) {
+          cb(response);
+          dispatch({ type: 'USER_PAYBACK', amount: response.data.amount });
         }
       });
   };

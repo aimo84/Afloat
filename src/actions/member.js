@@ -25,6 +25,7 @@ export function getUserData(token, cb) {
         type: 'UPDATE_USER',
         data: userDetails,
       });
+
       if (cb) {
         cb(response.data.user);
       } else {

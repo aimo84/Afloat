@@ -95,6 +95,12 @@ export default function userReducer(state = initialState, action) {
         active: true,
       };
     }
+    case 'USER_PAYBACK': {
+      return {
+        ...state,
+        outstandingBalance: 0,
+      };
+    }
     default:
       return state;
   }

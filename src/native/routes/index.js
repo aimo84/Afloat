@@ -29,9 +29,7 @@ import LinkBank from '../../containers/LinkBank';
 import DashboardComponent from '../components/Dashboard';
 import MakeTransactionComponent from '../components/MakeTransaction';
 import LoanHistoryComponent from '../components/LoanHistory';
-import UserMenuComponent from '../components/UserMenu'
-
-
+import UserMenuComponent from '../components/UserMenu';
 
 
 const Index = (
@@ -100,6 +98,9 @@ const Index = (
         {...DefaultProps.navbarProps}
       >
         <Scene key="home" component={Auth(DashboardComponent)} />
+
+        <Scene key="makeTransaction" component={Auth(MakeTransactionComponent)} />
+
       </Stack>
 
       <Stack

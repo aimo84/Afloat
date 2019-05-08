@@ -100,8 +100,8 @@ class MakeTransaction extends Component {
 
   handleSubmit = () => {
     const { member } = this.props;
-    this.props.transferAchToUser(member.token, this.state.amount);
-    // Actions.replace('home');
+    this.props.transferAchToUser(member.token, this.state.amount, this.props.updateUser);
+    Actions.pop();
   }
 
   // eslint-disable-next-line arrow-body-style
