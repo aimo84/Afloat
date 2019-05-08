@@ -26,7 +26,7 @@ export function getUserData(token, cb) {
         data: userDetails,
       });
       if (cb) {
-        resolve(cb);
+        cb(response.data.user);
       } else {
         resolve({});
       }

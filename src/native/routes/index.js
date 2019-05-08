@@ -28,6 +28,11 @@ import LinkBank from '../../containers/LinkBank';
 
 import DashboardComponent from '../components/Dashboard';
 import MakeTransactionComponent from '../components/MakeTransaction';
+import LoanHistoryComponent from '../components/LoanHistory';
+import UserMenuComponent from '../components/UserMenu'
+
+
+
 
 const Index = (
   <Stack hideNavBar>
@@ -89,7 +94,8 @@ const Index = (
       </Stack>
       <Stack
         key="mainHome"
-        title="Transactions"
+        title="Dashboard"
+        navigationBarStyle={{ fontSize: 30 }}
         icon={() => <Icon name="switch" {...DefaultProps.icons} />}
         {...DefaultProps.navbarProps}
       >
@@ -107,9 +113,27 @@ const Index = (
       </Stack>
 
       <Stack
+        key="mainLoanPage"
+        title="Loan History"
+        icon={() => <Icon name="add-circle" {...DefaultProps.icons} />}
+        {...DefaultProps.navbarProps}
+      >
+        <Scene key="mainLoanPage" component={Auth(LoanHistoryComponent)} />
+      </Stack>
+
+      <Stack
+        key="mainUserMenu"
+        title="Home"
+        icon={() => <Icon name="add-circle" {...DefaultProps.icons} />}
+        {...DefaultProps.navbarProps}
+      >
+        <Scene key="mainUserMenu" component={Auth(UserMenuComponent)} />
+      </Stack>
+
+      <Stack
+        back
         key="mainSettings"
         title="Settings"
-        back
         icon={() => <Icon name="person" {...DefaultProps.icons} />}
         {...DefaultProps.navbarProps}
       >

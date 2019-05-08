@@ -31,7 +31,11 @@ export default function userReducer(state = initialState, action) {
       if (action.data) {
         return {
           ...state,
-          bankSet: true,
+          bankSet: action.data.bankSet,
+          outstandingBalance: action.data.outstandingBalance,
+          subscriptionEnrolled: action.data.subscriptionEnrolled,
+          active: action.data.active,
+          emailVerified: false,
         };
       }
       return initialState;
@@ -84,6 +88,12 @@ export default function userReducer(state = initialState, action) {
     }
     case 'USER_RESET': {
       return initialState;
+    }
+    case 'USER_ENROLLED': {
+      return {
+        ...state,
+        active: true,
+      };
     }
     default:
       return state;
