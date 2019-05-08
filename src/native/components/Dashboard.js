@@ -176,19 +176,7 @@ $
         global.pieDictionaryData[transactions[x].category[0]] = transactions[x].amount;
       }
     }
-<<<<<<< HEAD
-    // Object.entries(global.pieDictionaryData).forEach(([key, value]) => {
-    //   var pieChartObject = new Object();
-    //   pieChartObject.amount = value.toFixed(2);
-    //   pieChartObject.color = 'rgba(131, 167, 234, 1)';
-    //   pieChartObject.legendFontColor = '#7F7F7F';
-    //   pieChartObject.legendFontSize = 15;
-    //   pieChartObject.name = key;
-    //   global.data2.push(pieChartObject);
-    // });
-=======
     console.log(pieDictionaryData);
->>>>>>> 5d01b47ec133f775b1b4bbce130b5b8a2aa0bb11
   }
 
   _renderItem = ({ item, index }) => {
@@ -198,12 +186,7 @@ $
     // console.log(item);
     if (index == 0) {
 
-<<<<<<< HEAD
-      if (!member.active){
-        console.log('this is balance');
-=======
       if (!item.active){
->>>>>>> 5d01b47ec133f775b1b4bbce130b5b8a2aa0bb11
           return (
             <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
               <View style={styles.slide}>
@@ -427,13 +410,6 @@ $
           <List style={{ flex: 1 }}>
             {transactionsListItems}
           </List>
-<<<<<<< HEAD
-          <Button onPress={() => {
-            this.props.logout(() => {
-              Actions.replace('entry');
-            });
-            // console.log(this.state.entryItems.balance)
-=======
 
         <Modal
         backdropOpacity={0.2}
@@ -481,7 +457,6 @@ $
           style={{
             width: 380,
             height: 380
->>>>>>> 5d01b47ec133f775b1b4bbce130b5b8a2aa0bb11
           }}
           loop={false}
           source={require('../../images/confetti.json')}
@@ -518,12 +493,9 @@ $
 
 const mapDispatchToProps = {
   logout,
-<<<<<<< HEAD
   getTransactions,
-=======
   enrollSubscription,
   getUserData,
->>>>>>> 5d01b47ec133f775b1b4bbce130b5b8a2aa0bb11
 };
 
 const mapStateToProps = state => {
