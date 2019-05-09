@@ -8,7 +8,7 @@ export default function userReducer(state = initialState, action) {
     case 'USER_LOGIN': {
       if (action.data) {
         console.log('ACTION DATA');
-        console.log(action.data);
+        // console.log(action.data);
         return {
           ...state,
           loading: false,
@@ -27,7 +27,7 @@ export default function userReducer(state = initialState, action) {
     }
     case 'UPDATE_USER': {
       console.log('dispatch recieved');
-      console.log(action.data);
+      // console.log(action.data);
       if (action.data) {
         return {
           ...state,
@@ -51,9 +51,7 @@ export default function userReducer(state = initialState, action) {
       return initialState;
     }
     case 'LOGOUT': {
-      return {
-        initialState,
-      };
+      return initialState;
     }
     case 'USER_TRANSFER': {
       return {

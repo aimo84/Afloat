@@ -89,17 +89,14 @@ class Dashboard extends Component {
   }
 
   componentDidMount = () => {
-    this.animation.play();
+    if (this.animation) {
+     this.animation.play();
+    }
     const { member } = this.props;
     if (!member.bankSet) {
       Actions.replace('linkBank');
     }
-
-    getTransactions(member.token,
-      (res) => {
-        this.setState({ transactions: res });
-        const { transactions } = this.state;
-      });
+    this.props.getTransactions(member.token);
 
     getBalance(member.token,
       (res) => {
@@ -379,14 +376,16 @@ $
   }
 
   render = () => {
-    const transactions = this.state.transactions.transactions;
+    const transactions = this.props.transactions;
     let transactionsListItems = [];
     const { slider1ActiveSlide } = this.state;
     const { member } = this.props;
 
     { this.renderJSXPieChartData(transactions); }
-    if (transactions) {
-      transactionsListItems =
+    console.log('printing transactions in render');
+    // Check that transactions are not null and that transactions are not an empty list
+    if (transactions && Object.keys(transactions).length >= 2) {
+      transactionsListItems = // console.log(transaction);
                               transactions.map(transaction => (
                                 <View key={JSON.stringify(transaction)}>
                                   { this.renderJSXDividers(transaction.date) }
@@ -568,9 +567,15 @@ $
 
 const mapDispatchToProps = {
   logout,
+  getTransactions,
   enrollSubscription,
   getUserData,
   transferAchToApp,
 };
 
-export default connect(null, mapDispatchToProps)(Dashboard);
+const mapStateToProps = state => (
+{
+    transactions: state.bank.transactions
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

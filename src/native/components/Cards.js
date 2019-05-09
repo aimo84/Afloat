@@ -18,7 +18,7 @@ class Cards extends React.Component {
   // }
   componentWillMount() {
     console.log('yay');
-    console.log(this.props);
+    // console.log(this.props);
     const { member } = this.props;
     if (member && member.token && member.token.length > 0) {
       // TODO: Verify token is correct
@@ -44,7 +44,7 @@ class Cards extends React.Component {
     const { item, index } = this.props;
     // console.log('props')
     console.log('index:');
-    console.log(index);
+    // console.log(index);
     switch (index) {
       case 0: {
         return (

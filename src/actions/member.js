@@ -20,7 +20,7 @@ export function getUserData(token, cb) {
     axios.get(`${ROOT_URL}/getUser`, { headers: { authorization: `Token ${token}` } }).then((response) => {
       const userDetails = response.data.user;
       console.log('Got the request!');
-      console.log(userDetails);
+      // console.log(userDetails);
       dispatch({
         type: 'UPDATE_USER',
         data: userDetails,
@@ -108,10 +108,8 @@ export function login(formData) {
     email,
     password,
   } = formData;
-
   return dispatch => new Promise(async (resolve, reject) => {
     await statusMessage(dispatch, 'loading', true);
-
     // Validation checks
     if (!email) return reject({ message: ErrorMessages.missingEmail });
     if (!password) return reject({ message: ErrorMessages.missingPassword });
@@ -215,6 +213,7 @@ export function updateProfile(formData) {
   * Logout
   */
 export function logout(cb) {
+  console.log('actions logout');
   return (dispatch) => {
     dispatch({ type: 'LOGOUT' });
     dispatch({ type: 'STATUS_REPLACE', loading: false });

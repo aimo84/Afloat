@@ -49,7 +49,6 @@ class UserMenu extends Component {
 render = () => {
   const { member } = this.props;
   console.log('settings page render(), member object:');
-  console.log(member);
   return (
     <Container style={{ backgroundColor: 'white' }}>
       <Content>
