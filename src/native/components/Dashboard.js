@@ -88,20 +88,15 @@ class Dashboard extends Component {
   }
 
   componentDidMount = () => {
-    this.animation.play();
+    if (this.animation) {
+     this.animation.play();
+    }
     const { member } = this.props;
     console.log('dispatched member');
     if (!member.bankSet) {
       Actions.replace('linkBank');
     }
     this.props.getTransactions(member.token);
-    // getTransactions(member.token,
-    //   (res) => {
-    //     this.setState({ transactions: res });
-    //     const { transactions } = this.state;
-    //     console.log("Got transactions");
-    //     console.log(member)
-    //   });
 
     getBalance(member.token,
       (res) => {
@@ -117,7 +112,7 @@ class Dashboard extends Component {
       entryItems[0].active = res.active; //execute the manipulations
       entryItems[0].outstandingBalance = res.outstandingBalance;
       this.setState({ entryItems })
-      console.log(this.state.entryItems);
+      // console.log(this.state.entryItems);
     });
 
   }
@@ -176,7 +171,6 @@ $
         global.pieDictionaryData[transactions[x].category[0]] = transactions[x].amount;
       }
     }
-    console.log(pieDictionaryData);
   }
 
   _renderItem = ({ item, index }) => {
@@ -498,12 +492,9 @@ const mapDispatchToProps = {
   getUserData,
 };
 
-const mapStateToProps = state => {
-  // console.log('here are transactions');
-  // console.log(state.bank);
-  // console.log(state.bank.transactions);
-  return {
+const mapStateToProps = state => (
+{
     transactions: state.bank.transactions
-}};
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

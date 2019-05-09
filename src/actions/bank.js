@@ -26,7 +26,6 @@ export function transferAchToUser(authToken, amount, cb) {
         // console.log(response);
         if (response.status === 200) {
           // cb();
-          console.log(response.data.amount);
           dispatch({ type: 'USER_TRANSFER', amount: response.data.amount });
         }
       });
@@ -39,14 +38,10 @@ export function transferAchToUser(authToken, amount, cb) {
 
 
 export function getTransactions(authToken) {
-  // TODO: Find better way of beating this race condition
-  // await sleep(5000);
-  console.log('get transactions called');
+  console.log('get transactions action called');
   return (dispatch) => {
     axios.get(`${ROOT_URL}/getTransactions`, { headers: { authorization: `Token ${authToken}` } })
       .then((response) => {
-        console.log('FETCH TRANSACTIONS');
-        // cb(response.data);
         dispatch({ type: 'FETCH_TRANSACTIONS', data: response.data.transactions });
       }).catch((error) => {
         console.log(error);

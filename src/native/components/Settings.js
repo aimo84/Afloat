@@ -51,6 +51,7 @@ class Settings extends Component {
   static defaultProps = {
     match: null,
   }
+
   // <Text style={styles.editName}>Deven Orie</Text>
   // <FontAwesome name="pencil" style={styles.editIcon} />
 render = () => {
@@ -58,7 +59,7 @@ render = () => {
   console.log('settings page render(), member object:');
 
   return (
-    <Container style={{backgroundColor: 'white'}} >
+    <Container style={{ backgroundColor: 'white' }}>
 
       <Content>
         <List>

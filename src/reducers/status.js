@@ -16,6 +16,10 @@ export default function appReducer(state = initialState, action) {
         success: action.success || null,
       };
     }
+    case 'LOGOUT': {
+      console.log('logout reducer');
+      return initialState;
+    }
     default:
       return state;
   }

@@ -51,10 +51,7 @@ export default function userReducer(state = initialState, action) {
       return initialState;
     }
     case 'LOGOUT': {
-      return {
-        ...state,
-        token: '',
-      };
+      return initialState;
     }
     case 'USER_TRANSFER': {
       return {
