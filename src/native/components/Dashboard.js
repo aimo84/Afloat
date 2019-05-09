@@ -88,28 +88,22 @@ class Dashboard extends Component {
   }
 
   componentDidMount = () => {
-    this.animation.play();
+    if (this.animation) {
+     this.animation.play();
+    }
     const { member } = this.props;
     console.log('dispatched member');
     if (!member.bankSet) {
       Actions.replace('linkBank');
     }
-
-    getTransactions(member.token,
-      (res) => {
-        this.setState({ transactions: res });
-        const { transactions } = this.state;
-        console.log("Got transactions");
-        console.log(member)
-      });
+    this.props.getTransactions(member.token);
 
     getBalance(member.token,
       (res) => {
         console.log('reached balance update')
         const entryItems = this.state.entryItems.slice() //copy the array
         entryItems[0].balance = res; //execute the manipulations
-        this.setState({ entryItems })
-        console.log(this.state.entryItems);
+        this.setState({ entryItems });
       }
     );
 
@@ -118,7 +112,7 @@ class Dashboard extends Component {
       entryItems[0].active = res.active; //execute the manipulations
       entryItems[0].outstandingBalance = res.outstandingBalance;
       this.setState({ entryItems })
-      console.log(this.state.entryItems);
+      // console.log(this.state.entryItems);
     });
 
   }
@@ -177,7 +171,6 @@ $
         global.pieDictionaryData[transactions[x].category[0]] = transactions[x].amount;
       }
     }
-    console.log(pieDictionaryData);
   }
 
   _renderItem = ({ item, index }) => {
@@ -332,13 +325,15 @@ $
   }
 
   render = () => {
-    const transactions = this.state.transactions.transactions;
+    const transactions = this.props.transactions;
     let transactionsListItems = [];
     const { slider1ActiveSlide } = this.state;
     const { member } = this.props;
 
     { this.renderJSXPieChartData(transactions); }
-    if (transactions) {
+    console.log('printing transactions in render');
+    // Check that transactions are not null and that transactions are not an empty list
+    if (transactions && Object.keys(transactions).length >= 2) {
       transactionsListItems = // console.log(transaction);
                               transactions.map(transaction => (
                                 <View key={JSON.stringify(transaction)}>
@@ -492,8 +487,14 @@ $
 
 const mapDispatchToProps = {
   logout,
+  getTransactions,
   enrollSubscription,
   getUserData,
 };
 
-export default connect(null, mapDispatchToProps)(Dashboard);
+const mapStateToProps = state => (
+{
+    transactions: state.bank.transactions
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

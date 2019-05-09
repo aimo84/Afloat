@@ -29,7 +29,6 @@ class SignUp extends Component {
       Layout,
       isLoading,
     } = this.props;
-
     const { errorMessage } = this.state;
 
     return (

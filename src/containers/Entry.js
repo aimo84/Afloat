@@ -66,7 +66,7 @@ class Entry extends Component {
 
   render = () => {
     // const { uid } = this.props.member;
-    console.log(this.props);
+    // console.log(this.props);
     // const { width } = Dimensions.get('window');
     // const contentOffset = (width - CustomComponent.WIDTH) / 2;
     // const { currentIndex } = this.state;
@@ -74,7 +74,7 @@ class Entry extends Component {
     const ENTRIES1 = [{ title: 'Quick' }, { title: 'Affordable' }, { title: 'Get Started' }];
     const { width: viewportWidth } = Dimensions.get('window');
     console.log('PROPS -=--');
-    console.log(this.props);
+    // console.log(this.props);
     return (
 
       <Container style={{ marginTop: 22 }}>
