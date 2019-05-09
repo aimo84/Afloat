@@ -10,13 +10,15 @@ import { connect } from 'react-redux';
 import Slider from 'react-native-slider';
 import { Actions } from 'react-native-router-flux';
 import { ScaledSheet } from 'react-native-size-matters';
+import Moment from 'moment-business-days';
+
 import { transferAchToUser } from '../../actions/bank';
 
 const styles = ScaledSheet.create({
   container: {
-    backgroundColor: '#F8F8F8',
+    backgroundColor: 'white',
     justifyContent: 'space-between',
-    alignItems: 'stretch',
+    display: 'flex',
   },
   amount: {
     fontSize: '65@ms',
@@ -27,7 +29,7 @@ const styles = ScaledSheet.create({
   form: {
     alignItems: 'center',
     alignContent: 'center',
-    paddingVertical: '70@vs',
+    paddingTop: '70@vs',
     paddingHorizontal: '12@s',
     backgroundColor: '#FFFFFF',
   },
@@ -50,8 +52,9 @@ const styles = ScaledSheet.create({
     fontWeight: 'bold',
   },
   noticeView: {
+    display: 'flex',
     alignItems: 'center',
-    alignContent: 'center',
+
   },
   submitButtonText: {
     fontSize: '18@ms',
@@ -107,6 +110,21 @@ class MakeTransaction extends Component {
   // eslint-disable-next-line arrow-body-style
   render = () => {
     // const { amount } = this.state;
+
+    let depositeDate = '';
+    const nextBusinessDay = Moment(Moment(), 'DD-MM-YYYY').nextBusinessDay();
+    const tomorrow = Moment().add(1, 'days').format('MM/DD/YYYY');
+    console.log('Moment');
+
+    console.log(nextBusinessDay);
+    console.log(Moment().add(1, 'days'));
+    if (Moment().add(1, 'days').isSame(nextBusinessDay, 'day')) {
+      console.log(nextBusinessDay);
+      console.log(Moment(Moment(), 'DD-MM-YYYY').add(1, 'days').format('MM/DD/YYYY'));
+      depositeDate = 'Tomorrow';
+    } else {
+      depositeDate = nextBusinessDay.format('MM/DD/YYYY');
+    }
     return (
       <Container style={styles.container}>
         {/* <View style={styles.wrapper}> */}
@@ -133,18 +151,18 @@ class MakeTransaction extends Component {
         </Form>
         <View style={styles.noticeView}>
           <Text style={styles.smallNoticeText}>
+            Deposited in your bank account:
+          </Text>
+          <Text style={styles.bigNoticeText}>
+            {depositeDate}
+          </Text>
+          <Text style={styles.smallNoticeText}>
               Deducted from your paycheck:
           </Text>
           <Text style={styles.bigNoticeText}>
               Apr 30
           </Text>
           <View style={{ height: 18 }} />
-          <Text style={styles.smallNoticeText}>
-              Deposited in your bank account:
-          </Text>
-          <Text style={styles.bigNoticeText}>
-              Tommorow
-          </Text>
         </View>
         {/* </Content> */}
         <View style={styles.bottom}>

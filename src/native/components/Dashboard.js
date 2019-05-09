@@ -91,7 +91,6 @@ class Dashboard extends Component {
   componentDidMount = () => {
     this.animation.play();
     const { member } = this.props;
-    console.log('dispatched member');
     if (!member.bankSet) {
       Actions.replace('linkBank');
     }
@@ -100,17 +99,13 @@ class Dashboard extends Component {
       (res) => {
         this.setState({ transactions: res });
         const { transactions } = this.state;
-        console.log("Got transactions");
-        console.log(member)
       });
 
     getBalance(member.token,
       (res) => {
-        console.log('reached balance update')
         const entryItems = this.state.entryItems.slice() //copy the array
         entryItems[0].balance = res; //execute the manipulations
         this.setState({ entryItems })
-        console.log(this.state.entryItems);
       }
     );
 
@@ -119,7 +114,6 @@ class Dashboard extends Component {
       entryItems[0].active = res.active; //execute the manipulations
       entryItems[0].outstandingBalance = res.outstandingBalance;
       this.setState({ entryItems })
-      console.log(this.state.entryItems);
     });
 
   }
@@ -178,7 +172,6 @@ $
         global.pieDictionaryData[transactions[x].category[0]] = transactions[x].amount;
       }
     }
-    console.log(pieDictionaryData);
   }
 
   _renderItem = ({ item, index }) => {
@@ -252,15 +245,11 @@ $
                 </View>
                 <Button style={{display: 'flex',  alignSelf: 'center', backgroundColor: 'white', width: 300, borderRadius: 35}} onPress={() => {
                   Actions.makeTransaction({ updateUser: () => {
-                    console.log('PASSED PROPS');
                     this.props.getUserData(member.token, (res) => {
-                      console.log('entered callback')
                       const entryItems = this.state.entryItems.slice() //copy the array
                       entryItems[0].active = res.active; //execute the manipulations
                       entryItems[0].outstandingBalance = res.outstandingBalance;
                       this.setState({ entryItems })
-                      console.log('repayment callback here')
-                      console.log(entryItems);
                     });
                   }});
                 }}
@@ -375,14 +364,11 @@ $
       entryItems[0].active = res.active; //execute the manipulations
       entryItems[0].outstandingBalance = res.outstandingBalance;
       this.setState({ entryItems })
-      console.log(this.state.entryItems);
     });
   };
 
   closeAllModals = () => {
     this.setState({
-      isModalVisible: false,
-      isConfirmModalVisible: false,
       baseModalVisible: false,
       confirmTextModal: false,
       });
@@ -400,7 +386,7 @@ $
 
     { this.renderJSXPieChartData(transactions); }
     if (transactions) {
-      transactionsListItems = // console.log(transaction);
+      transactionsListItems =
                               transactions.map(transaction => (
                                 <View key={JSON.stringify(transaction)}>
                                   { this.renderJSXDividers(transaction.date) }
@@ -484,6 +470,9 @@ $
         <View style={styles.modalContainer}>
           <View style={styles.modalBody}>
             <Text style={styles.modalTitle}>Say Goodbye to Bank Overdraft Fees</Text>
+            <View style={styles.spacer} />
+            <Text style={styles.modalTitle}>Borrow money when you need it for no interest</Text>
+            <Text style={styles.modalTitle}> Subscribe for $9.99/month </Text>
             <Button style={{display: 'flex',  alignSelf: 'center', backgroundColor: '#21D0A5', width: scale(200), borderRadius: 35}} onPress={() => {
               this.props.enrollSubscription(member.token, () => {
                 this.toggleConfirmModal()
@@ -559,8 +548,6 @@ $
               const entryItems = this.state.entryItems.slice() //copy the array
               entryItems[0].outstandingBalance = 0;
               this.setState({ entryItems })
-              console.log('REPAYHERE')
-              console.log(this.state.entryItems);
             });
             this.toggleConfirmRepaymentModal();
           }}

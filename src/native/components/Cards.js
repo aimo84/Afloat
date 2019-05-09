@@ -31,7 +31,7 @@ class Cards extends React.Component {
   };
 
   onSignUpClick = () => {
-    Actions.signUp();
+    Actions.signUp({ testing: false });
   }
 
   onLogInClick = () => {

@@ -217,6 +217,7 @@ export function updateProfile(formData) {
 export function logout(cb) {
   return (dispatch) => {
     dispatch({ type: 'LOGOUT' });
+    dispatch({ type: 'STATUS_REPLACE', loading: false });
     cb();
   };
 }

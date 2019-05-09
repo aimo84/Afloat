@@ -262,8 +262,10 @@ export default ScaledSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: '30@s',
   },
   modalTitle: {
     fontFamily: 'Roboto',
     fontSize: viewportWidth * 0.05,
+    textAlign: 'center',
 }});
