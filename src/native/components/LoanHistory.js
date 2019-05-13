@@ -89,7 +89,7 @@ class LoanHistory extends Component {
             </ListItem>
             <ListItem style={styles.ListItemStyling} avatar>
               <Left style={styles.ListItemStyling} >
-                <Thumbnail small source={{ uri: 'https://www.iconsdb.com/icons/preview/red/down-xxl.png' }} />
+                <Thumbnail small source={{ uri: 'https://i.imgur.com/tiAaGh0.png' }} />
               </Left>
               <Body style={styles.ListItemStyling} >
                 <Text style={styles.TransactionText} >Loan</Text>
@@ -103,7 +103,7 @@ class LoanHistory extends Component {
             </ListItem>
             <ListItem style={styles.ListItemStyling} avatar>
               <Left style={styles.ListItemStyling} >
-                <Thumbnail small source={{ uri: 'https://www.iconsdb.com/icons/preview/green/up-xxl.png' }} />
+                <Thumbnail small source={{ uri: 'https://i.imgur.com/lXCylbz.png' }} />
               </Left>
               <Body style={styles.ListItemStyling} >
                 <Text style={styles.TransactionText} >Deposit</Text>
@@ -117,7 +117,7 @@ class LoanHistory extends Component {
             </ListItem>
             <ListItem style={styles.ListItemStyling} avatar>
               <Left style={styles.ListItemStyling} >
-                <Thumbnail small source={{ uri: 'https://www.iconsdb.com/icons/preview/red/down-xxl.png' }} />
+                <Thumbnail small source={{ uri: 'https://i.imgur.com/tiAaGh0.png' }} />
               </Left>
               <Body style={styles.ListItemStyling} >
                 <Text style={styles.TransactionText} >Loan</Text>
