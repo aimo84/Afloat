@@ -40,11 +40,12 @@ class UserMenu extends Component {
     match: null,
   }
 
-logout(){
-  // this.props.logout(() => {
-    Actions.replace('entry');
-  // });
-}
+logout() {
+    // eslint-disable-next-line react/destructuring-assignment
+    this.props.logout(() => {
+      Actions.replace('entry');
+    });
+  }
 
 render = () => {
   const { member } = this.props;
