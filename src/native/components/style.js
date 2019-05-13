@@ -139,6 +139,14 @@ export default ScaledSheet.create({
     color: 'white',
     width: '200@s',
   },
+  loanbalance: {
+    fontWeight: 'bold',
+    fontFamily: 'Lato_regular',
+    fontSize: viewportWidth * 0.13,
+    color: 'white',
+    alignItems:'center',
+    justifyContent:'center',
+  },
   nonActiveText: {
     fontFamily: 'Lato_regular',
     fontSize: viewportWidth * 0.05,
@@ -195,9 +203,11 @@ export default ScaledSheet.create({
   },
   slideLoanHistory: {
     flex: 1,
+    marginTop: 20,
     backgroundColor: '#c13f3f',
     borderRadius: 10,
     shadowColor: "#000",
+    alignItems:'center',
     shadowOffset: {
       width: 0,
       height: 2,

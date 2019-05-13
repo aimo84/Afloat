@@ -68,13 +68,13 @@ class LoanHistory extends Component {
     return (
       <Container style={styles.container}>
       <View style={styles.slideLoanHistory}>
-        <View>
+        <View style={{alignItems:'center',justifyContent:'center'}}>
           <Text style={styles.name}>
             Amount Owed:
           </Text>
           <View style={styles.spacer}>
           </View>
-          <Text style={styles.balance}>
+          <Text style={styles.loanbalance}>
              ${this.state.amount}
           </Text>
           <Text style={styles.balanceTitle}>
