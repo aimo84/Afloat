@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import Animation from 'lottie-react-native';
 import Image from 'react-native-scalable-image';
-import { Animated } from 'react-native';
+import { Animated, FlatList } from 'react-native';
 import {
   View, Segment, Picker, Form, Container, Content, H1, H2, H3,
   Header, List, ListItem, Button, Left, Body, Right, Thumbnail,
@@ -11,7 +11,7 @@ import {
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import Modal from "react-native-modal";
 import { enrollSubscription } from '../../actions/bank';
-
+import TransactionList from './TransactionList';
 import { Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
@@ -20,6 +20,7 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import FooterBar from './FooterBar';
 import Spacer from './Spacer';
 import styles from './style.js';
+
 
 import { getTransactions, getBalance } from '../../actions/bank';
 import { logout, getUserData } from '../../actions/member';
@@ -329,7 +330,6 @@ $
     let transactionsListItems = [];
     const { slider1ActiveSlide } = this.state;
     const { member } = this.props;
-
     { this.renderJSXPieChartData(transactions); }
     console.log('printing transactions in render');
     // Check that transactions are not null and that transactions are not an empty list
@@ -372,7 +372,11 @@ $
           </Text>
         </View>
       );
+      return <View><Text>null</Text></View>
     }
+    console.log('pre transactions');
+    console.log(transactions);
+    console.log('post transactions');
     return (
       <Container style={{backgroundColor: 'white'}}>
         <Content style={{ flex: 1 }}>
@@ -401,9 +405,19 @@ $
           <Text style={styles.transactionHeader}>
             Transactions
           </Text>
-          <List style={{ flex: 1 }}>
+          {/* <List style={{ flex: 1 }}>
             {transactionsListItems}
-          </List>
+          </List> */}
+          <TransactionList transactions = { transactions } />
+
+          {/* <FlatList
+            style={{ flex: 1 }}
+            data={transactions}
+            renderItem={(transaction) => {
+              console.log(transaction);
+              return <Text>{transaction.name}</Text>
+            })
+          /> */}
 
         <Modal
         backdropOpacity={0.2}
