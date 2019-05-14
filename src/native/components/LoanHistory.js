@@ -3,7 +3,7 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import {
-  View, Text, Form, Button, Container,Image,
+  View, Text, Form, Button, Container,
 } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -14,6 +14,7 @@ import { transferAchToUser } from '../../actions/bank';
 import FooterBar from './FooterBar';
 import { Header, Content, List, ListItem, Left, Body, Right, Thumbnail } from 'native-base';
 import styles from './style.js';
+import { AppRegistry, Image } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
 const stylesSlider = ScaledSheet.create({
@@ -69,16 +70,20 @@ class LoanHistory extends Component {
       <Container style={styles.container}>
       <View style={styles.slideLoanHistory}>
         <View style={{alignItems:'center',justifyContent:'center'}}>
-          <Text style={styles.name}>
-            Amount Owed:
+          <Text style={styles.statusLabel}>
+            PayDay Loan Status
           </Text>
           <View style={styles.spacer}>
           </View>
           <Text style={styles.loanbalance}>
-             ${this.state.amount}
+             ${this.state.amount} Owed
           </Text>
+          <Image
+            style={styles.UserIconImage}
+            source={{uri: 'https://i.imgur.com/tiAaGh0.png'}}
+          />
           <Text style={styles.balanceTitle}>
-            Subscription Renews 05/01
+            Next PayDay June 20th
           </Text>
         </View>
       </View>
