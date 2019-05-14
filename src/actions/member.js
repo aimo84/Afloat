@@ -20,7 +20,7 @@ export function getUserData(token, cb) {
     axios.get(`${ROOT_URL}/getUser`, { headers: { authorization: `Token ${token}` } }).then((response) => {
       const userDetails = response.data.user;
       console.log('Got the request!');
-      // console.log(userDetails);
+      console.log(userDetails);
       dispatch({
         type: 'UPDATE_USER',
         data: userDetails,

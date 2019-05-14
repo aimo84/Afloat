@@ -45,7 +45,7 @@ class LinkBank extends Component {
         () => {
           console.log('getting user data');
           // console.log(member.token);
-          Actions.replace('home');
+          Actions.replace('mainHome');
         });
     }
   }

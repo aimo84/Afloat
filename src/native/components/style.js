@@ -239,7 +239,6 @@ export default ScaledSheet.create({
   transactionHeader: {
     marginLeft: '3%',
     fontSize: viewportWidth * 0.07,
-    fontWeight: 'bold',
     fontFamily: 'Roboto',
     fontWeight: 'bold',
   },
@@ -255,8 +254,8 @@ export default ScaledSheet.create({
   },
   modalBody: {
     backgroundColor: 'white',
-    width: '80%',
-    height:'60%',
+    width: '300@s',
+    height:'330@vs',
     borderRadius: 10,
     backgroundColor: 'white',
     display: 'flex',
@@ -266,6 +265,19 @@ export default ScaledSheet.create({
   },
   modalTitle: {
     fontFamily: 'Roboto',
-    fontSize: viewportWidth * 0.05,
+    fontWeight: 'bold',
+    fontSize: viewportWidth * 0.055,
     textAlign: 'center',
-}});
+  },
+  modalText: {
+    fontFamily: 'Roboto',
+    fontSize: viewportWidth * 0.045,
+    textAlign: 'center',
+    lineHeight: 30,
+  },
+  textRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+  }
+});

@@ -13,6 +13,9 @@ export default function bankReducer(state = { transactions: null }, action) {
       }
       return initialState;
     }
+    case 'LOGOUT': {
+      return initialState;
+    }
     default:
       return state;
   }

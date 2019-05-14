@@ -52,14 +52,16 @@ export function transferAchToApp(authToken, cb) {
 // }
 
 
-export function getTransactions(authToken) {
+export function getTransactions(authToken, cb, refresh) {
   console.log('get transactions action called');
   return (dispatch) => {
     axios.get(`${ROOT_URL}/getTransactions`, { headers: { authorization: `Token ${authToken}` } })
       .then((response) => {
+        cb(response.data.accounts[0].balances.current);
         dispatch({ type: 'FETCH_TRANSACTIONS', data: response.data.transactions });
       }).catch((error) => {
-        console.log(error);
+        console.log('response called');
+        refresh();
       });
   };
 }

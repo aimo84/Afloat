@@ -32,6 +32,7 @@ export default function userReducer(state = initialState, action) {
         return {
           ...state,
           bankSet: action.data.bankSet,
+          bankStaging: action.data.bankStaging,
           outstandingBalance: action.data.outstandingBalance,
           subscriptionEnrolled: action.data.subscriptionEnrolled,
           active: action.data.active,
@@ -46,6 +47,7 @@ export default function userReducer(state = initialState, action) {
         return {
           ...state,
           bankSet: true,
+          bankStaging: true,
         };
       }
       return initialState;

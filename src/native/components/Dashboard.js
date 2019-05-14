@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import Animation from 'lottie-react-native';
 import Image from 'react-native-scalable-image';
-import { Animated } from 'react-native';
+import { Animated, TouchableOpacity } from 'react-native';
 import {
   View, Segment, Picker, Form, Container, Content, H1, H2, H3,
   Header, List, ListItem, Button, Left, Body, Right, Thumbnail,
@@ -10,6 +10,8 @@ import {
 } from 'native-base';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import Modal from "react-native-modal";
+import Emoji from 'react-native-emoji';
+
 import { enrollSubscription } from '../../actions/bank';
 
 import { Dimensions } from 'react-native';
@@ -93,24 +95,27 @@ class Dashboard extends Component {
      this.animation.play();
     }
     const { member } = this.props;
-    if (!member.bankSet) {
-      Actions.replace('linkBank');
-    }
-    this.props.getTransactions(member.token);
 
-    getBalance(member.token,
-      (res) => {
-        const entryItems = this.state.entryItems.slice() //copy the array
-        entryItems[0].balance = res; //execute the manipulations
-        this.setState({ entryItems })
-      }
-    );
-
-    this.props.getUserData(member.token, (res) => {
+    this.props.getTransactions(member.token, (res) => {
       const entryItems = this.state.entryItems.slice() //copy the array
-      entryItems[0].active = res.active; //execute the manipulations
-      entryItems[0].outstandingBalance = res.outstandingBalance;
+      entryItems[0].balance = res; //execute the manipulations
       this.setState({ entryItems })
+
+      this.props.getUserData(member.token, (res) => {
+        console.log('link bank')
+        const entryItems = this.state.entryItems.slice() //copy the array
+        entryItems[0].active = res.active; //execute the manipulations
+        entryItems[0].outstandingBalance = res.outstandingBalance;
+        this.setState({ entryItems })
+      });
+    },
+    () => {
+      this.props.getUserData(member.token, (res) => {
+        const entryItems = this.state.entryItems.slice() //copy the array
+        entryItems[0].active = res.active; //execute the manipulations
+        entryItems[0].outstandingBalance = res.outstandingBalance;
+        this.setState({ entryItems })
+      });
     });
 
   }
@@ -364,11 +369,51 @@ $
     });
   };
 
-  closeAllModals = () => {
+  sleep = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  closeFirstModals = () => {
     this.setState({
-      baseModalVisible: false,
+      isModalVisible: false,
+    });
+    this.sleep(15).then(() => {
+      this.setState({
+        baseModalVisible: false,
+      })
+    })
+  }
+
+  closeSecondModals = () => {
+    this.setState({
       confirmTextModal: false,
-      });
+    });
+    this.sleep(15).then(() => {
+      this.setState({
+        baseModalVisible: false,
+      })
+    })
+  }
+
+  redirectTransaction = () => {
+    this.setState({
+      confirmTextModal: false,
+    });
+    this.sleep(15).then(() => {
+      this.setState({
+        baseModalVisible: false,
+      })
+    })
+    this.sleep().then(() => {
+      Actions.makeTransaction({ updateUser: () => {
+        this.props.getUserData(member.token, (res) => {
+          const entryItems = this.state.entryItems.slice() //copy the array
+          entryItems[0].active = res.active; //execute the manipulations
+          entryItems[0].outstandingBalance = res.outstandingBalance;
+          this.setState({ entryItems })
+        });
+      }});
+    })
   }
 
   toggleConfirmRepaymentModal = () => {
@@ -380,6 +425,10 @@ $
     let transactionsListItems = [];
     const { slider1ActiveSlide } = this.state;
     const { member } = this.props;
+
+    if (typeof member.bankStaging !== 'undefined' && !member.bankStaging) {
+      Actions.replace('linkBank');
+    }
 
     { this.renderJSXPieChartData(transactions); }
     console.log('printing transactions in render');
@@ -459,30 +508,59 @@ $
         <Modal
         backdropOpacity={0.2}
         isVisible={this.state.baseModalVisible}
+        useNativeDriver
         >
         <Modal
         onSwipeComplete={() => this.setState({ isModalVisible: false })}
         swipeDirection={['down']}
         backdropOpacity={0.0}
         isVisible={this.state.isModalVisible}
+        useNativeDriver
         >
         <View style={styles.modalContainer}>
           <View style={styles.modalBody}>
-            <Text style={styles.modalTitle}>Say Goodbye to Bank Overdraft Fees</Text>
-            <View style={styles.spacer} />
-            <Text style={styles.modalTitle}>Borrow money when you need it for no interest</Text>
-            <Text style={styles.modalTitle}> Subscribe for $9.99/month </Text>
-            <Button style={{display: 'flex',  alignSelf: 'center', backgroundColor: '#21D0A5', width: scale(200), borderRadius: 35}} onPress={() => {
-              this.props.enrollSubscription(member.token, () => {
-                this.toggleConfirmModal()
-              });
-              this.toggleModal();
-            }}
-            >
-              <Text style={{ color: 'white', textAlign: 'center', width: scale(200)}}>
-                Enroll Now
-              </Text>
-            </Button>
+          <TouchableOpacity style = {{ position: 'absolute', top: 15, right: 15 }} onPress={() => {
+            this.closeFirstModals();
+            console.log(this.state);
+          }}>
+            <Text style={{ fontSize: 30 }}>X</Text>
+          </TouchableOpacity>
+            <View style={{flex: 1}}>
+              <Text style={styles.modalTitle}>Say Goodbye to Bank Overdraft Fees</Text>
+              <View style={styles.spacer} />
+            </View>
+            <View style={{flexGrow: 1}}>
+              <View style={styles.textRow}>
+                <Emoji name="moneybag" style={{fontSize: 30}} />
+                <Text style={styles.modalText}>Borrow money when you need it </Text>
+              </View>
+              <View style={styles.textRow}>
+                <Emoji name="money_with_wings" style={{fontSize: 30}} />
+                <Text style={styles.modalText}>Recieve in your bank next day </Text>
+              </View>
+              <View style={styles.textRow}>
+                <Emoji name="man-gesturing-no" style={{fontSize: 30}} />
+                <Text style={styles.modalText}>Pay no interest </Text>
+              </View>
+              <View style={styles.textRow}>
+                <Emoji name="clock130" style={{fontSize: 30}} />
+                <Text style={styles.modalText}>Automatic repayment next paycheck </Text>
+              </View>
+            </View>
+            <View style={{flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+              <Text style={styles.modalText}> Subscribe for $9.99/month </Text>
+              <Button style={{display: 'flex',  alignSelf: 'center', backgroundColor: '#21D0A5', width: scale(200), borderRadius: 35}} onPress={() => {
+                this.props.enrollSubscription(member.token, () => {
+                  this.toggleConfirmModal()
+                });
+                this.toggleModal();
+              }}
+              >
+                <Text style={{ color: 'white', textAlign: 'center', width: scale(200)}}>
+                  Enroll Now
+                </Text>
+              </Button>
+            </View>
           </View>
         </View>
       </Modal>
@@ -490,6 +568,7 @@ $
       onSwipeComplete={() => this.setState({ isConfirmModalVisible: false })}
       isVisible={this.state.isConfirmModalVisible}
       backdropOpacity={0.0}
+      useNativeDriver
       onModalShow={() => {
         Animated.timing(this.state.progress, {
           toValue: 1,
@@ -515,12 +594,13 @@ $
         <Modal
         backdropOpacity={0.0}
         isVisible={this.state.confirmTextModal}
+        useNativeDriver
         >
         <View style={styles.modalContainer}>
           <View style={styles.modalBody}>
             <Text style={styles.modalTitle}>Thanks for Enrolling</Text>
             <Button style={{display: 'flex',  alignSelf: 'center', backgroundColor: '#21D0A5', width: scale(200), borderRadius: 35}} onPress={() => {
-              this.closeAllModals();
+              this.closeSecondModals();
             }}
             >
               <Text style={{ color: 'white', textAlign: 'center', width: scale(200)}}>
@@ -537,6 +617,7 @@ $
       isVisible={this.state.confirmRepaymentModal}
       swipeDirection={['down']}
       onSwipeComplete={() => this.setState({ confirmRepaymentModal: false })}
+      useNativeDriver
 
       >
       <View style={styles.modalContainer}>
