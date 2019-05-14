@@ -88,9 +88,12 @@ class LoanHistory extends Component {
         </View>
       </View>
         <Content>
+        <Text style={styles.loanHeader}>
+          History
+        </Text>
           <List>
             <ListItem style={styles.listDividerBackgroundColor} itemDivider>
-              <Text style={styles.listDividerText} > Pending </Text>
+              <Text style={styles.listDividerText} > May 15 </Text>
             </ListItem>
             <ListItem style={styles.ListItemStyling} avatar>
               <Left style={styles.ListItemStyling} >
@@ -104,7 +107,7 @@ class LoanHistory extends Component {
               </Right>
             </ListItem>
             <ListItem style={styles.listDividerBackgroundColor} itemDivider>
-              <Text style={styles.listDividerText} > Processed 5/20/19 </Text>
+              <Text style={styles.listDividerText} > June 05</Text>
             </ListItem>
             <ListItem style={styles.ListItemStyling} avatar>
               <Left style={styles.ListItemStyling} >
@@ -118,7 +121,7 @@ class LoanHistory extends Component {
               </Right>
             </ListItem>
             <ListItem style={styles.listDividerBackgroundColor} itemDivider>
-              <Text style={styles.listDividerText} > Processed 4/4/19 </Text>
+              <Text style={styles.listDividerText} >  April 10</Text>
             </ListItem>
             <ListItem style={styles.ListItemStyling} avatar>
               <Left style={styles.ListItemStyling} >

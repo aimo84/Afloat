@@ -99,6 +99,7 @@ export default ScaledSheet.create({
     fontSize: 17,
     textAlignVertical: 'center',
     borderBottomWidth: 0,
+    color: '#000000',
   },
   slide: {
     display: 'flex',
@@ -259,6 +260,14 @@ export default ScaledSheet.create({
     fontWeight: 'bold',
     fontFamily: 'Roboto',
     fontWeight: 'bold',
+  },
+  loanHeader: {
+    marginLeft: '3%',
+    fontSize: viewportWidth * 0.07,
+    fontWeight: 'bold',
+    fontFamily: 'Roboto',
+    fontWeight: 'bold',
+    marginTop: 30,
   },
   loadingText: {
     fontWeight: 'bold',
