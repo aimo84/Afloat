@@ -21,9 +21,12 @@ import FooterBar from './FooterBar';
 import Spacer from './Spacer';
 import styles from './style.js';
 
-import { getTransactions, getBalance } from '../../actions/bank';
+import { getTransactions, getBalance, getBalanceOverTime } from '../../actions/bank';
 import { logout, getUserData } from '../../actions/member';
-
+import { VictoryBar, VictoryChart, VictoryTheme, VictoryAxis, VictoryLabel, VictoryTooltip, VictoryLine, VictoryGroup, VictoryScatter, VictoryLegend } from "victory-native";
+import dateFormat from 'dateformat';
+import { Svg } from 'expo';
+const {Rect} = Svg;
 
 global.lastDate = 'date';
 global.pieDictionaryData = new Object();
@@ -66,6 +69,7 @@ class Dashboard extends Component {
           title: 'Item 3',
         },
       ],
+      balanceOverTimeData: [],
       selected: 'key1',
       transactions: {},
       slider1ActiveSlide: 0,
@@ -112,6 +116,25 @@ class Dashboard extends Component {
         console.log(this.state.entryItems);
       }
     );
+
+    let lastWeek = new Date(Date.now() - 31 * 24 * 60 * 60 * 1000)
+    let lastWeekFormattedDate = dateFormat(lastWeek, "mm/dd/yyyy")
+    console.log(lastWeekFormattedDate)
+    getBalanceOverTime(member.token, lastWeekFormattedDate, (res) => {
+      console.log('oisduaosiduaosduiasodiuasoiduasoiduaosdi')
+      console.log(res)
+      let balanceOverTimeData = res.map((val) => {
+        if (val.outwardCashFlow === undefined) {
+          return {date: val.date, outwardFlow: 0, endBalance: val.endBalance}
+        }
+        else {
+          return {date: val.date, outwardFlow: val.outwardCashFlow, endBalance: val.endBalance}
+        }
+      });
+      this.setState({
+        balanceOverTimeData,
+      })
+    })
 
     this.props.getUserData(member.token, (res) => {
       const entryItems = this.state.entryItems.slice() //copy the array
@@ -280,16 +303,100 @@ $
 
 
     } if (index == 1) {
+      let xTickValues = this.state.balanceOverTimeData.filter((d, i) => i % 5 === 0);
+      console.log("ticks")
+      console.log(xTickValues)
+      if (this.state.balanceOverTimeData.length > 1) {      
+        return (
+          <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
+            <View style={styles.slide}>
+              <VictoryChart animate={{ duration: 2000 }} width={350} theme={VictoryTheme.material}>
+              <VictoryLabel x = {10} y = {20} style={{
+                  textAnchor: "start",
+                  verticalAnchor: "end",
+                  fill: "white",
+                  fontFamily: "inherit",
+                  fontSize: "22px",
+                  fontWeight: "bold"
+                }}
+                text="Daily Cash Flow"
+              />
+              <VictoryAxis
+                dependentAxis
+                tickFormat={(x) => (`$${x}`)}
+                style={{ grid: { stroke: 'rgba(255, 255, 255, 0.2)' } }}
+              />
+                <VictoryAxis padding={{ top: 20, bottom: 60 }} style={{
+                                  ticks: {fill: 'white', padding: 2},
+                                  tickLabels: {fill: 'white', angle: 45},
+                                  grid: { stroke: 'rgba(255, 255, 255, 0.1)' },
+                                }}
+                  scale="time"
+                  tickValues={xTickValues}
+                  tickFormat={(x) => {
+                    let d = new Date(x)
+                    var weekday = new Array(7);
+                    weekday[0] =  "Sunday";
+                    weekday[1] = "Monday";
+                    weekday[2] = "Tuesday";
+                    weekday[3] = "Wednesday";
+                    weekday[4] = "Thursday";
+                    weekday[5] = "Friday";
+                    weekday[6] = "Saturday";
 
-      return (
-        <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
-          <View style={styles.slide}>
+                    var newDate = new Date(d.setTime( d.getTime() + 1 * 86400000 ));
+                    return `${dateFormat(newDate, "m/dd")}`
+                  }}
+                />
+                <VictoryBar data={this.state.balanceOverTimeData} x="date" y="outwardFlow" events={
+                  [{
+                    target: 'data',
+                    eventHandlers: {
+                      onPress: props => console.log('boom'),
+                    },
+                  },]
+                }/>
+            <VictoryLegend x={265} y={5}
+                orientation="vertical"
+                symbolSpacer={5}
+                gutter={20}
+                data={[
+                  { name: "Cash Spent", symbol: { fill: "#455A64" } }, { name: "Balance", symbol: { fill: "yellow" }, },
+                ]}
+              />
+          <VictoryGroup
+            color="yellow"
+            labelComponent={
+              <VictoryTooltip
+                style={{ fontSize: 10 }}
+              />
+            }
+            data={this.state.balanceOverTimeData} x="date" y="endBalance"
+          >
+            <VictoryLine/>
+            {/* <VictoryScatter
+              size={(d, a) => {return a ? 8 : 3;}}
+            /> */}
+          </VictoryGroup>
+                <VictoryTooltip
+                    cornerRadius={0}
+                    pointerLength={0}
+                    flyoutStyle={{
+                        stroke: "none",
+                        fill: "blue"
+                    }}
+                />
 
+              </VictoryChart>
+            </View>
+            <View style={styles.spacer}>
+            </View>
           </View>
-          <View style={styles.spacer}>
-          </View>
-        </View>
-      );
+        );
+      }
+      else {
+        return (<View/>)
+      }
     }
 
     return (
