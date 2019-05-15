@@ -331,6 +331,7 @@ $
     const { member } = this.props;
 
     { this.renderJSXPieChartData(transactions); }
+    console.log(transactions);
     console.log('printing transactions in render');
     // Check that transactions are not null and that transactions are not an empty list
     if (transactions && Object.keys(transactions).length >= 2) {
