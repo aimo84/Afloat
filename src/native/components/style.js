@@ -137,7 +137,6 @@ export default ScaledSheet.create({
     fontFamily: 'Lato_regular',
     fontSize: viewportWidth * 0.13,
     color: 'white',
-    width: '200@s',
   },
   nonActiveText: {
     fontFamily: 'Lato_regular',
@@ -279,5 +278,52 @@ export default ScaledSheet.create({
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
-  }
+  },
+  container: {
+    backgroundColor: 'white',
+    display: 'flex',
+  },
+  amount: {
+    fontSize: '65@ms',
+    color: '#489e48',
+    fontWeight: 'bold',
+    marginBottom: '18@s',
+  },
+  form: {
+    alignItems: 'center',
+    alignContent: 'center',
+    paddingTop: '70@vs',
+    paddingHorizontal: '12@s',
+    backgroundColor: '#FFFFFF',
+  },
+  payMeText: {
+    fontSize: '22@ms',
+    color: '#489e48',
+  },
+  button: {
+    display: 'flex',
+    alignSelf: 'center',
+    backgroundColor: '#21D0A5',
+    width: '200@s',
+    borderRadius: 35,
+  },
+  slider: {
+    width: '85%',
+  },
+  smallNoticeText: {
+    fontSize: '18@s',
+    color: '#8b8e8b',
+  },
+  bigNoticeText: {
+    fontSize: '23@s',
+    fontWeight: 'bold',
+  },
+  noticeView: {
+    display: 'flex',
+    alignItems: 'center',
+
+  },
+  submitButtonText: {
+    fontSize: '18@ms',
+  },
 });

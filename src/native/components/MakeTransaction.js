@@ -5,61 +5,17 @@ import React, { Component } from 'react';
 import {
   View, Text, Form, Button, Container,
 } from 'native-base';
+import { Animated } from 'react-native';
+import Animation from 'lottie-react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Slider from 'react-native-slider';
 import { Actions } from 'react-native-router-flux';
-import { ScaledSheet } from 'react-native-size-matters';
+import { scale, verticalScale, ScaledSheet } from 'react-native-size-matters';
 import Moment from 'moment-business-days';
 
 import { transferAchToUser } from '../../actions/bank';
-
-const styles = ScaledSheet.create({
-  container: {
-    backgroundColor: 'white',
-    justifyContent: 'space-between',
-    display: 'flex',
-  },
-  amount: {
-    fontSize: '65@ms',
-    color: '#489e48',
-    fontWeight: 'bold',
-    marginBottom: '18@s',
-  },
-  form: {
-    alignItems: 'center',
-    alignContent: 'center',
-    paddingTop: '70@vs',
-    paddingHorizontal: '12@s',
-    backgroundColor: '#FFFFFF',
-  },
-  payMeText: {
-    fontSize: '22@ms',
-    color: '#489e48',
-  },
-  button: {
-    height: '68@vs',
-  },
-  slider: {
-    width: '85%',
-  },
-  smallNoticeText: {
-    fontSize: '18@s',
-    color: '#8b8e8b',
-  },
-  bigNoticeText: {
-    fontSize: '23@s',
-    fontWeight: 'bold',
-  },
-  noticeView: {
-    display: 'flex',
-    alignItems: 'center',
-
-  },
-  submitButtonText: {
-    fontSize: '18@ms',
-  },
-});
+import styles from './style.js';
 
 const stylesSlider = ScaledSheet.create({
   track: {
@@ -91,8 +47,13 @@ class MakeTransaction extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      amount: 30,
+      amount: 75,
+      showConfirm: false,
+      progress: new Animated.Value(0),
     };
+  }
+
+  componentDidMount = () => {
   }
 
   handleChange = (name, val) => {
@@ -103,13 +64,23 @@ class MakeTransaction extends Component {
 
   handleSubmit = () => {
     const { member } = this.props;
-    this.props.transferAchToUser(member.token, this.state.amount, this.props.updateUser);
-    Actions.pop();
+    this.setState({ showConfirm: true });
+    this.props.transferAchToUser(member.token, this.state.amount, () => {
+      Animated.timing(this.state.progress, {
+        toValue: 1,
+        duration: 2500,
+        useNativeDriver: true,
+      }).start(() => {
+        Actions.pop();
+        this.props.updateUser();
+      });
+    });
   }
 
   // eslint-disable-next-line arrow-body-style
   render = () => {
     // const { amount } = this.state;
+    const { showConfirm } = this.state;
 
     let depositeDate = '';
     const nextBusinessDay = Moment(Moment(), 'DD-MM-YYYY').nextBusinessDay();
@@ -125,22 +96,57 @@ class MakeTransaction extends Component {
     } else {
       depositeDate = nextBusinessDay.format('MM/DD/YYYY');
     }
+
+
+    if (showConfirm) {
+      return (
+        <Container style={styles.container}>
+          {/* <View style={styles.wrapper}> */}
+          <Form style={styles.form}>
+            <Text style={styles.payMeText}>
+                   Pay me
+            </Text>
+            <Text style={styles.amount}>
+                   $
+              {this.state.amount}
+            </Text>
+          </Form>
+          <View style={styles.noticeView}>
+            <View style={{ height: verticalScale(90) }} />
+            <Animation
+              ref={(animation) => {
+                this.animation = animation;
+              }}
+              style={{
+                width: 380,
+                height: 380,
+              }}
+              loop={false}
+              source={require('../../images/confirm.json')}
+              progress={this.state.progress}
+              resizeMode="cover"
+            />
+          </View>
+        </Container>
+
+      );
+    }
     return (
       <Container style={styles.container}>
         {/* <View style={styles.wrapper}> */}
         <Form style={styles.form}>
           <Text style={styles.payMeText}>
-                 Pay me
+                   Pay me
           </Text>
           <Text style={styles.amount}>
-                 $
+                   $
             {this.state.amount}
           </Text>
           <Slider
             value={this.state.amount}
-            minimumValue={0}
-            maximumValue={100}
-            step={1}
+            minimumValue={50}
+            maximumValue={200}
+            step={5}
             minimumTrackTintColor="#efefef"
             maximumTrackTintColor="#efefef"
             style={styles.slider}
@@ -150,27 +156,26 @@ class MakeTransaction extends Component {
           />
         </Form>
         <View style={styles.noticeView}>
+          <View style={{ height: verticalScale(90) }} />
           <Text style={styles.smallNoticeText}>
-            Deposited in your bank account:
+              Deposited in your bank account:
           </Text>
           <Text style={styles.bigNoticeText}>
             {depositeDate}
           </Text>
           <Text style={styles.smallNoticeText}>
-              Deducted from your paycheck:
+                Deducted from your paycheck:
           </Text>
           <Text style={styles.bigNoticeText}>
-              Apr 30
+                Apr 30
           </Text>
-          <View style={{ height: 18 }} />
+          <View style={{ height: verticalScale(40) }} />
         </View>
-        {/* </Content> */}
         <View style={styles.bottom}>
           <Button full success onPress={this.handleSubmit} style={styles.button}>
             <Text style={styles.submitButtonText}>Submit</Text>
           </Button>
         </View>
-        {/* </View> */}
       </Container>
 
     );
