@@ -99,6 +99,7 @@ export default ScaledSheet.create({
     fontSize: 17,
     textAlignVertical: 'center',
     borderBottomWidth: 0,
+    color: '#000000',
   },
   slide: {
     display: 'flex',
@@ -127,6 +128,11 @@ export default ScaledSheet.create({
     fontSize: viewportWidth * 0.05,
     color: '#333333',
   },
+  statusLabel: {
+    fontFamily: 'Lato_black',
+    fontSize: viewportWidth * 0.04,
+    color: '#808080',
+  },
   balanceTitle: {
     fontFamily: 'Lato_regular',
     fontSize: viewportWidth * 0.04,
@@ -138,6 +144,14 @@ export default ScaledSheet.create({
     fontSize: viewportWidth * 0.13,
     color: 'white',
     width: '200@s',
+  },
+  loanbalance: {
+    fontWeight: 'bold',
+    fontFamily: 'Lato_bold',
+    fontSize: viewportWidth * 0.09,
+    color: '#000000',
+    alignItems:'center',
+    justifyContent:'center',
   },
   nonActiveText: {
     fontFamily: 'Lato_regular',
@@ -195,9 +209,13 @@ export default ScaledSheet.create({
   },
   slideLoanHistory: {
     flex: 1,
-    backgroundColor: '#c13f3f',
+    marginTop: 20,
+    backgroundColor: '#FFFFFF',
     borderRadius: 10,
+    borderColor:"#8b8e8b",
+    borderWidth: 2,
     shadowColor: "#000",
+    alignItems:'center',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -242,6 +260,14 @@ export default ScaledSheet.create({
     fontWeight: 'bold',
     fontFamily: 'Roboto',
     fontWeight: 'bold',
+  },
+  loanHeader: {
+    marginLeft: '3%',
+    fontSize: viewportWidth * 0.07,
+    fontWeight: 'bold',
+    fontFamily: 'Roboto',
+    fontWeight: 'bold',
+    marginTop: 30,
   },
   loadingText: {
     fontWeight: 'bold',
