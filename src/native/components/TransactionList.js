@@ -1,61 +1,12 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable arrow-body-style */
-/* eslint-disable react/no-unused-state */
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
-/* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import { FlatList } from 'react-native';
 import {
-  Text, View, Left, Right, Thumbnail, Body, ListItem, List,
+  Text, View, Left, Right, Thumbnail, Body, ListItem,
 } from 'native-base';
 import styles from './style.js';
 
 class TransactionList extends Component {
-  state = {
-    list: [
-    ],
-    offset: 0,
-    limit: 12,
-    gettingMoreList: false,
-    transactions: [],
-  };
-
-  componentDidMount() {
-    console.log(`9z length ${this.props.transactions.length}`);
-    this.setState(prevState => ({
-      ...prevState,
-      transactions: this.getTestTransactions(),
-    }));
-    console.log(this.getTestTransactions().length);
-    console.log(`8c ${this.state.list.length}`);
-    this.getNextCoupleTransactions();
-  }
-
-  // lazy loading adapted from
-  // https://stackoverflow.com/questions/49648292/how-to-apply-lazy-loading-in-flatlist-in-react-native
-
-
-  getNextCoupleTransactions = () => {
-    console.log('fetching more');
-    // console.log(this.props.transactions.length);
-    const {
-      offset, limit, list, transactions,
-    } = this.state;
-    this.setState(prevState => ({
-      ...prevState,
-      list: list.concat(prevState.transactions.slice(offset, offset + limit)),
-      offset: offset + limit,
-    }));
-  }
-
-  // Outside of the component
-   isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
-     const paddingToBottom = 90; // Distance from the bottom you want it to trigger.
-     return layoutMeasurement.height + contentOffset.y
-        >= contentSize.height - paddingToBottom;
-   };
-
     getTestTransactions = () => {
       const transactions = [];
       for (let i = 0; i < 250; i += 1) {
@@ -73,25 +24,13 @@ class TransactionList extends Component {
       return transactions;
     }
 
-  // eslint-disable-next-line arrow-body-style
   render = () => {
-    console.log('top of render method of flatlist');
-    console.log(this.state.transactions.length, this.state.list.length);
-    // const { transactions } = this.props;
-    console.log(this.state.list.length);
-    console.log('cotote');
+    const { transactions } = this.props;
     return (
       <FlatList
-        // style={{ flex: 1 }}
-        extraData={this.state}
-        data={this.state.list}
-        // ListHeaderComponent={MyHeaderComponent}
-        // contentContainerStyle={{ flexGrow: 1 }}
-        // renderItem={({ item }) => <Text>{item.key}</Text>}
+        data={transactions}
         renderItem={this.renderListItem}
         keyExtractor={(item, index) => index.toString()}
-        onEndReached={this.getNextCoupleTransactions}
-        onEndReachedThreshold={0.999}
       />
     );
   }
@@ -145,9 +84,6 @@ $
 
   renderListItem = (transactionWrapper) => {
     const transaction = transactionWrapper.item;
-    // console.log(transaction);
-    // console.log('fun');
-    // console.log(transaction);
     return (
       <View key={JSON.stringify(transaction)}>
         { this.renderJSXDividers(transaction.date) }

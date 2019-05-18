@@ -281,18 +281,10 @@ class Dashboard extends Component {
 
   render = () => {
     const transactions = this.props.transactions;
-    if (transactions) {
-      console.log(`III transactions.length ${transactions.length}`);
-    }
-    else {
-      console.log('III transactions null');
-    }
 
-    // let transactionsListItems = [];
     const { slider1ActiveSlide } = this.state;
     const { member } = this.props;
     { this.renderJSXPieChartData(transactions); }
-    console.log('printing transactions in render');
     let transactionList = null;
     // Check that transactions are not null and that transactions are not an empty list
     if (transactions && Object.keys(transactions).length >= 2) {
@@ -318,14 +310,12 @@ class Dashboard extends Component {
             </Text>
           </View>
     }
-    console.log('pre transactions');
-    // console.log(transactions);
-    console.log('post transactions');
+
     return (
       <Container style={{backgroundColor: 'white'}}>
         <Content
           style={{flex: 1}}
-          contentContainerStyle={{flex: 1}} // important!
+          // contentContainerStyle={{flex: 1}} // important!
         >
         <Carousel
           ref={(c) => { this._carousel = c; }}
