@@ -64,7 +64,7 @@ class FooterBar extends Component {
         <Icon name="md-stats" style={styles.footerIcons} />
       </Button>
       <Button style={styles.footerButtons} onPress={this.onSettingsPressed}>
-        <Icon name="md-home" style={styles.footerIcons} />
+        <Icon name="md-person" style={styles.footerIcons} />
       </Button>
     </View>
   )

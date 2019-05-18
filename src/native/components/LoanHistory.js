@@ -3,7 +3,7 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import {
-  View, Text, Form, Button, Container,Image,
+  View, Text, Form, Button, Container,
 } from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -14,6 +14,7 @@ import { transferAchToUser } from '../../actions/bank';
 import FooterBar from './FooterBar';
 import { Header, Content, List, ListItem, Left, Body, Right, Thumbnail } from 'native-base';
 import styles from './style.js';
+import { AppRegistry, Image } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
 const stylesSlider = ScaledSheet.create({
@@ -68,28 +69,35 @@ class LoanHistory extends Component {
     return (
       <Container style={styles.container}>
       <View style={styles.slideLoanHistory}>
-        <View>
-          <Text style={styles.name}>
-            Amount Owed:
+        <View style={{alignItems:'center',justifyContent:'center'}}>
+          <Text style={styles.statusLabel}>
+            PayDay Loan Status
           </Text>
           <View style={styles.spacer}>
           </View>
-          <Text style={styles.balance}>
-             ${this.state.amount}
+          <Text style={styles.loanbalance}>
+             ${this.state.amount} Owed
           </Text>
+          <Image
+            style={styles.UserIconImage}
+            source={{uri: 'https://i.imgur.com/tiAaGh0.png'}}
+          />
           <Text style={styles.balanceTitle}>
-            Subscription Renews 05/01
+            Next PayDay June 20th
           </Text>
         </View>
       </View>
         <Content>
+        <Text style={styles.loanHeader}>
+          History
+        </Text>
           <List>
             <ListItem style={styles.listDividerBackgroundColor} itemDivider>
-              <Text style={styles.listDividerText} > Pending </Text>
+              <Text style={styles.listDividerText} > May 15 </Text>
             </ListItem>
             <ListItem style={styles.ListItemStyling} avatar>
               <Left style={styles.ListItemStyling} >
-                <Thumbnail small source={{ uri: 'https://www.iconsdb.com/icons/preview/red/down-xxl.png' }} />
+                <Thumbnail small source={{ uri: 'https://i.imgur.com/tiAaGh0.png' }} />
               </Left>
               <Body style={styles.ListItemStyling} >
                 <Text style={styles.TransactionText} >Loan</Text>
@@ -99,11 +107,11 @@ class LoanHistory extends Component {
               </Right>
             </ListItem>
             <ListItem style={styles.listDividerBackgroundColor} itemDivider>
-              <Text style={styles.listDividerText} > Processed 5/20/19 </Text>
+              <Text style={styles.listDividerText} > June 05</Text>
             </ListItem>
             <ListItem style={styles.ListItemStyling} avatar>
               <Left style={styles.ListItemStyling} >
-                <Thumbnail small source={{ uri: 'https://www.iconsdb.com/icons/preview/green/up-xxl.png' }} />
+                <Thumbnail small source={{ uri: 'https://i.imgur.com/lXCylbz.png' }} />
               </Left>
               <Body style={styles.ListItemStyling} >
                 <Text style={styles.TransactionText} >Deposit</Text>
@@ -113,11 +121,11 @@ class LoanHistory extends Component {
               </Right>
             </ListItem>
             <ListItem style={styles.listDividerBackgroundColor} itemDivider>
-              <Text style={styles.listDividerText} > Processed 4/4/19 </Text>
+              <Text style={styles.listDividerText} >  April 10</Text>
             </ListItem>
             <ListItem style={styles.ListItemStyling} avatar>
               <Left style={styles.ListItemStyling} >
-                <Thumbnail small source={{ uri: 'https://www.iconsdb.com/icons/preview/red/down-xxl.png' }} />
+                <Thumbnail small source={{ uri: 'https://i.imgur.com/tiAaGh0.png' }} />
               </Left>
               <Body style={styles.ListItemStyling} >
                 <Text style={styles.TransactionText} >Loan</Text>
