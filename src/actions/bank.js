@@ -87,6 +87,20 @@ export function enrollSubscription(authToken, cb) {
   };
 }
 
+export function getLoanHistory(authToken, cb) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/getLoanHistory`, { headers: { authorization: `Token ${authToken}` } })
+      .then((response) => {
+        console.log('LOANRESPONSECALLED');
+        cb();
+        if (response.status === 200) {
+          console.log(response.data);
+          dispatch({ type: 'LOAN_HISTORY', data: response.data });
+        }
+      });
+  };
+}
+
 export default function dummy() {
   return dispatch => new Promise(async (resolve) => {
     // Validate locale

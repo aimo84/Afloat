@@ -13,6 +13,15 @@ export default function bankReducer(state = { transactions: null }, action) {
       }
       return initialState;
     }
+    case 'LOAN_HISTORY': {
+      if (action.data) {
+        return {
+          ...state,
+          loanHistory: action.data,
+        };
+      }
+      return initialState;
+    }
     case 'LOGOUT': {
       return initialState;
     }

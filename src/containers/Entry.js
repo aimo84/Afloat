@@ -73,7 +73,6 @@ class Entry extends Component {
     const { slider1ActiveSlide } = this.state;
     const ENTRIES1 = [{ title: 'Quick' }, { title: 'Affordable' }, { title: 'Get Started' }];
     const { width: viewportWidth } = Dimensions.get('window');
-    console.log('PROPS -=--');
     // console.log(this.props);
     return (
 
@@ -99,7 +98,7 @@ class Entry extends Component {
             dotsLength={ENTRIES1.length}
             activeDotIndex={slider1ActiveSlide}
               // containerStyle={styles.paginationContainer}
-            dotColor="rgba(255, 255, 255, 0.92)"
+            dotColor="#21D0A5"
               // dotStyle={styles.paginationDot}
             inactiveDotColor="#000000"
             inactiveDotOpacity={0.4}

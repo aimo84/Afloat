@@ -13,7 +13,7 @@ import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import Modal from "react-native-modal";
 import Emoji from 'react-native-emoji';
 
-import { enrollSubscription } from '../../actions/bank';
+import { enrollSubscription, getLoanHistory } from '../../actions/bank';
 
 import { Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -116,6 +116,9 @@ class Dashboard extends Component {
       this.setState({ entryItems })
 
       clearInterval(this.intervalID);
+
+      const { member } = this.props;
+      this.props.getLoanHistory(member.token, () => {});
 
       this.props.getUserData(member.token, (res) => {
         console.log('link bank')
@@ -407,6 +410,8 @@ $
   };
 
   closeSecondModals = () => {
+    const { member } = this.props;
+
     this.setState({
       confirmTextModal: false,
     });
@@ -469,7 +474,7 @@ $
     }
 
     { this.renderJSXPieChartData(transactions); }
-    console.log('printing transactions in render');
+
     // Check that transactions are not null and that transactions are not an empty list
     if (transactions && Object.keys(transactions).length >= 2) {
       transactionsListItems = // console.log(transaction);
@@ -673,6 +678,7 @@ $
               const entryItems = this.state.entryItems.slice() //copy the array
               entryItems[0].outstandingBalance = 0;
               this.setState({ entryItems })
+              this.props.getLoanHistory(member.token, ()=>{console.log('LOANHISTORYCALLED')});
             });
             this.toggleConfirmRepaymentModal();
           }}
@@ -697,6 +703,7 @@ const mapDispatchToProps = {
   enrollSubscription,
   getUserData,
   transferAchToApp,
+  getLoanHistory
 };
 
 const mapStateToProps = state => (

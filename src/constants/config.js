@@ -2,7 +2,7 @@ const devMode = (process.env.NODE_ENV !== 'development');
 
 export default {
   // App Details
-  appName: 'Quantweb',
+  appName: 'Afloat',
 
   // Build Configuration - eg. Debug or Release?
   DEV: devMode,
@@ -11,5 +11,5 @@ export default {
   gaTrackingId: (devMode) ? 'UA-84284256-2' : 'UA-84284256-1',
 
   // TODO: Need to manually update this each time you run ngrok
-  ROOT_URL: 'https://5e17256e.ngrok.io',
+  ROOT_URL: 'https://0a77af9e.ngrok.io',
 };

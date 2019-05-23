@@ -3,11 +3,24 @@ import PropTypes from 'prop-types';
 import {
   Container, Content, Text, Form, Item, Label, Input, Button,
 } from 'native-base';
+import { Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Loading from './Loading';
 import Messages from './Messages';
 import Header from './Header';
 import Spacer from './Spacer';
+
+const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+
+function wp(percentage) {
+  const value = (percentage * viewportWidth) / 100;
+  return Math.round(value);
+}
+
+function wph(percentage) {
+  const value = (percentage * viewportHeight) / 100;
+  return Math.round(value);
+}
 
 class SignUp extends React.Component {
   static propTypes = {
@@ -59,10 +72,14 @@ class SignUp extends React.Component {
 
     return (
       <Container>
-        <Content padder>
+        <Content
+          padder
+          style={{ backgroundColor: 'white' }}
+        >
           <Header
-            title="Welcome"
-            content="We're glad to welcome you to the community. There's only a few questions and you'll be on your way."
+            title="Sign Up"
+            content="Never pay an overdraft fee again!"
+            style={{ fontFamily: 'Roboto' }}
           />
 
           {error && <Messages message={error} />}
@@ -109,7 +126,18 @@ class SignUp extends React.Component {
 
             <Spacer size={20} />
 
-            <Button block onPress={this.handleSubmit}>
+            <Button
+              block
+              onPress={this.handleSubmit}
+              style={{
+                display: 'flex',
+                alignSelf: 'center',
+                backgroundColor: '#21D0A5',
+                width: wp(60),
+                borderRadius: 35,
+                justifyContent: 'center',
+              }}
+            >
               <Text>
                 Sign Up
               </Text>

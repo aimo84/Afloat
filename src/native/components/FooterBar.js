@@ -36,7 +36,7 @@ class FooterBar extends Component {
   }
 
   onDashboardPressed = () => {
-    Actions.replace('home');
+    Actions.replace('mainHome');
   }
 
   onMakeTransactionPressed = () => {

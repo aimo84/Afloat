@@ -14,7 +14,7 @@ import { Actions } from 'react-native-router-flux';
 import { scale, verticalScale, ScaledSheet } from 'react-native-size-matters';
 import Moment from 'moment-business-days';
 
-import { transferAchToUser } from '../../actions/bank';
+import { transferAchToUser, getLoanHistory } from '../../actions/bank';
 import styles from './style.js';
 
 const stylesSlider = ScaledSheet.create({
@@ -73,6 +73,7 @@ class MakeTransaction extends Component {
       }).start(() => {
         Actions.pop();
         this.props.updateUser();
+        this.props.getLoanHistory(member.token, () => {});
       });
     });
   }
@@ -184,6 +185,7 @@ class MakeTransaction extends Component {
 
 const mapDispatchToProps = {
   transferAchToUser,
+  getLoanHistory,
 };
 
 export default connect(null, mapDispatchToProps)(MakeTransaction);

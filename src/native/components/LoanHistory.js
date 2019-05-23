@@ -2,19 +2,17 @@
 /* eslint-disable no-useless-constructor */
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
-import {
-  View, Text, Form, Button, Container,Image,
-} from 'native-base';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Slider from 'react-native-slider';
 import { Actions } from 'react-native-router-flux';
 import { ScaledSheet } from 'react-native-size-matters';
-import { transferAchToUser } from '../../actions/bank';
+import {
+  Content, List, ListItem, Left, Body, Right, Thumbnail, View, Text, Container,
+} from 'native-base';
+import dateFormat from 'dateformat';
+import { getLoanHistory, getTransactions } from '../../actions/bank';
 import FooterBar from './FooterBar';
-import { Header, Content, List, ListItem, Left, Body, Right, Thumbnail } from 'native-base';
 import styles from './style.js';
-import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 
 const stylesSlider = ScaledSheet.create({
   track: {
@@ -31,7 +29,8 @@ const stylesSlider = ScaledSheet.create({
   },
 });
 
-// Joe: Inspiration taken from login.js file
+global.lastDate = 'date';
+
 class LoanHistory extends Component {
   static propTypes = {
     member: PropTypes.shape({
@@ -50,11 +49,10 @@ class LoanHistory extends Component {
     };
   }
 
-  // handleChange = (name, val) => {
-  //   this.setState({
-  //     [name]: val,
-  //   });
-  // }
+  componentDidMount = () => {
+    const { member } = this.props;
+    this.props.getTransactions(member.token, () => {});
+  }
 
   handleSubmit = () => {
     const { member } = this.props;
@@ -62,81 +60,133 @@ class LoanHistory extends Component {
     Actions.replace('home');
   }
 
+  formatDate(transactionDate) {
+    const month = new Array();
+    month[1] = 'January';
+    month[2] = 'February';
+    month[3] = 'March';
+    month[4] = 'April';
+    month[5] = 'May';
+    month[6] = 'June';
+    month[7] = 'July';
+    month[8] = 'August';
+    month[9] = 'September';
+    month[10] = 'October';
+    month[11] = 'November';
+    month[12] = 'December';
+    const splitDate = String(transactionDate).split('-');
+    return `${month[splitDate[1].replace(/^0+/, '')]} ${splitDate[2]}`;
+  }
+
+  renderJSXDividers(transactionDate) {
+    if (transactionDate != global.lastDate) {
+      global.lastDate = transactionDate;
+      console.log('test');
+      console.log(global.lastDate);
+      return (
+        <ListItem style={styles.listDividerBackgroundColor} itemDivider>
+          <Text style={styles.listDividerText}>{this.formatDate(transactionDate)}</Text>
+        </ListItem>
+      );
+    }
+  }
+
   // eslint-disable-next-line arrow-body-style
   render = () => {
     // const { amount } = this.state;
+    const { member, loanHistory } = this.props;
+
+    let historyList = (<View />);
+
+
+    if (loanHistory) {
+      historyList = loanHistory.map((transfer) => {
+        const loanDate = new Date(transfer.date);
+
+
+        if (transfer.type === 'LOAN_DISBURSEMENT') {
+          return (
+            <View key={JSON.stringify(transfer)}>
+              { this.renderJSXDividers(dateFormat(loanDate, 'dd-mm-yyyy')) }
+              <ListItem style={styles.ListItemStyling} avatar>
+                <Left style={styles.ListItemStyling}>
+                  <Thumbnail small source={{ uri: 'https://img.icons8.com/ios/24/000000/down.png' }} />
+                </Left>
+                <Body style={styles.ListItemStyling}>
+                  <Text style={styles.TransactionText}>Loan Recieved</Text>
+                </Body>
+                <Right>
+                  <Text style={styles.RightNoteText} note>
+$
+                    {transfer.amount}
+.00
+                  </Text>
+                </Right>
+              </ListItem>
+            </View>
+          );
+        }
+        return (
+          <View key={JSON.stringify(transfer)}>
+            { this.renderJSXDividers(dateFormat(loanDate, 'dd-mm-yyyy')) }
+            <ListItem style={styles.ListItemStyling} avatar>
+              <Left style={styles.ListItemStyling}>
+                <Thumbnail small source={{ uri: 'https://img.icons8.com/ios/24/000000/up.png' }} />
+              </Left>
+              <Body style={styles.ListItemStyling}>
+                <Text style={styles.TransactionText}>Loan Repayed</Text>
+              </Body>
+              <Right>
+                <Text style={styles.RightNoteText} note>
+$
+                  {transfer.amount}
+.00
+                </Text>
+              </Right>
+            </ListItem>
+          </View>
+        );
+      });
+    } else {
+      historyList = (
+        <ListItem style={styles.ListItemStyling} avatar>
+          <Left style={styles.ListItemStyling}>
+            <Thumbnail small source={{ uri: 'https://i.imgur.com/tiAaGh0.png' }} />
+          </Left>
+          <Body style={styles.ListItemStyling}>
+            <Text style={styles.TransactionText}>hi</Text>
+          </Body>
+          <Right>
+            <Text style={styles.RightNoteText} note>hi</Text>
+          </Right>
+        </ListItem>
+      );
+    }
+
     return (
       <Container style={styles.container}>
-      <View style={styles.slideLoanHistory}>
-        <View>
-          <Text style={styles.name}>
-            Amount Owed:
-          </Text>
-          <View style={styles.spacer}>
-          </View>
-          <Text style={styles.balance}>
-             ${this.state.amount}
-          </Text>
-          <Text style={styles.balanceTitle}>
-            Subscription Renews 05/01
-          </Text>
-        </View>
-      </View>
         <Content>
+          <Text style={styles.loanHeader}>
+            History
+          </Text>
           <List>
-            <ListItem style={styles.listDividerBackgroundColor} itemDivider>
-              <Text style={styles.listDividerText} > Pending </Text>
-            </ListItem>
-            <ListItem style={styles.ListItemStyling} avatar>
-              <Left style={styles.ListItemStyling} >
-                <Thumbnail small source={{ uri: 'https://www.iconsdb.com/icons/preview/red/down-xxl.png' }} />
-              </Left>
-              <Body style={styles.ListItemStyling} >
-                <Text style={styles.TransactionText} >Loan</Text>
-              </Body>
-              <Right>
-                <Text style={styles.RightNoteText} note>$44</Text>
-              </Right>
-            </ListItem>
-            <ListItem style={styles.listDividerBackgroundColor} itemDivider>
-              <Text style={styles.listDividerText} > Processed 5/20/19 </Text>
-            </ListItem>
-            <ListItem style={styles.ListItemStyling} avatar>
-              <Left style={styles.ListItemStyling} >
-                <Thumbnail small source={{ uri: 'https://www.iconsdb.com/icons/preview/green/up-xxl.png' }} />
-              </Left>
-              <Body style={styles.ListItemStyling} >
-                <Text style={styles.TransactionText} >Deposit</Text>
-              </Body>
-              <Right>
-                <Text style={styles.RightNoteText} note>$180</Text>
-              </Right>
-            </ListItem>
-            <ListItem style={styles.listDividerBackgroundColor} itemDivider>
-              <Text style={styles.listDividerText} > Processed 4/4/19 </Text>
-            </ListItem>
-            <ListItem style={styles.ListItemStyling} avatar>
-              <Left style={styles.ListItemStyling} >
-                <Thumbnail small source={{ uri: 'https://www.iconsdb.com/icons/preview/red/down-xxl.png' }} />
-              </Left>
-              <Body style={styles.ListItemStyling} >
-                <Text style={styles.TransactionText} >Loan</Text>
-              </Body>
-              <Right>
-                <Text style={styles.RightNoteText} note>$315</Text>
-              </Right>
-            </ListItem>
+            {historyList}
           </List>
         </Content>
         <FooterBar />
       </Container>
-
     );
   }
 }
 
 const mapDispatchToProps = {
-  transferAchToUser,
+  getLoanHistory,
+  getTransactions,
 };
 
-export default connect(null, mapDispatchToProps)(LoanHistory);
+const mapStateToProps = state => (
+  {
+    loanHistory: state.bank.loanHistory,
+  });
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoanHistory);

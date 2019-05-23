@@ -43,14 +43,12 @@ const Index = (
       >
         <Scene
           key="entry"
-          title="LOGO"
           hideNavBar={false}
           {...DefaultProps.navbarProps}
           component={Auth(EntryContainer)}
         />
         <Scene
           key="linkBank"
-          title="LINK BANK"
           hideNavBar
           {...DefaultProps.navbarProps}
           component={Auth(LinkBank)}
@@ -59,7 +57,6 @@ const Index = (
           back
           hideNavBar={false}
           key="signUp"
-          title="SIGN UP"
           {...DefaultProps.navbarProps}
           component={SignUpContainer}
           Layout={SignUpComponent}
@@ -68,7 +65,6 @@ const Index = (
           back
           hideNavBar={false}
           key="login"
-          title="LOGIN"
           {...DefaultProps.navbarProps}
           component={LoginContainer}
           Layout={LoginComponent}
@@ -83,7 +79,6 @@ const Index = (
         >
           <Scene
             key="Landing"
-            title="Landing"
             {...DefaultProps.navbarProps}
             component={Auth(LandingContainer)}
             Layout={LandingComponent}
@@ -92,7 +87,7 @@ const Index = (
       </Stack>
       <Stack
         key="mainHome"
-        title="Dashboard"
+        title={AppConfig.appName.toUpperCase()}
         navigationBarStyle={{ fontSize: 30 }}
         icon={() => <Icon name="switch" {...DefaultProps.icons} />}
         {...DefaultProps.navbarProps}
@@ -104,18 +99,8 @@ const Index = (
       </Stack>
 
       <Stack
-        key="makeTransaction"
-        title="Get Paid Early"
-        back
-        icon={() => <Icon name="add-circle" {...DefaultProps.icons} />}
-        {...DefaultProps.navbarProps}
-      >
-        <Scene key="settings" component={Auth(MakeTransactionComponent)} />
-      </Stack>
-
-      <Stack
         key="mainLoanPage"
-        title="Loan History"
+        title={AppConfig.appName.toUpperCase()}
         icon={() => <Icon name="add-circle" {...DefaultProps.icons} />}
         {...DefaultProps.navbarProps}
       >
@@ -124,17 +109,19 @@ const Index = (
 
       <Stack
         key="mainUserMenu"
-        title="Home"
+        title={AppConfig.appName.toUpperCase()}
         icon={() => <Icon name="add-circle" {...DefaultProps.icons} />}
         {...DefaultProps.navbarProps}
       >
         <Scene key="mainUserMenu" component={Auth(UserMenuComponent)} />
+        <Scene key="settings" component={Auth(MakeTransactionComponent)} />
+
       </Stack>
 
       <Stack
         back
         key="mainSettings"
-        title="Settings"
+        title={AppConfig.appName.toUpperCase()}
         icon={() => <Icon name="person" {...DefaultProps.icons} />}
         {...DefaultProps.navbarProps}
       >
@@ -146,7 +133,7 @@ const Index = (
       back
       clone
       key="updateProfile"
-      title="UPDATE"
+      title={AppConfig.appName.toUpperCase()}
       {...DefaultProps.navbarProps}
       component={SettingsContainer}
       Layout={RecipeViewComponent}
