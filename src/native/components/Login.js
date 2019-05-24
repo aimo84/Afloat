@@ -4,11 +4,24 @@ import {
   Container, Content, Form, Item, Label, Input, Text, Button, View,
 } from 'native-base';
 import { Actions } from 'react-native-router-flux';
+import { Dimensions } from 'react-native';
 import Loading from './Loading';
 import Messages from './Messages';
 import { translate } from '../../i18n';
 import Header from './Header';
 import Spacer from './Spacer';
+
+const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+
+function wp(percentage) {
+  const value = (percentage * viewportWidth) / 100;
+  return Math.round(value);
+}
+
+function wph(percentage) {
+  const value = (percentage * viewportHeight) / 100;
+  return Math.round(value);
+}
 
 class Login extends React.Component {
   static propTypes = {
@@ -68,12 +81,13 @@ class Login extends React.Component {
     if (loading) return <Loading />;
 
     return (
-      <Container>
+      <Container
+        style={{ backgroundColor: 'white' }}
+      >
         <Content>
           <View padder>
             <Header
-              title="Welcome back"
-              content="Please use your email and password to login."
+              title="Login"
             />
             { success ? <Messages type="success" message={success} /> : null }
             { error ? <Messages message={error} /> : null }
@@ -104,7 +118,18 @@ class Login extends React.Component {
             <Spacer size={20} />
 
             <View padder>
-              <Button block onPress={this.handleSubmit}>
+              <Button
+                block
+                onPress={this.handleSubmit}
+                style={{
+                  display: 'flex',
+                  alignSelf: 'center',
+                  backgroundColor: '#21D0A5',
+                  width: wp(60),
+                  borderRadius: 35,
+                  justifyContent: 'center',
+                }}
+              >
                 <Text>
                   {translate('Login', locale)}
                 </Text>

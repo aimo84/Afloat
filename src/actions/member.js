@@ -20,11 +20,12 @@ export function getUserData(token, cb) {
     axios.get(`${ROOT_URL}/getUser`, { headers: { authorization: `Token ${token}` } }).then((response) => {
       const userDetails = response.data.user;
       console.log('Got the request!');
-      // console.log(userDetails);
+      console.log(userDetails);
       dispatch({
         type: 'UPDATE_USER',
         data: userDetails,
       });
+
       if (cb) {
         cb(response.data.user);
       } else {
@@ -215,6 +216,7 @@ export function logout(cb) {
   console.log('actions logout');
   return (dispatch) => {
     dispatch({ type: 'LOGOUT' });
+    dispatch({ type: 'STATUS_REPLACE', loading: false });
     cb();
   };
 }
