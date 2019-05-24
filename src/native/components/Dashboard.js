@@ -102,12 +102,17 @@ class Dashboard extends Component {
     }
     const { member } = this.props;
 
-    this.intervalID = setInterval(() => {
-      const entryItems = this.state.entryItems.slice(); //copy the array
-      entryItems[0].balance = this.getRandom(100,1000) + "";
-      this.setState({ entryItems })
 
-    }, 100);
+    const balance = this.props.balance;
+    const active = this.props.active;
+    if (typeof balance !== 'undefined') {
+      console.log('TESTING');
+      console.log(balance)
+      const entryItems = this.state.entryItems.slice() //copy the array
+      entryItems[0].active = active; //execute the manipulations
+      entryItems[0].balance = balance.toFixed(2);
+      this.setState({ entryItems })
+    }
 
     this.props.getTransactions(member.token, (res) => {
       const entryItems = this.state.entryItems.slice() //copy the array
@@ -224,7 +229,7 @@ $
                   </View>
                   <View style={{flexGrow: 1, justifyContent: 'center'}}>
                   <Text style={styles.nonActiveText}>
-                  [Name] has you covered in case your balance runs low. Get a $300 interest-free loan now and pay us back when your paycheck arrives.
+                  Afloat has you covered in case your balance runs low. Get a $300 interest-free loan now and pay us back when your paycheck arrives.
                   </Text>
                   <View style={styles.spacer}>
                   </View>
@@ -468,7 +473,6 @@ $
     const { slider1ActiveSlide } = this.state;
     const { member } = this.props;
 
-
     if (typeof member.bankStaging !== 'undefined' && !member.bankStaging) {
       Actions.replace('linkBank');
     }
@@ -708,7 +712,9 @@ const mapDispatchToProps = {
 
 const mapStateToProps = state => (
 {
-    transactions: state.bank.transactions
+    transactions: state.bank.transactions,
+    balance: state.bank.balance,
+    active: state.member.active
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

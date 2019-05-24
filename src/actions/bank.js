@@ -58,7 +58,7 @@ export function getTransactions(authToken, cb, refresh) {
     axios.get(`${ROOT_URL}/getTransactions`, { headers: { authorization: `Token ${authToken}` } })
       .then((response) => {
         cb(response.data.accounts[0].balances.current);
-        dispatch({ type: 'FETCH_TRANSACTIONS', data: response.data.transactions });
+        dispatch({ type: 'FETCH_TRANSACTIONS', data: response.data.transactions, balance: response.data.accounts[0].balances.current });
       }).catch((error) => {
         console.log('response called');
         refresh();

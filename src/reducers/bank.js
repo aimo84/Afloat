@@ -9,6 +9,7 @@ export default function bankReducer(state = { transactions: null }, action) {
         return {
           ...state,
           transactions: action.data,
+          balance: action.balance,
         };
       }
       return initialState;
