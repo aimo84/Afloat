@@ -54,11 +54,12 @@ render = () => {
     <Container style={{ backgroundColor: 'white' }}>
       <Content>
         <View style={styles.UserIconStylingView}>
-          <Image
-            style={styles.UserIconImage}
-            source={{ uri: 'https://i.pinimg.com/originals/af/25/49/af25490494d3338afef00869c59fdd37.png' }}
-          />
-          <Text style={styles.UserNameStyling}> Deven Orie </Text>
+          <Text style={styles.UserNameStyling}>
+            {' '}
+            {member.firstname}
+            {' '}
+            {member.lastname}
+          </Text>
         </View>
         <List>
           <ListItem avatar>
@@ -69,12 +70,28 @@ render = () => {
               <Text style={styles.UserMenuItems}>Profile</Text>
             </Body>
           </ListItem>
-          <ListItem onPress={() => Actions.mainSettings()} avatar>
-            <Left>
-              <Icon name="md-settings" style={styles.footerIcons} />
-            </Left>
-            <Body>
-              <Text style={styles.UserMenuItems}>Settings</Text>
+          <ListItem avatar>
+            <Left />
+            <Body style={{ paddingLeft: '5%' }}>
+              <Text style={styles.UserMenuItems}>
+Email:
+                {'  '}
+                <Text style={{ fontWeight: 'normal' }}>
+                  {member.email}
+                </Text>
+              </Text>
+            </Body>
+          </ListItem>
+          <ListItem avatar>
+            <Left />
+            <Body style={{ paddingLeft: '5%' }}>
+              <Text style={styles.UserMenuItems}>
+Bank:
+                {'  '}
+                <Text style={{ fontWeight: 'normal' }}>
+                  Plaid Checking - XXXXXXX0000
+                </Text>
+              </Text>
             </Body>
           </ListItem>
           <ListItem onPress={() => this.logout()} avatar>

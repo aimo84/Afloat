@@ -61,7 +61,7 @@ class Dashboard extends Component {
       entryItems: [
         {
           title: 'Item 1',
-          balance: "2.33",
+          balance: "~",
           active: false,
           outstandingBalance: 0
         },
@@ -105,12 +105,14 @@ class Dashboard extends Component {
 
     const balance = this.props.balance;
     const active = this.props.active;
+    const outstandingBalance = this.props.outstandingBalance;
     if (typeof balance !== 'undefined') {
       console.log('TESTING');
       console.log(balance)
       const entryItems = this.state.entryItems.slice() //copy the array
       entryItems[0].active = active; //execute the manipulations
       entryItems[0].balance = balance.toFixed(2);
+      entryItems[0].outstandingBalance = outstandingBalance;
       this.setState({ entryItems })
     }
 
@@ -714,7 +716,8 @@ const mapStateToProps = state => (
 {
     transactions: state.bank.transactions,
     balance: state.bank.balance,
-    active: state.member.active
+    active: state.member.active,
+    outstandingBalance: state.member.outstandingBalance
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
