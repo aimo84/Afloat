@@ -11,5 +11,6 @@ export default {
   gaTrackingId: (devMode) ? 'UA-84284256-2' : 'UA-84284256-1',
 
   // TODO: Need to manually update this each time you run ngrok
-  ROOT_URL: 'http://abb49795.ngrok.io',
+  // ROOT_URL: 'http://quantwebdev.me',
+  ROOT_URL: 'http://0.0.0.0:3000',
 };
