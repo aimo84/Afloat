@@ -75,7 +75,7 @@ class LinkBank extends Component {
             publicKey="beae29cb016901b1a1d8ac65538e8a"
             env="sandbox"
             product="auth,transactions"
-            clientName="QuantWeb"
+            clientName="Afloat"
             selectAccount
           />
         );
