@@ -19,8 +19,6 @@ export function getUserData(token, cb) {
     //       - send login action with user details
     axios.get(`${ROOT_URL}/getUser`, { headers: { authorization: `Token ${token}` } }).then((response) => {
       const userDetails = response.data.user;
-      console.log('Got the request!');
-      console.log(userDetails);
       dispatch({
         type: 'UPDATE_USER',
         data: userDetails,

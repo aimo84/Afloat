@@ -18,16 +18,11 @@ class Settings extends Component {
   }
 
   handleButtonClicked = () => {
-    console.log('next button clicked');
     const { member } = this.props;
     this.props.getUserData(member.token, (res) => {
-      console.log('9x');
-      console.log(res);
       if (res.verified) {
-        console.log('9z user verified');
         Actions.replace('home');
       } else {
-        console.log('9z user not verified');
         this.setState({
           error: true,
         });
@@ -37,8 +32,6 @@ class Settings extends Component {
 
 render = () => {
   const { member } = this.props;
-  console.log('settings page render(), member object:'); // ha
-  console.log(member);
   let emailMessage = null;
   if (!this.state.error) {
     emailMessage = (

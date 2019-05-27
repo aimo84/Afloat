@@ -101,10 +101,7 @@ class Dashboard extends Component {
      this.animation.play();
     }
     const { member } = this.props;
-    console.log('dispatched member');
     if (!member.verified) {
-      console.log('99t user NOT verified');
-      console.log(member);
       Actions.replace('emailVerification');
     }
 
@@ -485,11 +482,6 @@ $
     }
 
     { this.renderJSXPieChartData(transactions); }
-<<<<<<< HEAD
-    console.log('printing transactions in render');
-=======
-
->>>>>>> acdb1debcc6c943247cbf672305692dbc9618755
     // Check that transactions are not null and that transactions are not an empty list
     if (transactions && Object.keys(transactions).length >= 2) {
       transactionsListItems = // console.log(transaction);
