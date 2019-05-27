@@ -288,8 +288,8 @@ $
               <View style={styles.spacer}>
               </View>
             </View>
-          );
-      } else if (item.active && item.outstandingBalance === 0){
+          );   
+      } else if (item.active && item.outstandingBalance === 0) {
         return (
           <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
             <View style={styles.slide}>
@@ -341,8 +341,6 @@ $
 
     } if (index == 1) {
       let xTickValues = this.state.balanceOverTimeData.filter((d, i) => i % 5 === 0);
-      console.log("ticks")
-      console.log(xTickValues)
       if (this.state.balanceOverTimeData.length > 1) {      
         return (
           <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
@@ -363,79 +361,6 @@ $
                 tickFormat={(x) => (`$${x}`)}
                 style={{ tickLabels: {fontSize: '11', fill: 'white'}, grid: { stroke: 'rgba(255, 255, 255, 0.2)' } }}
               />
-                <VictoryAxis padding={{ top: 20, bottom: 60 }} style={{
-                                  ticks: {fill: 'white', padding: 2},
-                                  tickLabels: {fill: 'white', angle: 0},
-                                  grid: { stroke: 'rgba(255, 255, 255, 0.1)' },
-                                }}
-                  scale="time"
-                  tickValues={xTickValues}
-                  tickFormat={(x) => {
-                    let d = new Date(x)
-                    var weekday = new Array(7);
-                    weekday[0] =  "Sunday";
-                    weekday[1] = "Monday";
-                    weekday[2] = "Tuesday";
-                    weekday[3] = "Wednesday";
-                    weekday[4] = "Thursday";
-                    weekday[5] = "Friday";
-                    weekday[6] = "Saturday";
-
-                    var newDate = new Date(d.setTime( d.getTime() + 1 * 86400000 ));
-                    return weekday[d.getDay()].substr(0, 2);
-                  }}
-                />
-                <VictoryBar data={this.state.balanceOverTimeData} x="date" y="endBalance" events={
-                  [{
-                    target: 'data',
-                    eventHandlers: {
-                      onPress: props => console.log('boom'),
-                    },
-                  },]
-                }/>
-                <VictoryTooltip
-                    cornerRadius={0}
-                    pointerLength={0}
-                    flyoutStyle={{
-                        stroke: "none",
-                        fill: "blue"
-                    }}
-                />
-
-              </VictoryChart>
-            </View>
-            <View style={styles.spacer}>
-            </View>
-          </View>
-        );
-      }
-      else {
-        return (<View/>)
-      }
-    }
-
-    let xTickValues = this.state.balanceOverTimeData.filter((d, i) => i % 5 === 0);
-
-    if (this.state.balanceOverTimeData.length > 1) {      
-      return (
-        <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
-          <View style={styles.chartSlide}>
-            <VictoryChart animate={{ duration: 2000 }} width={350} theme={VictoryTheme.material}>
-            <VictoryLabel x = {10} y = {20} style={{
-                textAnchor: "start",
-                verticalAnchor: "end",
-                fill: "white",
-                fontFamily: "inherit",
-                fontSize: "22px",
-                fontWeight: "bold"
-              }}
-              text="Daily Cash Flow"
-            />
-            <VictoryAxis
-              dependentAxis
-              tickFormat={(x) => (`$${x}`)}
-              style={{ tickLabels: {fontSize: '11', fill: 'white'}, grid: { stroke: 'rgba(255, 255, 255, 0.2)' } }}
-            />
               <VictoryAxis padding={{ top: 20, bottom: 60 }} style={{
                                 ticks: {fill: 'white', padding: 2},
                                 tickLabels: {fill: 'white', angle: 0},
@@ -458,14 +383,85 @@ $
                   return weekday[d.getDay()].substr(0, 2);
                 }}
               />
-          <VictoryLegend x={265} y={5}
-              orientation="vertical"
-              symbolSpacer={5}
-              gutter={20}
-              data={[
-                { name: "Income", symbol: { fill: "#455A64" } }, { name: "Spending", symbol: { fill: "yellow" }, },
-              ]}
+              <VictoryBar data={this.state.balanceOverTimeData} x="date" y="endBalance" events={
+                [{
+                  target: 'data',
+                  eventHandlers: {
+                    onPress: props => console.log('boom'),
+                  },
+                },]
+              }/>
+              <VictoryTooltip
+                  cornerRadius={0}
+                  pointerLength={0}
+                  flyoutStyle={{
+                      stroke: "none",
+                      fill: "blue"
+                  }}
+              />
+              </VictoryChart>
+            </View>
+            <View style={styles.spacer}>
+            </View>
+          </View>
+        );
+      }
+      else {
+        return (<View/>)
+      }
+    }
+
+    let xTickValues = this.state.balanceOverTimeData.filter((d, i) => i % 5 === 0);
+    if (this.state.balanceOverTimeData.length > 1) {      
+      return (
+        <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
+          <View style={styles.chartSlide}>
+            <VictoryChart animate={{ duration: 2000 }} width={350} theme={VictoryTheme.material}>
+            <VictoryLabel x = {10} y = {20} style={{
+                textAnchor: "start",
+                verticalAnchor: "end",
+                fill: "white",
+                fontFamily: "inherit",
+                fontSize: "22px",
+                fontWeight: "bold"
+              }}
+              text="Daily Cash Flow"
             />
+            <VictoryAxis
+              dependentAxis
+              tickFormat={(x) => (`$${x}`)}
+              style={{ tickLabels: {fontSize: '11', fill: 'white'}, grid: { stroke: 'rgba(255, 255, 255, 0.2)' } }}
+            />
+            <VictoryAxis padding={{ top: 20, bottom: 60 }} style={{
+                              ticks: {fill: 'white', padding: 2},
+                              tickLabels: {fill: 'white', angle: 0},
+                              grid: { stroke: 'rgba(255, 255, 255, 0.1)' },
+                            }}
+              scale="time"
+              tickValues={xTickValues}
+              tickFormat={(x) => {
+                let d = new Date(x)
+                var weekday = new Array(7);
+                weekday[0] =  "Sunday";
+                weekday[1] = "Monday";
+                weekday[2] = "Tuesday";
+                weekday[3] = "Wednesday";
+                weekday[4] = "Thursday";
+                weekday[5] = "Friday";
+                weekday[6] = "Saturday";
+
+                var newDate = new Date(d.setTime( d.getTime() + 1 * 86400000 ));
+                return weekday[d.getDay()].substr(0, 2);
+              }}
+            />
+            <VictoryLegend x={265} y={5}
+                  orientation="vertical"
+                  symbolSpacer={5}
+                  gutter={20}
+                  data={[
+                    { name: "Income", symbol: { fill: "#455A64" } }, { name: "Spending", symbol: { fill: "yellow" }, },
+                  ]}
+                />
         <VictoryGroup
           color="#FF6B6B"
           labelComponent={
