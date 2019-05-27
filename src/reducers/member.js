@@ -17,6 +17,7 @@ export default function userReducer(state = initialState, action) {
           email: action.data.email,
           bankSet: action.data.bankSet,
           firstname: action.data.firstname,
+          lastname: action.data.lastname,
           emailVerified: false,
           active: action.data.active,
           outstandingBalance: action.data.outstandingBalance,
@@ -32,6 +33,7 @@ export default function userReducer(state = initialState, action) {
         return {
           ...state,
           bankSet: action.data.bankSet,
+          bankStaging: action.data.bankStaging,
           outstandingBalance: action.data.outstandingBalance,
           subscriptionEnrolled: action.data.subscriptionEnrolled,
           active: action.data.active,
@@ -46,6 +48,7 @@ export default function userReducer(state = initialState, action) {
         return {
           ...state,
           bankSet: true,
+          bankStaging: true,
         };
       }
       return initialState;
@@ -90,6 +93,12 @@ export default function userReducer(state = initialState, action) {
       return {
         ...state,
         active: true,
+      };
+    }
+    case 'USER_PAYBACK': {
+      return {
+        ...state,
+        outstandingBalance: 0,
       };
     }
     default:
