@@ -5,58 +5,17 @@ import React, { Component } from 'react';
 import {
   View, Text, Form, Button, Container,
 } from 'native-base';
+import { Animated } from 'react-native';
+import Animation from 'lottie-react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Slider from 'react-native-slider';
 import { Actions } from 'react-native-router-flux';
-import { ScaledSheet } from 'react-native-size-matters';
-import { transferAchToUser } from '../../actions/bank';
+import { scale, verticalScale, ScaledSheet } from 'react-native-size-matters';
+import Moment from 'moment-business-days';
 
-const styles = ScaledSheet.create({
-  container: {
-    backgroundColor: '#F8F8F8',
-    justifyContent: 'space-between',
-    alignItems: 'stretch',
-  },
-  amount: {
-    fontSize: '65@ms',
-    color: '#489e48',
-    fontWeight: 'bold',
-    marginBottom: '18@s',
-  },
-  form: {
-    alignItems: 'center',
-    alignContent: 'center',
-    paddingVertical: '70@vs',
-    paddingHorizontal: '12@s',
-    backgroundColor: '#FFFFFF',
-  },
-  payMeText: {
-    fontSize: '22@ms',
-    color: '#489e48',
-  },
-  button: {
-    height: '68@vs',
-  },
-  slider: {
-    width: '85%',
-  },
-  smallNoticeText: {
-    fontSize: '18@s',
-    color: '#8b8e8b',
-  },
-  bigNoticeText: {
-    fontSize: '23@s',
-    fontWeight: 'bold',
-  },
-  noticeView: {
-    alignItems: 'center',
-    alignContent: 'center',
-  },
-  submitButtonText: {
-    fontSize: '18@ms',
-  },
-});
+import { transferAchToUser, getLoanHistory } from '../../actions/bank';
+import styles from './style.js';
 
 const stylesSlider = ScaledSheet.create({
   track: {
@@ -88,8 +47,13 @@ class MakeTransaction extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      amount: 30,
+      amount: 75,
+      showConfirm: false,
+      progress: new Animated.Value(0),
     };
+  }
+
+  componentDidMount = () => {
   }
 
   handleChange = (name, val) => {
@@ -100,29 +64,90 @@ class MakeTransaction extends Component {
 
   handleSubmit = () => {
     const { member } = this.props;
-    this.props.transferAchToUser(member.token, this.state.amount);
-    // Actions.replace('home');
+    this.setState({ showConfirm: true });
+    this.props.transferAchToUser(member.token, this.state.amount, () => {
+      Animated.timing(this.state.progress, {
+        toValue: 1,
+        duration: 2500,
+        useNativeDriver: true,
+      }).start(() => {
+        Actions.pop();
+        this.props.updateUser();
+        this.props.getLoanHistory(member.token, () => {});
+      });
+    });
   }
 
   // eslint-disable-next-line arrow-body-style
   render = () => {
     // const { amount } = this.state;
+    const { showConfirm } = this.state;
+
+    let depositeDate = '';
+    const nextBusinessDay = Moment(Moment(), 'DD-MM-YYYY').nextBusinessDay();
+    const tomorrow = Moment().add(1, 'days').format('MM/DD/YYYY');
+    console.log('Moment');
+
+    console.log(nextBusinessDay);
+    console.log(Moment().add(1, 'days'));
+    if (Moment().add(1, 'days').isSame(nextBusinessDay, 'day')) {
+      console.log(nextBusinessDay);
+      console.log(Moment(Moment(), 'DD-MM-YYYY').add(1, 'days').format('MM/DD/YYYY'));
+      depositeDate = 'Tomorrow';
+    } else {
+      depositeDate = nextBusinessDay.format('MM/DD/YYYY');
+    }
+
+
+    if (showConfirm) {
+      return (
+        <Container style={styles.container}>
+          {/* <View style={styles.wrapper}> */}
+          <Form style={styles.form}>
+            <Text style={styles.payMeText}>
+                   Pay me
+            </Text>
+            <Text style={styles.amount}>
+                   $
+              {this.state.amount}
+            </Text>
+          </Form>
+          <View style={styles.noticeView}>
+            <View style={{ height: verticalScale(90) }} />
+            <Animation
+              ref={(animation) => {
+                this.animation = animation;
+              }}
+              style={{
+                width: 380,
+                height: 380,
+              }}
+              loop={false}
+              source={require('../../images/confirm.json')}
+              progress={this.state.progress}
+              resizeMode="cover"
+            />
+          </View>
+        </Container>
+
+      );
+    }
     return (
       <Container style={styles.container}>
         {/* <View style={styles.wrapper}> */}
         <Form style={styles.form}>
           <Text style={styles.payMeText}>
-                 Pay me
+                   Pay me
           </Text>
           <Text style={styles.amount}>
-                 $
+                   $
             {this.state.amount}
           </Text>
           <Slider
             value={this.state.amount}
-            minimumValue={0}
-            maximumValue={100}
-            step={1}
+            minimumValue={50}
+            maximumValue={200}
+            step={5}
             minimumTrackTintColor="#efefef"
             maximumTrackTintColor="#efefef"
             style={styles.slider}
@@ -132,27 +157,26 @@ class MakeTransaction extends Component {
           />
         </Form>
         <View style={styles.noticeView}>
-          <Text style={styles.smallNoticeText}>
-              Deducted from your paycheck:
-          </Text>
-          <Text style={styles.bigNoticeText}>
-              Apr 30
-          </Text>
-          <View style={{ height: 18 }} />
+          <View style={{ height: verticalScale(90) }} />
           <Text style={styles.smallNoticeText}>
               Deposited in your bank account:
           </Text>
           <Text style={styles.bigNoticeText}>
-              Tommorow
+            {depositeDate}
           </Text>
+          <Text style={styles.smallNoticeText}>
+                Deducted from your paycheck:
+          </Text>
+          <Text style={styles.bigNoticeText}>
+                Apr 30
+          </Text>
+          <View style={{ height: verticalScale(40) }} />
         </View>
-        {/* </Content> */}
         <View style={styles.bottom}>
           <Button full success onPress={this.handleSubmit} style={styles.button}>
             <Text style={styles.submitButtonText}>Submit</Text>
           </Button>
         </View>
-        {/* </View> */}
       </Container>
 
     );
@@ -161,6 +185,7 @@ class MakeTransaction extends Component {
 
 const mapDispatchToProps = {
   transferAchToUser,
+  getLoanHistory,
 };
 
 export default connect(null, mapDispatchToProps)(MakeTransaction);

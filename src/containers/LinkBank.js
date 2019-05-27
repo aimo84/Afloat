@@ -39,13 +39,13 @@ class LinkBank extends Component {
       const publicToken = data.metadata.public_token;
       const accountId = data.metadata.account_id;
       console.log('account id');
-      console.log(accountId);
+      // console.log(accountId);
       // eslint-ignore-next-line
       this.props.addUserToBank(member.token, publicToken, accountId,
         () => {
           console.log('getting user data');
-          console.log(member.token);
-          Actions.replace('home');
+          // console.log(member.token);
+          Actions.replace('mainHome');
         });
     }
   }
@@ -75,7 +75,7 @@ class LinkBank extends Component {
             publicKey="beae29cb016901b1a1d8ac65538e8a"
             env="sandbox"
             product="auth,transactions"
-            clientName="QuantWeb"
+            clientName="Afloat"
             selectAccount
           />
         );

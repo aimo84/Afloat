@@ -36,13 +36,11 @@ class FooterBar extends Component {
   }
 
   onDashboardPressed = () => {
-    //Actions.mainHome();
     Actions.replace('mainHome');
-
   }
 
   onMakeTransactionPressed = () => {
-    Actions.replace('makeTransaction');
+    Actions.replace('makeTransaction', { onBack: () => Actions.replace('mainHome') });
   }
 
   onSettingsPressed = () => {
@@ -50,21 +48,20 @@ class FooterBar extends Component {
   }
 
   onLoanHistoryPressed = () => {
-    //Actions.mainLoanPage();
+    // Actions.mainLoanPage();
     Actions.replace('mainLoanPage');
-
   }
 
   render = () => (
     <View style={styles.footer}>
       <Button style={styles.footerButtons} onPress={this.onDashboardPressed}>
-        <Icon name="md-menu" style={styles.footerIcons} />
+        <Icon name="md-home" style={styles.footerIcons} />
       </Button>
       <Button style={styles.footerButtons} onPress={this.onLoanHistoryPressed}>
-        <Icon name="md-stats" style={styles.footerIcons} />
+        <Icon name="md-menu" style={styles.footerIcons} />
       </Button>
       <Button style={styles.footerButtons} onPress={this.onSettingsPressed}>
-        <Icon name="md-home" style={styles.footerIcons} />
+        <Icon name="md-person" style={styles.footerIcons} />
       </Button>
     </View>
   )

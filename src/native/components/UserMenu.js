@@ -16,13 +16,13 @@ import {
   StackedBarChart,
 } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
-import FooterBar from './FooterBar';
 import { Actions } from 'react-native-router-flux';
 import { AppRegistry, Image } from 'react-native';
+import FooterBar from './FooterBar';
 import { logout, getUserData } from '../../actions/member';
+import styles from './style.js';
 
 const screenWidth = Dimensions.get('window').width;
-import styles from './style.js';
 
 
 class UserMenu extends Component {
@@ -40,41 +40,58 @@ class UserMenu extends Component {
     match: null,
   }
 
-logout(){
-  // this.props.logout(() => {
-    Actions.replace('entry');
-  // });
-}
+  logout() {
+    this.props.logout(() => {
+      Actions.replace('entry');
+    });
+  }
 
 render = () => {
   const { member } = this.props;
   console.log('settings page render(), member object:');
   console.log(member);
   return (
-    <Container style={{backgroundColor: 'white'}}>
+    <Container style={{ backgroundColor: 'white' }}>
       <Content>
-      <View style={styles.UserIconStylingView}>
-          <Image
-            style={styles.UserIconImage}
-            source={{uri: 'https://i.pinimg.com/originals/af/25/49/af25490494d3338afef00869c59fdd37.png'}}
-          />
-          <Text style={styles.UserNameStyling}> Deven Orie </Text>
-      </View>
+        <View style={styles.UserIconStylingView}>
+          <Text style={styles.UserNameStyling}>
+            {' '}
+            {member.firstname}
+            {' '}
+            {member.lastname}
+          </Text>
+        </View>
         <List>
           <ListItem avatar>
             <Left>
               <Icon name="md-person" style={styles.footerIcons} />
             </Left>
-            <Body >
-              <Text style={styles.UserMenuItems} >Profile</Text>
+            <Body>
+              <Text style={styles.UserMenuItems}>Profile</Text>
             </Body>
           </ListItem>
-          <ListItem onPress={() => Actions.mainSettings()} avatar>
-            <Left>
-              <Icon name="md-settings" style={styles.footerIcons} />
-            </Left>
-            <Body>
-              <Text style={styles.UserMenuItems} >Settings</Text>
+          <ListItem avatar>
+            <Left />
+            <Body style={{ paddingLeft: '5%' }}>
+              <Text style={styles.UserMenuItems}>
+Email:
+                {'  '}
+                <Text style={{ fontWeight: 'normal' }}>
+                  {member.email}
+                </Text>
+              </Text>
+            </Body>
+          </ListItem>
+          <ListItem avatar>
+            <Left />
+            <Body style={{ paddingLeft: '5%' }}>
+              <Text style={styles.UserMenuItems}>
+Bank:
+                {'  '}
+                <Text style={{ fontWeight: 'normal' }}>
+                  Plaid Checking - XXXXXXX0000
+                </Text>
+              </Text>
             </Body>
           </ListItem>
           <ListItem onPress={() => this.logout()} avatar>
@@ -82,7 +99,7 @@ render = () => {
               <Icon name="md-log-out" style={styles.footerIcons} />
             </Left>
             <Body>
-              <Text style={styles.UserMenuItems} >Log Out</Text>
+              <Text style={styles.UserMenuItems}>Log Out</Text>
             </Body>
           </ListItem>
         </List>
