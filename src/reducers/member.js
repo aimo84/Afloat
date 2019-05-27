@@ -17,7 +17,7 @@ export default function userReducer(state = initialState, action) {
           email: action.data.email,
           bankSet: action.data.bankSet,
           firstname: action.data.firstname,
-          emailVerified: false,
+          verified: action.data.verified,
           active: action.data.active,
           outstandingBalance: action.data.outstandingBalance,
           subscriptionEnrolled: action.data.subscriptionEnrolled,
@@ -35,7 +35,7 @@ export default function userReducer(state = initialState, action) {
           outstandingBalance: action.data.outstandingBalance,
           subscriptionEnrolled: action.data.subscriptionEnrolled,
           active: action.data.active,
-          emailVerified: false,
+          verified: action.data.verified,
         };
       }
       return initialState;

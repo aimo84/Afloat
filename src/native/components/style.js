@@ -322,6 +322,6 @@ export default ScaledSheet.create({
     alignSelf:'center',
   },
   emailErrorText: {
-    color: red,
+    color: 'red',
   }
 });

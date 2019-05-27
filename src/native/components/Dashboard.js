@@ -93,6 +93,11 @@ class Dashboard extends Component {
     }
     const { member } = this.props;
     console.log('dispatched member');
+    if (!member.verified) {
+      console.log('99t user NOT verified');
+      console.log(member);
+      Actions.replace('emailVerification');
+    }
     if (!member.bankSet) {
       Actions.replace('linkBank');
     }
@@ -331,7 +336,6 @@ $
     const { member } = this.props;
 
     { this.renderJSXPieChartData(transactions); }
-    console.log(transactions);
     console.log('printing transactions in render');
     // Check that transactions are not null and that transactions are not an empty list
     if (transactions && Object.keys(transactions).length >= 2) {

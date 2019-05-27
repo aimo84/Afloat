@@ -14,7 +14,7 @@ class Settings extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { error: '' };
+    this.state = { error: false };
   }
 
   handleButtonClicked = () => {
@@ -29,9 +29,7 @@ class Settings extends Component {
       } else {
         console.log('9z user not verified');
         this.setState({
-          error: `Sorry, your email does not a
-        ppear to be verified. Please click the email verification link
-        again`,
+          error: true,
         });
       }
     });
@@ -41,19 +39,37 @@ render = () => {
   const { member } = this.props;
   console.log('settings page render(), member object:'); // ha
   console.log(member);
+  let emailMessage = null;
+  if (!this.state.error) {
+    emailMessage = (
+      <Text style={styles.emailVerificationText}>
+    An email has been sent to
+        {' '}
+        {member.email}
+        {' '}
+    Please click the link in the email we sent to verify your email!
+      </Text>
+    );
+  } else {
+    emailMessage = (
+      <Text style={[styles.emailVerificationText, styles.emailErrorText]}>
+    Your email does not appear to be
+          verified.
+    Please visit your email:
+        {' '}
+        {member.email}
+        {' '}
+    and try clicking the link again.
+      </Text>
+    );
+  }
+
   return (
     <Container style={{ backgroundColor: 'white' }}>
       <Content>
         <View>
           <View style={styles.centerContainer}>
-            <Text style={styles.emailVerificationText}>
-An email has been sent to
-              {' '}
-              {member.email}
-              {' '}
-Please click the link in the email we sent to verify your email!
-            </Text>
-            <Text style={styles.emailErrorText}>{this.state.error || ''}</Text>
+            {emailMessage}
             <Button onPress={this.handleButtonClicked} block><Text>Next</Text></Button>
           </View>
         </View>

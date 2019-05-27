@@ -27,7 +27,6 @@ class LinkBank extends Component {
     this.state = {
       status: '',
     };
-    Actions.replace('emailVerification');
   }
 
   onMessage = (data) => {
