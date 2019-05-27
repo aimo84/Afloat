@@ -23,10 +23,12 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import FooterBar from './FooterBar';
 import Spacer from './Spacer';
 import styles from './style.js';
-
-import { getTransactions, getBalance, transferAchToApp } from '../../actions/bank';
+import { getTransactions, getBalance, transferAchToApp, getBalanceOverTime } from '../../actions/bank';
 import { logout, getUserData } from '../../actions/member';
-
+import { VictoryBar, VictoryChart, VictoryTheme, VictoryAxis, VictoryLabel, VictoryTooltip, VictoryLine, VictoryGroup, VictoryLegend } from "victory-native";
+import dateFormat from 'dateformat';
+import { Svg } from 'expo';
+const {Rect} = Svg;
 
 global.lastDate = 'date';
 global.pieDictionaryData = new Object();
@@ -72,6 +74,7 @@ class Dashboard extends Component {
           title: 'Item 3',
         },
       ],
+      balanceOverTimeData: [],
       selected: 'key1',
       transactions: {},
       slider1ActiveSlide: 0,
@@ -116,6 +119,62 @@ class Dashboard extends Component {
       this.setState({ entryItems })
     }
 
+    let lastWeek = new Date(Date.now() - 31 * 24 * 60 * 60 * 1000)
+    let lastWeekFormattedDate = dateFormat(lastWeek, "mm/dd/yyyy")
+    console.log(lastWeekFormattedDate)
+    getBalanceOverTime(member.token, lastWeekFormattedDate, (res) => {
+
+      // Map undefined values to 0
+      let balanceOverTimeData = res.map((val) => {
+        let outwardFlow = val.outwardCashFlow === undefined ? 0 : val.outwardCashFlow;
+        let inwardFlow = val.inwardCashFlow === undefined ? 0 : val.inwardCashFlow;
+        return {
+          date: val.date, 
+          outwardFlow,
+          inwardFlow,
+          endBalance: val.endBalance,
+        }
+      });
+
+      let dateFromDate = (source, days) => {
+        let copy = new Date(source.getTime())
+        return new Date(copy.setDate(copy.getDate() + days));
+      }
+      let currentIndex = 0;
+      // Insert blank records between dates
+      while (currentIndex < balanceOverTimeData.length - 1) {
+        
+        // Get current date
+        let current = new Date(dateFormat(balanceOverTimeData[currentIndex].date, 'isoDateTime'));
+        current.setDate(current.getDate() + 1);
+
+        // Get next date
+        let next = new Date(dateFormat(balanceOverTimeData[currentIndex + 1].date, 'isoDateTime'));
+        next.setDate(next.getDate() + 1);
+        
+        // Calculate correct next date
+        let tmp = dateFromDate(current, -1);
+        
+        // If next isn't correct, insert blank record
+        if (next.getTime() !== tmp.getTime()) {
+          balanceOverTimeData.splice(currentIndex + 1, 0, {
+            date: dateFormat(tmp, 'yyyy-mm-dd'),
+            endBalance: balanceOverTimeData[currentIndex + 1].endBalance,
+            inwardFlow: 0,
+            outwardFlow: 0,
+          });
+        }
+        currentIndex += 1;
+      }
+
+      // Reverse the sorted data
+      balanceOverTimeData = balanceOverTimeData.reverse();
+
+      this.setState({
+        balanceOverTimeData: balanceOverTimeData.slice(0, 7),
+      })
+    })
+
     this.props.getTransactions(member.token, (res) => {
       const entryItems = this.state.entryItems.slice() //copy the array
       console.log(res)
@@ -129,6 +188,7 @@ class Dashboard extends Component {
 
       this.props.getUserData(member.token, (res) => {
         console.log('link bank')
+        debugger;
         const entryItems = this.state.entryItems.slice() //copy the array
         entryItems[0].active = res.active; //execute the manipulations
         entryItems[0].outstandingBalance = res.outstandingBalance;
@@ -256,8 +316,8 @@ $
               <View style={styles.spacer}>
               </View>
             </View>
-          );
-      } else if (item.active && item.outstandingBalance === 0){
+          );   
+      } else if (item.active && item.outstandingBalance === 0) {
         return (
           <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
             <View style={styles.slide}>
@@ -354,27 +414,166 @@ $
 
 
     } if (index == 1) {
+      let xTickValues = this.state.balanceOverTimeData.filter((d, i) => i % 5 === 0);
+      if (this.state.balanceOverTimeData.length > 1) {      
+        return (
+          <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
+            <View style={styles.chartSlide}>
+              <VictoryChart animate={{ duration: 2000 }} width={350} theme={VictoryTheme.material}>
+              <VictoryLabel x = {10} y = {20} style={{
+                  textAnchor: "start",
+                  verticalAnchor: "end",
+                  fill: "white",
+                  fontFamily: "inherit",
+                  fontSize: "22px",
+                  fontWeight: "bold"
+                }}
+                text="Balance Over Time"
+              />
+              <VictoryAxis
+                dependentAxis
+                tickFormat={(x) => (`$${x}`)}
+                style={{ tickLabels: {fontSize: '11', fill: 'white'}, grid: { stroke: 'rgba(255, 255, 255, 0.2)' } }}
+              />
+              <VictoryAxis padding={{ top: 20, bottom: 60 }} style={{
+                                ticks: {fill: 'white', padding: 2},
+                                tickLabels: {fill: 'white', angle: 0},
+                                grid: { stroke: 'rgba(255, 255, 255, 0.1)' },
+                              }}
+                scale="time"
+                tickValues={xTickValues}
+                tickFormat={(x) => {
+                  let d = new Date(x)
+                  var weekday = new Array(7);
+                  weekday[0] =  "Sunday";
+                  weekday[1] = "Monday";
+                  weekday[2] = "Tuesday";
+                  weekday[3] = "Wednesday";
+                  weekday[4] = "Thursday";
+                  weekday[5] = "Friday";
+                  weekday[6] = "Saturday";
 
+                  var newDate = new Date(d.setTime( d.getTime() + 1 * 86400000 ));
+                  return weekday[d.getDay()].substr(0, 2);
+                }}
+              />
+              <VictoryBar data={this.state.balanceOverTimeData} x="date" y="endBalance" events={
+                [{
+                  target: 'data',
+                  eventHandlers: {
+                    onPress: props => console.log('boom'),
+                  },
+                },]
+              }/>
+              <VictoryTooltip
+                  cornerRadius={0}
+                  pointerLength={0}
+                  flyoutStyle={{
+                      stroke: "none",
+                      fill: "blue"
+                  }}
+              />
+              </VictoryChart>
+            </View>
+            <View style={styles.spacer}>
+            </View>
+          </View>
+        );
+      }
+      else {
+        return (<View/>)
+      }
+    }
+
+    let xTickValues = this.state.balanceOverTimeData.filter((d, i) => i % 5 === 0);
+    if (this.state.balanceOverTimeData.length > 1) {      
       return (
         <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
-          <View style={styles.slide}>
+          <View style={styles.chartSlide}>
+            <VictoryChart animate={{ duration: 2000 }} width={350} theme={VictoryTheme.material}>
+            <VictoryLabel x = {10} y = {20} style={{
+                textAnchor: "start",
+                verticalAnchor: "end",
+                fill: "white",
+                fontFamily: "inherit",
+                fontSize: "22px",
+                fontWeight: "bold"
+              }}
+              text="Daily Cash Flow"
+            />
+            <VictoryAxis
+              dependentAxis
+              tickFormat={(x) => (`$${x}`)}
+              style={{ tickLabels: {fontSize: '11', fill: 'white'}, grid: { stroke: 'rgba(255, 255, 255, 0.2)' } }}
+            />
+            <VictoryAxis padding={{ top: 20, bottom: 60 }} style={{
+                              ticks: {fill: 'white', padding: 2},
+                              tickLabels: {fill: 'white', angle: 0},
+                              grid: { stroke: 'rgba(255, 255, 255, 0.1)' },
+                            }}
+              scale="time"
+              tickValues={xTickValues}
+              tickFormat={(x) => {
+                let d = new Date(x)
+                var weekday = new Array(7);
+                weekday[0] =  "Sunday";
+                weekday[1] = "Monday";
+                weekday[2] = "Tuesday";
+                weekday[3] = "Wednesday";
+                weekday[4] = "Thursday";
+                weekday[5] = "Friday";
+                weekday[6] = "Saturday";
 
+                var newDate = new Date(d.setTime( d.getTime() + 1 * 86400000 ));
+                return weekday[d.getDay()].substr(0, 2);
+              }}
+            />
+            <VictoryLegend x={265} y={5}
+                  orientation="vertical"
+                  symbolSpacer={5}
+                  gutter={20}
+                  data={[
+                    { name: "Income", symbol: { fill: "#455A64" } }, { name: "Spending", symbol: { fill: "yellow" }, },
+                  ]}
+                />
+        <VictoryGroup
+          color="#FF6B6B"
+          labelComponent={
+            <VictoryTooltip
+              style={{ fontSize: 10 }}
+            />
+          }
+          data={this.state.balanceOverTimeData} x="date" y="outwardFlow"
+        >
+          <VictoryLine style={{ data: { stroke: "yellow", strokeWidth: 2 }, }} />
+        </VictoryGroup>
+        <VictoryGroup
+          color="#028090"
+          labelComponent={
+            <VictoryTooltip
+              style={{ fontSize: 10 }}
+            />
+          }
+          data={this.state.balanceOverTimeData} x="date" y="inwardFlow"
+        >
+          <VictoryLine style={{ data: { stroke: "#455A64", strokeWidth: 2 }, }} />
+        </VictoryGroup>
+              <VictoryTooltip
+                  cornerRadius={0}
+                  pointerLength={0}
+                  flyoutStyle={{
+                      stroke: "none",
+                      fill: "blue"
+                  }}
+              />
+
+            </VictoryChart>
           </View>
           <View style={styles.spacer}>
           </View>
         </View>
       );
     }
-
-    return (
-      <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
-        <View style={styles.slide}>
-
-        </View>
-        <View style={styles.spacer}>
-        </View>
-      </View>
-    );
   }
 
   toggleModal = () => {
