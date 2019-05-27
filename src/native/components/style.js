@@ -131,6 +131,28 @@ export default ScaledSheet.create({
     paddingLeft: '20@s',
     paddingTop: '20@vs',
   },
+  slideTwo: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#21D0A5',
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+    	width: 0,
+    	height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    height: '20%',
+    width: '315@s',
+    marginTop: '5%',
+    marginLeft: '5%',
+    paddingRight: '5%',
+    paddingLeft: '20@s',
+    paddingTop: '20@vs',
+  },
   name: {
     fontFamily: 'Lato_black',
     fontSize: viewportWidth * 0.05,
@@ -151,7 +173,6 @@ export default ScaledSheet.create({
     fontFamily: 'Lato_regular',
     fontSize: viewportWidth * 0.13,
     color: 'white',
-    width: '200@s',
   },
   loanbalance: {
     fontWeight: 'bold',
@@ -265,7 +286,6 @@ export default ScaledSheet.create({
   transactionHeader: {
     marginLeft: '3%',
     fontSize: viewportWidth * 0.07,
-    fontWeight: 'bold',
     fontFamily: 'Roboto',
     fontWeight: 'bold',
   },
@@ -289,17 +309,78 @@ export default ScaledSheet.create({
   },
   modalBody: {
     backgroundColor: 'white',
-    width: '80%',
-    height: '60%',
+    width: '300@s',
+    height:'330@vs',
     borderRadius: 10,
     backgroundColor: 'white',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: '30@s',
   },
   modalTitle: {
     fontFamily: 'Roboto',
-    fontSize: viewportWidth * 0.05,
+    fontWeight: 'bold',
+    fontSize: viewportWidth * 0.055,
+    textAlign: 'center',
+  },
+  modalText: {
+    fontFamily: 'Roboto',
+    fontSize: viewportWidth * 0.045,
+    textAlign: 'center',
+    lineHeight: 30,
+  },
+  textRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+  },
+  container: {
+    backgroundColor: 'white',
+    display: 'flex',
+  },
+  amount: {
+    fontSize: '65@ms',
+    color: '#489e48',
+    fontWeight: 'bold',
+    marginBottom: '18@s',
+  },
+  form: {
+    alignItems: 'center',
+    alignContent: 'center',
+    paddingTop: '70@vs',
+    paddingHorizontal: '12@s',
+    backgroundColor: '#FFFFFF',
+  },
+  payMeText: {
+    fontSize: '22@ms',
+    color: '#489e48',
+  },
+  button: {
+    display: 'flex',
+    alignSelf: 'center',
+    backgroundColor: '#21D0A5',
+    width: '200@s',
+    borderRadius: 35,
+  },
+  slider: {
+    width: '85%',
+  },
+  smallNoticeText: {
+    fontSize: '18@s',
+    color: '#8b8e8b',
+  },
+  bigNoticeText: {
+    fontSize: '23@s',
+    fontWeight: 'bold',
+  },
+  noticeView: {
+    display: 'flex',
+    alignItems: 'center',
+
+  },
+  submitButtonText: {
+    fontSize: '18@ms',
   },
   centerContainer: {
     flex: 1,

@@ -2,15 +2,18 @@
 import React, { Component } from 'react';
 import Animation from 'lottie-react-native';
 import Image from 'react-native-scalable-image';
-import { Animated } from 'react-native';
+import { Animated, TouchableOpacity } from 'react-native';
 import {
   View, Segment, Picker, Form, Container, Content, H1, H2, H3,
   Header, List, ListItem, Button, Left, Body, Right, Thumbnail,
   Text, Icon, Switch, Spinner, Separator, Tab, Tabs, ScrollableTab,
 } from 'native-base';
+import Ticker, { Tick } from "react-native-ticker";
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import Modal from "react-native-modal";
-import { enrollSubscription } from '../../actions/bank';
+import Emoji from 'react-native-emoji';
+
+import { enrollSubscription, getLoanHistory } from '../../actions/bank';
 
 import { Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
@@ -21,7 +24,7 @@ import FooterBar from './FooterBar';
 import Spacer from './Spacer';
 import styles from './style.js';
 
-import { getTransactions, getBalance } from '../../actions/bank';
+import { getTransactions, getBalance, transferAchToApp } from '../../actions/bank';
 import { logout, getUserData } from '../../actions/member';
 
 
@@ -33,6 +36,9 @@ const screenWidth = Dimensions.get('window').width;
 
 
 class Dashboard extends Component {
+
+  intervalId = 0;
+
   static propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({}),
@@ -55,7 +61,7 @@ class Dashboard extends Component {
       entryItems: [
         {
           title: 'Item 1',
-          balance: 0,
+          balance: "~",
           active: false,
           outstandingBalance: 0
         },
@@ -74,6 +80,9 @@ class Dashboard extends Component {
       baseModalVisible: false,
       confirmTextModal: false,
       progress: new Animated.Value(0),
+      confirmRepaymentModal: false,
+      currency: "$",
+      value: "123.00",
     };
   }
 
@@ -98,28 +107,54 @@ class Dashboard extends Component {
       console.log(member);
       Actions.replace('emailVerification');
     }
-    if (!member.bankSet) {
-      Actions.replace('linkBank');
-    }
-    this.props.getTransactions(member.token);
 
-    getBalance(member.token,
-      (res) => {
-        console.log('reached balance update')
-        const entryItems = this.state.entryItems.slice() //copy the array
-        entryItems[0].balance = res; //execute the manipulations
-        this.setState({ entryItems });
-      }
-    );
-
-    this.props.getUserData(member.token, (res) => {
+    const balance = this.props.balance;
+    const active = this.props.active;
+    const outstandingBalance = this.props.outstandingBalance;
+    if (typeof balance !== 'undefined') {
+      console.log('TESTING');
+      console.log(balance)
       const entryItems = this.state.entryItems.slice() //copy the array
-      entryItems[0].active = res.active; //execute the manipulations
-      entryItems[0].outstandingBalance = res.outstandingBalance;
+      entryItems[0].active = active; //execute the manipulations
+      entryItems[0].balance = balance.toFixed(2);
+      entryItems[0].outstandingBalance = outstandingBalance;
       this.setState({ entryItems })
-      // console.log(this.state.entryItems);
+    }
+
+    this.props.getTransactions(member.token, (res) => {
+      const entryItems = this.state.entryItems.slice() //copy the array
+      console.log(res)
+      entryItems[0].balance = res.toFixed(2) + ''; //execute the manipulations
+      this.setState({ entryItems })
+
+      clearInterval(this.intervalID);
+
+      const { member } = this.props;
+      this.props.getLoanHistory(member.token, () => {});
+
+      this.props.getUserData(member.token, (res) => {
+        console.log('link bank')
+        const entryItems = this.state.entryItems.slice() //copy the array
+        entryItems[0].active = res.active; //execute the manipulations
+        entryItems[0].outstandingBalance = res.outstandingBalance;
+        this.setState({ entryItems })
+      });
+    },
+    () => {
+      this.props.getUserData(member.token, (res) => {
+        const entryItems = this.state.entryItems.slice() //copy the array
+        entryItems[0].active = res.active; //execute the manipulations
+        entryItems[0].outstandingBalance = res.outstandingBalance;
+        this.setState({ entryItems })
+      });
     });
 
+  }
+
+  getRandom = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return (Math.floor(Math.random() * (max - min + 1)) + min).toFixed(2);
   }
 
   renderJSXAmount(transactionAmount) {
@@ -182,6 +217,7 @@ $
     const { member } = this.props;
     let { balance } = this.state;
 
+
     // console.log(item);
     if (index == 0) {
 
@@ -190,10 +226,9 @@ $
             <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
               <View style={styles.slide}>
                 <View>
-
-                  <Text style={styles.balance}>
-                    ${item.balance.toFixed(2)}
-                  </Text>
+                  <View style={{ width: '30%'}}>
+                  <Ticker text={'$'+item.balance} textStyle={styles.balance} rotateTime={50} />
+                  </View>
                   <Text style={styles.balanceTitle}>
                     Current Bank Balance
                   </Text>
@@ -201,7 +236,7 @@ $
                   </View>
                   <View style={{flexGrow: 1, justifyContent: 'center'}}>
                   <Text style={styles.nonActiveText}>
-                  [Name] has you covered in case your balance runs low. Get a $300 interest-free loan now and pay us back when your paycheck arrives.
+                  Afloat has you covered in case your balance runs low. Get a $300 interest-free loan now and pay us back when your paycheck arrives.
                   </Text>
                   <View style={styles.spacer}>
                   </View>
@@ -234,7 +269,7 @@ $
               <View>
 
                 <Text style={styles.balance}>
-                  ${item.balance.toFixed(2)}
+                  ${item.balance}
                 </Text>
                 <Text style={styles.balanceTitle}>
                   Current Bank Balance
@@ -248,7 +283,14 @@ $
                 <View style={styles.spacer}>
                 </View>
                 <Button style={{display: 'flex',  alignSelf: 'center', backgroundColor: 'white', width: 300, borderRadius: 35}} onPress={() => {
-                  this.toggleModal();
+                  Actions.makeTransaction({ updateUser: () => {
+                    this.props.getUserData(member.token, (res) => {
+                      const entryItems = this.state.entryItems.slice() //copy the array
+                      entryItems[0].active = res.active; //execute the manipulations
+                      entryItems[0].outstandingBalance = res.outstandingBalance;
+                      this.setState({ entryItems })
+                    });
+                  }});
                 }}
                 >
                   <Text style={{ color: '#21D0A5', textAlign: 'center', width: 300,}}>
@@ -269,11 +311,50 @@ $
         );
       }
       else {
-        <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
-          <View style={styles.slide}>
-            {member.outstandingBalance}
+        return (
+          <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
+            <View style={styles.slide}>
+              <View>
+
+                <Text style={styles.balance}>
+                  ${item.balance}
+                </Text>
+                <Text style={styles.balanceTitle}>
+                  Current Bank Balance
+                </Text>
+                <View style={styles.spacer}>
+                </View>
+                <Text style={styles.balance}>
+                  ${item.outstandingBalance.toFixed(2)}
+                </Text>
+                <Text style={styles.balanceTitle}>
+                  Current Loan Outstanding
+                </Text>
+                <View style={styles.spacer}>
+                </View>
+                <View style={{flexGrow: 1, justifyContent: 'center'}}>
+                <Text style={styles.nonActiveText}>
+                Repay your loan early at any time or we'll automatically do it next paycheck.
+                </Text>
+                <View style={styles.spacer}>
+                </View>
+                <Button style={{display: 'flex',  alignSelf: 'center', backgroundColor: 'white', width: 300, borderRadius: 35}} onPress={() => {
+                  this.toggleConfirmRepaymentModal()
+                }}
+                >
+                  <Text style={{ color: '#21D0A5', textAlign: 'center', width: 300,}}>
+                    Repay now
+                  </Text>
+                </Button>
+
+                </View>
+
+              </View>
+            </View>
+            <View style={styles.spacer}>
+            </View>
           </View>
-        </View>
+        );
       }
 
 
@@ -317,16 +398,80 @@ $
   toggleConfirmTextModal = () => {
     const { member } = this.props;
     this.setState({ confirmTextModal: !this.state.confirmTextModal });
-    this.props.getUserData(member.token, () => {});
+    this.props.getUserData(member.token, (res) => {
+      const entryItems = this.state.entryItems.slice() //copy the array
+      entryItems[0].active = res.active; //execute the manipulations
+      entryItems[0].outstandingBalance = res.outstandingBalance;
+      this.setState({ entryItems })
+    });
   };
 
-  closeAllModals = () => {
+  sleep = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  closeFirstModals = () => {
     this.setState({
       isModalVisible: false,
-      isConfirmModalVisible: false,
-      baseModalVisible: false,
+    });
+    this.sleep(50).then(() => {
+      this.setState({
+        baseModalVisible: false,
+      })
+    })
+  };
+
+  closeSecondModals = () => {
+    const { member } = this.props;
+
+    this.setState({
       confirmTextModal: false,
+    });
+    this.sleep(50).then(() => {
+      this.setState({
+        isConfirmModalVisible: false,
       });
+      this.sleep(50).then(() => {
+        this.setState({
+          baseModalVisible: false,
+        });
+        console.log(this.state);
+        Actions.makeTransaction({ updateUser: () => {
+          this.props.getUserData(member.token, (res) => {
+            const entryItems = this.state.entryItems.slice() //copy the array
+            entryItems[0].active = res.active; //execute the manipulations
+            entryItems[0].outstandingBalance = res.outstandingBalance;
+            this.setState({ entryItems })
+          });
+        }})
+        console.log('move called');
+      })
+    })
+  }
+
+  redirectTransaction = () => {
+    this.setState({
+      confirmTextModal: false,
+    });
+    this.sleep(15).then(() => {
+      this.setState({
+        baseModalVisible: false,
+      })
+    })
+    this.sleep().then(() => {
+      Actions.makeTransaction({ updateUser: () => {
+        this.props.getUserData(member.token, (res) => {
+          const entryItems = this.state.entryItems.slice() //copy the array
+          entryItems[0].active = res.active; //execute the manipulations
+          entryItems[0].outstandingBalance = res.outstandingBalance;
+          this.setState({ entryItems })
+        });
+      }});
+    })
+  }
+
+  toggleConfirmRepaymentModal = () => {
+    this.setState({ confirmRepaymentModal: !this.state.confirmRepaymentModal});
   }
 
   render = () => {
@@ -335,8 +480,16 @@ $
     const { slider1ActiveSlide } = this.state;
     const { member } = this.props;
 
+    if (typeof member.bankStaging !== 'undefined' && !member.bankStaging) {
+      Actions.replace('linkBank');
+    }
+
     { this.renderJSXPieChartData(transactions); }
+<<<<<<< HEAD
     console.log('printing transactions in render');
+=======
+
+>>>>>>> acdb1debcc6c943247cbf672305692dbc9618755
     // Check that transactions are not null and that transactions are not an empty list
     if (transactions && Object.keys(transactions).length >= 2) {
       transactionsListItems = // console.log(transaction);
@@ -413,34 +566,64 @@ $
         <Modal
         backdropOpacity={0.2}
         isVisible={this.state.baseModalVisible}
+        useNativeDriver
         >
         <Modal
-        onSwipeComplete={() => this.setState({ isModalVisible: false })}
-        swipeDirection={['up']}
         backdropOpacity={0.0}
         isVisible={this.state.isModalVisible}
+        useNativeDriver
         >
         <View style={styles.modalContainer}>
           <View style={styles.modalBody}>
-            <Text style={styles.modalTitle}>Say Goodbye to Bank Overdraft Fees</Text>
-            <Button style={{display: 'flex',  alignSelf: 'center', backgroundColor: '#21D0A5', width: scale(200), borderRadius: 35}} onPress={() => {
-              this.props.enrollSubscription(member.token, () => {
-                this.toggleConfirmModal()
-              });
-              this.toggleModal();
-            }}
-            >
-              <Text style={{ color: 'white', textAlign: 'center', width: scale(200)}}>
-                Enroll Now
-              </Text>
-            </Button>
+          <TouchableOpacity style = {{ position: 'absolute', top: 15, right: 15 }} onPress={() => {
+            this.closeFirstModals();
+            console.log(this.state);
+          }}>
+            <Text style={{ fontSize: 30 }}>X</Text>
+          </TouchableOpacity>
+            <View style={{flex: 1}}>
+              <Text style={styles.modalTitle}>Say Goodbye to Bank Overdraft Fees</Text>
+              <View style={styles.spacer} />
+            </View>
+            <View style={{flexGrow: 1}}>
+              <View style={styles.textRow}>
+                <Emoji name="moneybag" style={{fontSize: 30}} />
+                <Text style={styles.modalText}>Borrow money when you need it </Text>
+              </View>
+              <View style={styles.textRow}>
+                <Emoji name="money_with_wings" style={{fontSize: 30}} />
+                <Text style={styles.modalText}>Recieve in your bank next day </Text>
+              </View>
+              <View style={styles.textRow}>
+                <Emoji name="man-gesturing-no" style={{fontSize: 30}} />
+                <Text style={styles.modalText}>Pay no interest </Text>
+              </View>
+              <View style={styles.textRow}>
+                <Emoji name="clock130" style={{fontSize: 30}} />
+                <Text style={styles.modalText}>Automatic repayment next paycheck </Text>
+              </View>
+            </View>
+            <View style={{flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+              <Text style={styles.modalText}> Subscribe for $9.99/month </Text>
+              <Button style={{display: 'flex',  alignSelf: 'center', backgroundColor: '#21D0A5', width: scale(200), borderRadius: 35}} onPress={() => {
+                this.props.enrollSubscription(member.token, () => {
+                  this.toggleConfirmModal()
+                });
+                this.toggleModal();
+              }}
+              >
+                <Text style={{ color: 'white', textAlign: 'center', width: scale(200)}}>
+                  Enroll Now
+                </Text>
+              </Button>
+            </View>
           </View>
         </View>
       </Modal>
       <Modal
-      onSwipeComplete={() => this.setState({ isConfirmModalVisible: false })}
       isVisible={this.state.isConfirmModalVisible}
       backdropOpacity={0.0}
+      useNativeDriver
       onModalShow={() => {
         Animated.timing(this.state.progress, {
           toValue: 1,
@@ -466,12 +649,19 @@ $
         <Modal
         backdropOpacity={0.0}
         isVisible={this.state.confirmTextModal}
+        useNativeDriver
         >
         <View style={styles.modalContainer}>
           <View style={styles.modalBody}>
             <Text style={styles.modalTitle}>Thanks for Enrolling</Text>
+            <View style={{flexGrow: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <View style={styles.textRow}>
+              <Emoji name="white_check_mark" style={{fontSize: 30}} />
+              <Text style={styles.modalText}>You're all set to borrow!</Text>
+            </View>
+            </View>
             <Button style={{display: 'flex',  alignSelf: 'center', backgroundColor: '#21D0A5', width: scale(200), borderRadius: 35}} onPress={() => {
-              this.closeAllModals();
+              this.closeSecondModals();
             }}
             >
               <Text style={{ color: 'white', textAlign: 'center', width: scale(200)}}>
@@ -483,6 +673,38 @@ $
       </Modal>
       </Modal>
       </Modal>
+      <Modal
+      backdropOpacity={0.2}
+      isVisible={this.state.confirmRepaymentModal}
+      useNativeDriver
+
+      >
+      <View style={styles.modalContainer}>
+        <View style={styles.modalBody}>
+          <Text style={styles.modalTitle}>Confirm Repayment</Text>
+          <View style={{flexGrow: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <View style={styles.textRow}>
+              <Emoji name="money_with_wings" style={{fontSize: 30}} />
+              <Text style={styles.modalText}>Repay ${this.state.entryItems[0].outstandingBalance}</Text>
+            </View>
+          </View>
+          <Button style={{display: 'flex',  alignSelf: 'center', backgroundColor: '#21D0A5', width: scale(200), borderRadius: 35}} onPress={() => {
+            this.props.transferAchToApp(member.token, (res) => {
+              const entryItems = this.state.entryItems.slice() //copy the array
+              entryItems[0].outstandingBalance = 0;
+              this.setState({ entryItems })
+              this.props.getLoanHistory(member.token, ()=>{console.log('LOANHISTORYCALLED')});
+            });
+            this.toggleConfirmRepaymentModal();
+          }}
+          >
+            <Text style={{ color: 'white', textAlign: 'center', width: scale(200)}}>
+              Confirm
+            </Text>
+          </Button>
+        </View>
+      </View>
+    </Modal>
         </Content>
         <FooterBar/>
       </Container>
@@ -495,11 +717,16 @@ const mapDispatchToProps = {
   getTransactions,
   enrollSubscription,
   getUserData,
+  transferAchToApp,
+  getLoanHistory
 };
 
 const mapStateToProps = state => (
 {
-    transactions: state.bank.transactions
+    transactions: state.bank.transactions,
+    balance: state.bank.balance,
+    active: state.member.active,
+    outstandingBalance: state.member.outstandingBalance
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

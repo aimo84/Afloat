@@ -24,5 +24,14 @@ export default StyleSheet.create({
     alignItems: 'center',
     width: viewportWidth,
     height: heighth,
+    elevation: 5,
   },
+  card: {
+    display: 'flex',
+    alignItems: 'center',
+    width: viewportWidth,
+    height: heighth,
+    elevation: 5,
+    backgroundColor: 'white',
+  }
 });
