@@ -11,5 +11,5 @@ export default {
   gaTrackingId: (devMode) ? 'UA-84284256-2' : 'UA-84284256-1',
 
   // TODO: Need to manually update this each time you run ngrok
-  ROOT_URL: 'https://647e2b84.ngrok.io',
+  ROOT_URL: 'https://a0fd4910.ngrok.io',
 };
