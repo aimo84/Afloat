@@ -74,6 +74,16 @@ export function getBalance(authToken, cb) {
     });
 }
 
+export function getBalanceOverTime(authToken, date, cb) {
+  // TODO: Find better way of beating this race condition
+  axios.post(`${ROOT_URL}/getBalanceRange`, { date }, { headers: { authorization: `Token ${authToken}` } })
+    .then((response) => {
+      console.log('HERE');
+      // console.log(JSON.stringify(response));
+      cb(response.data);
+    });
+}
+
 export function enrollSubscription(authToken, cb) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/enrollSubscription`, { }, { headers: { authorization: `Token ${authToken}` } })
