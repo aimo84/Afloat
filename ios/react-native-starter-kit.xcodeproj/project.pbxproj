@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		11ED7A5019F04AD1BB92CB8E /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BBA3E67CA76B402F9F4B2BB1 /* EvilIcons.ttf */; };
-		198C2D0C229CCEAA00C2DB45 /* splash_screen2.png in Resources */ = {isa = PBXBuildFile; fileRef = 198C2D0B229CCEA900C2DB45 /* splash_screen2.png */; };
+		19697288229E172400BB0E45 /* splash_screen_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 19697287229E172400BB0E45 /* splash_screen_2.png */; };
 		19B7B27047474109817D9D25 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8279DC10854D480190211AEE /* Roboto.ttf */; };
 		1B8C9F8CB1FB4518A79C5553 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3F015B28619E46D68ECC40B8 /* Entypo.ttf */; };
 		23182B4620B649D586D8BC7B /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FE6B981870F44955B225B9F3 /* MaterialIcons.ttf */; };
@@ -44,7 +44,7 @@
 		0170A89FACF2428DB9219F3E /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/native-base/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		01940E4EA4AD4EA6AF2D4C27 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		142899BB712D4CD493983F21 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/native-base/Fonts/Feather.ttf"; sourceTree = "<group>"; };
-		198C2D0B229CCEA900C2DB45 /* splash_screen2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = splash_screen2.png; path = ../../../../../Downloads/splash_screen2.png; sourceTree = "<group>"; };
+		19697287229E172400BB0E45 /* splash_screen_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_screen_2.png; sourceTree = "<group>"; };
 		1D915E8D20BD479DB41AF3C1 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
 		2C1548D9E4CB1AEFA5CCAE6D /* Pods-react-native-starter-kit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-react-native-starter-kit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-react-native-starter-kit/Pods-react-native-starter-kit.debug.xcconfig"; sourceTree = "<group>"; };
 		3F015B28619E46D68ECC40B8 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
@@ -143,7 +143,7 @@
 			children = (
 				B5693E8F1FABD46800307FA4 /* launch_background_image.png */,
 				B5693E901FABD46800307FA4 /* launch_icon.png */,
-				198C2D0B229CCEA900C2DB45 /* splash_screen2.png */,
+				19697287229E172400BB0E45 /* splash_screen_2.png */,
 				B5693E8D1FABD16A00307FA4 /* LaunchScreen.xib */,
 				B5DB047E1F3A684600E91581 /* shell-app-manifest.json */,
 				B5DB047F1F3A684600E91581 /* shell-app.bundle */,
@@ -257,11 +257,11 @@
 				1B8C9F8CB1FB4518A79C5553 /* Entypo.ttf in Resources */,
 				11ED7A5019F04AD1BB92CB8E /* EvilIcons.ttf in Resources */,
 				9C4183B6E730457E9CB7D765 /* Feather.ttf in Resources */,
-				198C2D0C229CCEAA00C2DB45 /* splash_screen2.png in Resources */,
 				FDADD3638AFB4C0EB74309F2 /* FontAwesome.ttf in Resources */,
 				D2DB54D7DD4B4D77A25CBAF6 /* FontAwesome5_Brands.ttf in Resources */,
 				ABFEFE24A9D44C01A939AC33 /* FontAwesome5_Regular.ttf in Resources */,
 				741BA50008AA4863B3923AAE /* FontAwesome5_Solid.ttf in Resources */,
+				19697288229E172400BB0E45 /* splash_screen_2.png in Resources */,
 				FA8769324FB440E2947D1EFE /* Foundation.ttf in Resources */,
 				BFF4ABAD082844E99415750C /* Ionicons.ttf in Resources */,
 				81E680395C5344F69383EDEC /* MaterialCommunityIcons.ttf in Resources */,
