@@ -408,7 +408,7 @@ export default ScaledSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: '10%'
+    marginHorizontal: wp(10),
   },
   emailVerificationText: {
     marginTop: '30%',

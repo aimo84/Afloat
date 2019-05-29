@@ -10,5 +10,5 @@ export default {
   // Google Analytics - uses a 'dev' account while we're testing
   gaTrackingId: (devMode) ? 'UA-84284256-2' : 'UA-84284256-1',
 
-  ROOT_URL: 'https://quantwebdev.me',
+  ROOT_URL: 'http://0.0.0.0:3000',
 };
