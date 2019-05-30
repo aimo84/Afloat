@@ -129,6 +129,32 @@ export function login(formData) {
   });
 }
 
+export function updateEmail(formData) {
+  const {
+    email,
+    token,
+  } = formData;
+  return dispatch => new Promise(async (resolve, reject) => {
+    await statusMessage(dispatch, 'loading', true);
+    // Validation checks
+    if (!email) return reject({ errorMessage: ErrorMessages.missingEmail });
+    // if (!password) return reject({ message: ErrorMessages.missingPassword });
+
+    axios.post(`${ROOT_URL}/updateEmail`, { email },
+      { headers: { authorization: `Token ${token}` } }).then((response) => {
+      // getUserData(dispatch);
+      const userDetails = response.data.user;
+      return resolve(dispatch({
+        type: 'UPDATE_EMAIL',
+        data: userDetails,
+      }));
+    }).catch(reject);
+  }).catch(async (error) => {
+    await statusMessage(dispatch, 'loading', false);
+    throw error;
+  });
+}
+
 /**
   * Reset Password
   */

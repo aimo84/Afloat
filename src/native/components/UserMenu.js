@@ -79,6 +79,15 @@ Email:
                 <Text style={{ fontWeight: 'normal' }}>
                   {member.email}
                 </Text>
+                {' '}
+                <Icon
+                  name="md-create"
+                  onPress={() => {
+                    console.log('onpressed 99x');
+                    Actions.editEmail();
+                  }}
+                  style={styles.emailEditIcon}
+                />
               </Text>
             </Body>
           </ListItem>

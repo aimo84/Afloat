@@ -26,6 +26,18 @@ export default function userReducer(state = initialState, action) {
       }
       return initialState;
     }
+    case 'UPDATE_EMAIL': {
+      if (action.data) {
+        console.log('UPDATE EMAIL');
+        // console.log(action.data);
+        return {
+          ...state,
+          loading: false,
+          email: action.data.email,
+        };
+      }
+      return initialState;
+    }
     case 'UPDATE_USER': {
       console.log('dispatch recieved');
       // console.log(action.data);
