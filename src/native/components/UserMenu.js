@@ -70,7 +70,13 @@ render = () => {
               <Text style={styles.UserMenuItems}>Profile</Text>
             </Body>
           </ListItem>
-          <ListItem avatar>
+          <ListItem
+            onPress={() => {
+              console.log('onpressed 99x');
+              Actions.editEmail();
+            }}
+            avatar
+          >
             <Left />
             <Body style={{ paddingLeft: '5%' }}>
               <Text style={styles.UserMenuItems}>
@@ -82,10 +88,6 @@ Email:
                 {' '}
                 <Icon
                   name="md-create"
-                  onPress={() => {
-                    console.log('onpressed 99x');
-                    Actions.editEmail();
-                  }}
                   style={styles.emailEditIcon}
                 />
               </Text>

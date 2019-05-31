@@ -34,7 +34,9 @@ class EditEmailPage extends React.Component {
     const { member } = this.props;
     this.state = {
       email: member.email,
+      token: member.token,
       error: '',
+      successMessage: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -52,21 +54,24 @@ class EditEmailPage extends React.Component {
     console.log('before component call');
     onFormSubmit(this.state)
       .then(() => {
+        this.setState({ successMessage: 'Email Updated', error: '' });
       })
       .catch((err) => {
         console.log('handleSubmitError', err);
-        this.setState({ error: err.errorMessage || 'Error Updating Email' }); throw err;
+        this.setState({ successMessage: '', error: err.errorMessage || 'Error Updating Email' }); throw err;
       });
   }
 
   render() {
-    const { loading, error } = this.state;
+    const { loading, error, successMessage } = this.state;
     const { email } = this.state;
     console.log('signup');
     console.log(this.props);
-    let errorMessage = null;
+    let message = null;
     if (error) {
-      errorMessage = <Messages message={error} />;
+      message = <Messages message={error} />;
+    } else if (successMessage) {
+      message = <Messages message={successMessage} type="success" />;
     }
     if (loading) return <Loading />;
     return (
@@ -79,7 +84,7 @@ class EditEmailPage extends React.Component {
             title="Update Email"
             style={{ fontFamily: 'Roboto' }}
           />
-          {errorMessage}
+          {message}
           <Form>
 
             <Item stackedLabel>

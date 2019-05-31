@@ -124,7 +124,7 @@ const Index = (
         icon={() => <Icon name="add-circle" {...DefaultProps.icons} />}
         {...DefaultProps.navbarProps}
       >
-        <Scene key="editEmail" component={Auth(EditEmailPage)} />
+        <Scene back key="editEmail" component={Auth(EditEmailPage)} />
       </Stack>
 
       <Stack
