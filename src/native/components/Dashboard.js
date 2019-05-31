@@ -155,15 +155,6 @@ class Dashboard extends Component {
         // Calculate correct next date
         let tmp = dateFromDate(current, -1);
 
-        // If next isn't correct, insert blank record
-        // if (next.getTime() !== tmp.getTime()) {
-        //   balanceOverTimeData.splice(currentIndex + 1, 0, {
-        //     date: dateFormat(tmp, 'yyyy-mm-dd'),
-        //     endBalance: balanceOverTimeData[currentIndex + 1].endBalance,
-        //     inwardFlow: 0,
-        //     outwardFlow: 0,
-        //   });
-        // }
         currentIndex += 1;
       }
 
