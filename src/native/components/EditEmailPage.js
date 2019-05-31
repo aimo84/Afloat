@@ -25,10 +25,6 @@ function wph(percentage) {
 }
 
 class EditEmailPage extends React.Component {
-  static defaultProps = {
-    error: null,
-  }
-
   constructor(props) {
     super(props);
     const { member } = this.props;
@@ -51,7 +47,6 @@ class EditEmailPage extends React.Component {
 
   handleSubmit = () => {
     const { onFormSubmit } = this.props;
-    console.log('before component call');
     onFormSubmit(this.state)
       .then(() => {
         this.setState({ successMessage: 'Email Updated', error: '' });
@@ -65,8 +60,6 @@ class EditEmailPage extends React.Component {
   render() {
     const { loading, error, successMessage } = this.state;
     const { email } = this.state;
-    console.log('signup');
-    console.log(this.props);
     let message = null;
     if (error) {
       message = <Messages message={error} />;

@@ -72,7 +72,6 @@ render = () => {
           </ListItem>
           <ListItem
             onPress={() => {
-              console.log('onpressed 99x');
               Actions.editEmail();
             }}
             avatar
