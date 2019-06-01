@@ -3,7 +3,7 @@
 
 # Afloat
 
-React Native frontend for an app for providing payday cash advances to American workers. Visit [here](https://github.com/dartmouth-cs98/19w-quantweb-backend) for the backend.
+React Native for an app for providing payday cash advances to American workers. Visit [here](https://github.com/dartmouth-cs98/19w-quantweb-backend) for the backend.
 
 
 ## Architecture
@@ -34,7 +34,9 @@ yarn start
 6) Click the play icon to build and run the the app. (Picking a simulator if none are selected)
 7) A simulator should open, running the app
 
-
+## Branches
+* `master` is our stable branch
+* `joe/dev` is Joe's dev branch, currently holding beta features (email verification, email updating, lazy loading transactions) that have not been merged with master
 ## Authors
 
 Tyler Burnam, Azhar Hussain, Deven Orie, Joe Connolly
