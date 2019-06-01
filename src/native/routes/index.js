@@ -30,7 +30,7 @@ import DashboardComponent from '../components/Dashboard';
 import MakeTransactionComponent from '../components/MakeTransaction';
 import LoanHistoryComponent from '../components/LoanHistory';
 import UserMenuComponent from '../components/UserMenu';
-
+import EditEmailPage from '../components/EditEmailPage';
 
 const Index = (
   <Stack hideNavBar>
@@ -116,6 +116,15 @@ const Index = (
         <Scene key="mainUserMenu" component={Auth(UserMenuComponent)} />
         <Scene key="settings" component={Auth(MakeTransactionComponent)} />
 
+      </Stack>
+
+      <Stack
+        key="editEmail"
+        title={AppConfig.appName.toUpperCase()}
+        icon={() => <Icon name="add-circle" {...DefaultProps.icons} />}
+        {...DefaultProps.navbarProps}
+      >
+        <Scene back key="editEmail" component={Auth(EditEmailPage)} />
       </Stack>
 
       <Stack

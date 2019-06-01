@@ -70,7 +70,12 @@ render = () => {
               <Text style={styles.UserMenuItems}>Profile</Text>
             </Body>
           </ListItem>
-          <ListItem avatar>
+          <ListItem
+            onPress={() => {
+              Actions.editEmail();
+            }}
+            avatar
+          >
             <Left />
             <Body style={{ paddingLeft: '5%' }}>
               <Text style={styles.UserMenuItems}>
@@ -79,6 +84,11 @@ Email:
                 <Text style={{ fontWeight: 'normal' }}>
                   {member.email}
                 </Text>
+                {' '}
+                <Icon
+                  name="md-create"
+                  style={styles.emailEditIcon}
+                />
               </Text>
             </Body>
           </ListItem>
