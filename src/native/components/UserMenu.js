@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import {
-  View, Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text, Icon, Switch,
+  View, Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text, Icon, Switch,CheckBox,
 } from 'native-base';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
@@ -27,6 +27,13 @@ const screenWidth = Dimensions.get('window').width;
 
 class UserMenu extends Component {
   // TODO check if match propType is required, if not req. remove it
+  constructor(props) {
+    super(props);
+    this.state = {
+      check1:true,
+      check2:false
+    }
+  }
   static propTypes = {
     match: PropTypes.shape({
       params: PropTypes.shape({}),
@@ -44,6 +51,14 @@ class UserMenu extends Component {
     this.props.logout(() => {
       Actions.replace('entry');
     });
+  }
+
+  savings_selected() {
+    console.log("SAVINGS")
+    this.setState({
+      check1:!this.state.check1,
+      check2:!this.state.check2
+    })
   }
 
 render = () => {
@@ -70,7 +85,12 @@ render = () => {
               <Text style={styles.UserMenuItems}>Profile</Text>
             </Body>
           </ListItem>
-          <ListItem avatar>
+          <ListItem
+            onPress={() => {
+              Actions.editEmail();
+            }}
+            avatar
+          >
             <Left />
             <Body style={{ paddingLeft: '5%' }}>
               <Text style={styles.UserMenuItems}>
@@ -79,19 +99,32 @@ Email:
                 <Text style={{ fontWeight: 'normal' }}>
                   {member.email}
                 </Text>
+                {' '}
+                <Icon
+                  name="md-create"
+                  style={styles.emailEditIcon}
+                />
               </Text>
             </Body>
           </ListItem>
           <ListItem avatar>
-            <Left />
-            <Body style={{ paddingLeft: '5%' }}>
-              <Text style={styles.UserMenuItems}>
-Bank:
-                {'  '}
-                <Text style={{ fontWeight: 'normal' }}>
-                  Plaid Checking - XXXXXXX0000
-                </Text>
-              </Text>
+            <Left>
+              <Icon name="md-cash" style={styles.footerIcons} />
+            </Left>
+            <Body>
+              <Text style={styles.UserMenuItems}>Bank</Text>
+            </Body>
+          </ListItem>
+          <ListItem style={{ paddingLeft: '10%' }}>
+            <CheckBox onPress={() => this.savings_selected()} checked={this.state.check1} color="green"/>
+            <Body>
+              <Text>Savings - XXXXXXX0000</Text>
+            </Body>
+          </ListItem>
+          <ListItem style={{ paddingLeft: '10%' }}>
+            <CheckBox onPress={() => this.savings_selected()} checked={this.state.check2} color="green"/>
+            <Body >
+              <Text>Checking - XXXXXXX1111</Text>
             </Body>
           </ListItem>
           <ListItem onPress={() => this.logout()} avatar>

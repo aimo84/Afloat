@@ -29,7 +29,7 @@ class Login extends Component {
       .then(() => {
         console.log('here');
       })
-      .catch((err) => { this.setState({ errorMessage: err }); throw err; });
+      .catch((err) => { this.setState({ errorMessage: 'Error Logging Up' }); throw err; });
   }
 
   render = () => {

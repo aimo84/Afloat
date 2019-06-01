@@ -168,7 +168,7 @@ class MakeTransaction extends Component {
                 Deducted from your paycheck:
           </Text>
           <Text style={styles.bigNoticeText}>
-                Apr 30
+                May 30
           </Text>
           <View style={{ height: verticalScale(40) }} />
         </View>

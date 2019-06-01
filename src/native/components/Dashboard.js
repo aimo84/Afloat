@@ -104,7 +104,9 @@ class Dashboard extends Component {
      this.animation.play();
     }
     const { member } = this.props;
-
+    if (!member.verified) {
+      Actions.replace('emailVerification');
+    }
 
     const balance = this.props.balance;
     const active = this.props.active;
@@ -129,7 +131,7 @@ class Dashboard extends Component {
         let outwardFlow = val.outwardCashFlow === undefined ? 0 : val.outwardCashFlow;
         let inwardFlow = val.inwardCashFlow === undefined ? 0 : val.inwardCashFlow;
         return {
-          date: val.date, 
+          date: val.date,
           outwardFlow,
           inwardFlow,
           endBalance: val.endBalance,
@@ -143,7 +145,7 @@ class Dashboard extends Component {
       let currentIndex = 0;
       // Insert blank records between dates
       while (currentIndex < balanceOverTimeData.length - 1) {
-        
+
         // Get current date
         let current = new Date(dateFormat(balanceOverTimeData[currentIndex].date, 'isoDateTime'));
         current.setDate(current.getDate() + 1);
@@ -151,19 +153,10 @@ class Dashboard extends Component {
         // Get next date
         let next = new Date(dateFormat(balanceOverTimeData[currentIndex + 1].date, 'isoDateTime'));
         next.setDate(next.getDate() + 1);
-        
+
         // Calculate correct next date
         let tmp = dateFromDate(current, -1);
-        
-        // If next isn't correct, insert blank record
-        if (next.getTime() !== tmp.getTime()) {
-          balanceOverTimeData.splice(currentIndex + 1, 0, {
-            date: dateFormat(tmp, 'yyyy-mm-dd'),
-            endBalance: balanceOverTimeData[currentIndex + 1].endBalance,
-            inwardFlow: 0,
-            outwardFlow: 0,
-          });
-        }
+
         currentIndex += 1;
       }
 
@@ -264,7 +257,7 @@ class Dashboard extends Component {
               <View style={styles.spacer}>
               </View>
             </View>
-          );   
+          );
       } else if (item.active && item.outstandingBalance === 0) {
         return (
           <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
@@ -363,7 +356,7 @@ class Dashboard extends Component {
 
     } if (index == 1) {
       let xTickValues = this.state.balanceOverTimeData.filter((d, i) => i % 5 === 0);
-      if (this.state.balanceOverTimeData.length > 1) {      
+      if (this.state.balanceOverTimeData.length > 1) {
         return (
           <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
             <View style={styles.chartSlide}>
@@ -434,7 +427,7 @@ class Dashboard extends Component {
     }
 
     let xTickValues = this.state.balanceOverTimeData.filter((d, i) => i % 5 === 0);
-    if (this.state.balanceOverTimeData.length > 1) {      
+    if (this.state.balanceOverTimeData.length > 1) {
       return (
         <View style={{height: verticalScale(300), display: 'flex', flex: 1}}>
           <View style={styles.chartSlide}>
