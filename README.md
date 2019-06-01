@@ -1,9 +1,9 @@
+
+
+
 # Afloat
 
 React Native frontend for an app for providing payday cash advances to American workers. Visit [here](https://github.com/dartmouth-cs98/19w-quantweb-backend) for the backend.
-
-
----
 
 
 ## Architecture
@@ -21,7 +21,8 @@ React Native frontend for an app for providing payday cash advances to American 
 
 1) Clone the repo
 2) Navigate to the repo's root folder. 
-3) Run the following commands:
+3) You can specify whether you want to run the backend locally or hosted by changing `ROOT_URL` in `src/constants/config.js` to `http://localhost:3000` or `https://quantwebdev.me`, respectively
+4) Run the following commands:
 ````
 # install depencies
 yarn
