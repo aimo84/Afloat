@@ -1,10 +1,19 @@
 /* eslint-disable */
-import { StyleSheet, Dimensions, Platform } from 'react-native';
-import { ScaledSheet } from 'react-native-size-matters';
+import {
+  StyleSheet,
+  Dimensions,
+  Platform
+} from 'react-native';
+import {
+  ScaledSheet
+} from 'react-native-size-matters';
 
 
 const IS_IOS = Platform.OS === 'ios';
-const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+const {
+  width: viewportWidth,
+  height: viewportHeight
+} = Dimensions.get('window');
 
 function wp(percentage) {
   const value = (percentage * viewportWidth) / 100;
@@ -29,8 +38,7 @@ export default ScaledSheet.create({
     marginRight,
     marginLeft: marginRight,
   },
-  balanceText: {
-  },
+  balanceText: {},
   dayText: {
     fontWeight: 'bold',
     fontSize: 18,
@@ -132,8 +140,8 @@ export default ScaledSheet.create({
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: {
-    	width: 0,
-    	height: 2,
+      width: 0,
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
@@ -193,8 +201,8 @@ export default ScaledSheet.create({
     fontFamily: 'Lato_bold',
     fontSize: viewportWidth * 0.09,
     color: '#000000',
-    alignItems:'center',
-    justifyContent:'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   nonActiveText: {
     fontFamily: 'Lato_regular',
@@ -255,10 +263,10 @@ export default ScaledSheet.create({
     marginTop: 20,
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
-    borderColor:"#8b8e8b",
+    borderColor: "#8b8e8b",
     borderWidth: 2,
     shadowColor: "#000",
-    alignItems:'center',
+    alignItems: 'center',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -275,24 +283,24 @@ export default ScaledSheet.create({
   },
   UserIconStylingView: {
     height: 150,
-    alignItems:'center',
-    justifyContent:'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginVertical: 25
   },
-  UserIconImage:{
+  UserIconImage: {
     width: 120,
     height: 120,
-    alignItems:'center',
-    justifyContent:'center',
-    borderRadius:60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 60,
     marginVertical: 10
   },
-  UserNameStyling:{
+  UserNameStyling: {
     fontWeight: 'bold',
     fontFamily: 'AvenirNext-Heavy',
     fontSize: 24
   },
-  UserMenuItems:{
+  UserMenuItems: {
     fontWeight: 'bold',
     fontFamily: 'Avenir-Light',
     fontSize: 20
@@ -399,4 +407,27 @@ export default ScaledSheet.create({
   submitButtonText: {
     fontSize: '18@ms',
   },
+  centerContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: wp(10),
+  },
+  emailVerificationText: {
+    marginTop: '30%',
+    marginBottom: '105%',
+    // marginHorizontal: '10%',
+    textAlign: 'center',
+  },
+  nextButton: {
+    // flex: 1,
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    // marginTop: '40%',
+    // width: '60%',
+    alignSelf:'center',
+  },
+  emailErrorText: {
+    color: 'red',
+  }
 });

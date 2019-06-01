@@ -104,7 +104,9 @@ class Dashboard extends Component {
      this.animation.play();
     }
     const { member } = this.props;
-
+    if (!member.verified) {
+      Actions.replace('emailVerification');
+    }
 
     const balance = this.props.balance;
     const active = this.props.active;
@@ -670,7 +672,6 @@ $
     }
 
     { this.renderJSXPieChartData(transactions); }
-
     // Check that transactions are not null and that transactions are not an empty list
     if (transactions && Object.keys(transactions).length >= 2) {
       transactionsListItems = // console.log(transaction);

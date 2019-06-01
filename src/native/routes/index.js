@@ -30,6 +30,8 @@ import DashboardComponent from '../components/Dashboard';
 import MakeTransactionComponent from '../components/MakeTransaction';
 import LoanHistoryComponent from '../components/LoanHistory';
 import UserMenuComponent from '../components/UserMenu';
+import EmailVerificationPage from '../components/EmailVerificationPage';
+
 import EditEmailPage from '../components/EditEmailPage';
 
 const Index = (
@@ -84,6 +86,14 @@ const Index = (
             Layout={LandingComponent}
           />
         </Stack>
+      </Stack>
+      <Stack
+        key="emailVerification"
+        title="Email Verification"
+        navigationBarStyle={{ fontSize: 30 }}
+        {...DefaultProps.navbarProps}
+      >
+        <Scene key="emailVerification" component={Auth(EmailVerificationPage)} />
       </Stack>
       <Stack
         key="mainHome"
