@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01A572B2229F199400AC545B /* launchhere.png in Resources */ = {isa = PBXBuildFile; fileRef = 01A572B1229F199400AC545B /* launchhere.png */; };
 		11ED7A5019F04AD1BB92CB8E /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BBA3E67CA76B402F9F4B2BB1 /* EvilIcons.ttf */; };
 		19697288229E172400BB0E45 /* splash_screen_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 19697287229E172400BB0E45 /* splash_screen_2.png */; };
 		19B7B27047474109817D9D25 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8279DC10854D480190211AEE /* Roboto.ttf */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		0170A89FACF2428DB9219F3E /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/native-base/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		01940E4EA4AD4EA6AF2D4C27 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
+		01A572B1229F199400AC545B /* launchhere.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launchhere.png; sourceTree = "<group>"; };
 		142899BB712D4CD493983F21 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/native-base/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		19697287229E172400BB0E45 /* splash_screen_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash_screen_2.png; sourceTree = "<group>"; };
 		1D915E8D20BD479DB41AF3C1 /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 		B563865B1DB96A5E00A0598C /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
+				01A572B1229F199400AC545B /* launchhere.png */,
 				B5693E8F1FABD46800307FA4 /* launch_background_image.png */,
 				B5693E901FABD46800307FA4 /* launch_icon.png */,
 				19697287229E172400BB0E45 /* splash_screen_2.png */,
@@ -247,6 +250,7 @@
 				B5693E911FABD46800307FA4 /* launch_background_image.png in Resources */,
 				B501732B1DC01252003445D9 /* EXShell.plist in Resources */,
 				B5CFBF4F1EDE419400B4BE24 /* EXBuildConstants.plist in Resources */,
+				01A572B2229F199400AC545B /* launchhere.png in Resources */,
 				B56386671DB9994300A0598C /* EXSDKVersions.plist in Resources */,
 				B5693E921FABD46800307FA4 /* launch_icon.png in Resources */,
 				B5693E8E1FABD16A00307FA4 /* LaunchScreen.xib in Resources */,

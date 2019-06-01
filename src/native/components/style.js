@@ -305,6 +305,9 @@ export default ScaledSheet.create({
     fontFamily: 'Avenir-Light',
     fontSize: 20
   },
+  emailEditIcon: {
+    fontSize: 20,
+  },
   transactionHeader: {
     marginLeft: '3%',
     fontSize: viewportWidth * 0.07,
