@@ -34,6 +34,25 @@ yarn start
 6) Click the play icon to build and run the the app. (Picking a simulator if none are selected)
 7) A simulator should open, running the app
 
+## Deployment
+Testflight
+1) Set up iOS Certificates for Development & Production on Apple Developer Account
+2) Set up iOS Provisioning Profiles for Development & Production on Apple Developer Account
+3) Download Generated Profiles onto Xcode
+4) Change Bundle identifier on Xcode to the identifier used for the certificates
+5) Set up Itunes Connect with the Afloat Bundle Identifier
+6) In Xcode General Select Correct Development Team and Change Devices to Iphone
+7) Run the following command:
+````
+# Creates the bundle and publishing packages for iOS 
+expo publish
+````
+8) Go into Xcode Build Phases, Click Prepare Expo, and select the box Run Script only when installing
+9) Select Xcode device as Generic iOS Device, Select Product, then Select Archive
+10) Select Upload App to App Store after Archive is Complete
+11) Add testers to the uploaded build under TestFlight on Itunes Connect
+12) Testers will get an invitation to downlod the app from the TestFlight App Store
+
 ## Branches
 * `master` is our stable branch
 * `joe/dev` is Joe's dev branch, currently holding beta features (email verification, email updating, lazy loading transactions) that have not been merged with master
