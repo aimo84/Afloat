@@ -30,7 +30,9 @@ import DashboardComponent from '../components/Dashboard';
 import MakeTransactionComponent from '../components/MakeTransaction';
 import LoanHistoryComponent from '../components/LoanHistory';
 import UserMenuComponent from '../components/UserMenu';
+import EmailVerificationPage from '../components/EmailVerificationPage';
 
+import EditEmailPage from '../components/EditEmailPage';
 
 const Index = (
   <Stack hideNavBar>
@@ -86,6 +88,14 @@ const Index = (
         </Stack>
       </Stack>
       <Stack
+        key="emailVerification"
+        title="Email Verification"
+        navigationBarStyle={{ fontSize: 30 }}
+        {...DefaultProps.navbarProps}
+      >
+        <Scene key="emailVerification" component={Auth(EmailVerificationPage)} />
+      </Stack>
+      <Stack
         key="mainHome"
         title={AppConfig.appName.toUpperCase()}
         navigationBarStyle={{ fontSize: 30 }}
@@ -116,6 +126,15 @@ const Index = (
         <Scene key="mainUserMenu" component={Auth(UserMenuComponent)} />
         <Scene key="settings" component={Auth(MakeTransactionComponent)} />
 
+      </Stack>
+
+      <Stack
+        key="editEmail"
+        title={AppConfig.appName.toUpperCase()}
+        icon={() => <Icon name="add-circle" {...DefaultProps.icons} />}
+        {...DefaultProps.navbarProps}
+      >
+        <Scene back key="editEmail" component={Auth(EditEmailPage)} />
       </Stack>
 
       <Stack

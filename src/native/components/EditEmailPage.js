@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Container, Content, Text, Form, Item, Label, Input, Button,
+  Container, Content, Text, Form, Item, Label, Input, Button, View,
 } from 'native-base';
 import { Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux';
 import Loading from './Loading';
 import Messages from './Messages';
 import Header from './Header';
 import Spacer from './Spacer';
+import { updateEmail } from '../../actions/member';
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
@@ -22,25 +24,15 @@ function wph(percentage) {
   return Math.round(value);
 }
 
-class SignUp extends React.Component {
-  static propTypes = {
-    error: PropTypes.string,
-    loading: PropTypes.bool.isRequired,
-    onFormSubmit: PropTypes.func.isRequired,
-  }
-
-  static defaultProps = {
-    error: null,
-  }
-
+class EditEmailPage extends React.Component {
   constructor(props) {
     super(props);
+    const { member } = this.props;
     this.state = {
-      firstname: '',
-      lastname: '',
-      email: '',
-      password: '',
-      password2: '',
+      email: member.email,
+      token: member.token,
+      error: '',
+      successMessage: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -55,19 +47,26 @@ class SignUp extends React.Component {
 
   handleSubmit = () => {
     const { onFormSubmit } = this.props;
-    console.log('before component call');
     onFormSubmit(this.state)
       .then(() => {
-        console.log('after component call');
-        Actions.replace('emailVerification');
+        this.setState({ successMessage: 'Email Updated', error: '' });
       })
-      .catch(e => console.log(`Error: ${e}`));
+      .catch((err) => {
+        console.log('handleSubmitError', err);
+        this.setState({ successMessage: '', error: err.errorMessage || 'Error Updating Email' }); throw err;
+      });
   }
 
   render() {
-    const { loading, error } = this.props;
+    const { loading, error, successMessage } = this.state;
+    const { email } = this.state;
+    let message = null;
+    if (error) {
+      message = <Messages message={error} />;
+    } else if (successMessage) {
+      message = <Messages message={successMessage} type="success" />;
+    }
     if (loading) return <Loading />;
-
     return (
       <Container>
         <Content
@@ -75,27 +74,11 @@ class SignUp extends React.Component {
           style={{ backgroundColor: 'white' }}
         >
           <Header
-            title="Sign Up"
-            content="Never pay an overdraft fee again!"
+            title="Update Email"
             style={{ fontFamily: 'Roboto' }}
           />
-
-          {error && <Messages message={error} />}
-
+          {message}
           <Form>
-            <Item stackedLabel>
-              <Label>
-                First Name
-              </Label>
-              <Input onChangeText={v => this.handleChange('firstname', v)} />
-            </Item>
-
-            <Item stackedLabel>
-              <Label>
-                Last Name
-              </Label>
-              <Input onChangeText={v => this.handleChange('lastname', v)} />
-            </Item>
 
             <Item stackedLabel>
               <Label>
@@ -103,23 +86,10 @@ class SignUp extends React.Component {
               </Label>
               <Input
                 autoCapitalize="none"
+                value={email}
                 keyboardType="email-address"
                 onChangeText={v => this.handleChange('email', v)}
               />
-            </Item>
-
-            <Item stackedLabel>
-              <Label>
-                Password
-              </Label>
-              <Input secureTextEntry onChangeText={v => this.handleChange('password', v)} />
-            </Item>
-
-            <Item stackedLabel>
-              <Label>
-                Confirm Password
-              </Label>
-              <Input secureTextEntry onChangeText={v => this.handleChange('password2', v)} />
             </Item>
 
             <Spacer size={20} />
@@ -137,7 +107,7 @@ class SignUp extends React.Component {
               }}
             >
               <Text>
-                Sign Up
+                Save
               </Text>
             </Button>
           </Form>
@@ -147,4 +117,8 @@ class SignUp extends React.Component {
   }
 }
 
-export default SignUp;
+const mapDispatchToProps = {
+  onFormSubmit: updateEmail,
+};
+
+export default connect(null, mapDispatchToProps)(EditEmailPage);

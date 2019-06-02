@@ -40,7 +40,6 @@ class Transactions extends Component {
         this.setState({ transactions: res });
         // eslint-disable-next-line no-unused-vars
         const { transactions } = this.state;
-        // console.log(transactions);
       });
   }
 
