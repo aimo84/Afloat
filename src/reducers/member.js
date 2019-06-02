@@ -17,23 +17,11 @@ export default function userReducer(state = initialState, action) {
           email: action.data.email,
           bankSet: action.data.bankSet,
           firstname: action.data.firstname,
-          verified: action.data.verified,
           lastname: action.data.lastname,
+          emailVerified: false,
           active: action.data.active,
           outstandingBalance: action.data.outstandingBalance,
           subscriptionEnrolled: action.data.subscriptionEnrolled,
-        };
-      }
-      return initialState;
-    }
-    case 'UPDATE_EMAIL': {
-      if (action.data) {
-        console.log('UPDATE EMAIL');
-        // console.log(action.data);
-        return {
-          ...state,
-          loading: false,
-          email: action.data.email,
         };
       }
       return initialState;
@@ -49,7 +37,7 @@ export default function userReducer(state = initialState, action) {
           outstandingBalance: action.data.outstandingBalance,
           subscriptionEnrolled: action.data.subscriptionEnrolled,
           active: action.data.active,
-          verified: action.data.verified,
+          emailVerified: false,
         };
       }
       return initialState;

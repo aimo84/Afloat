@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import Animation from 'lottie-react-native';
 import Image from 'react-native-scalable-image';
-import { Animated, FlatList, TouchableOpacity } from 'react-native';
+import { Animated, TouchableOpacity } from 'react-native';
 import {
   View, Segment, Picker, Form, Container, Content, H1, H2, H3,
   Header, List, ListItem, Button, Left, Body, Right, Thumbnail,
@@ -14,7 +14,7 @@ import Modal from "react-native-modal";
 import Emoji from 'react-native-emoji';
 
 import { enrollSubscription, getLoanHistory } from '../../actions/bank';
-import TransactionList from './TransactionList';
+
 import { Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import PropTypes from 'prop-types';
@@ -104,9 +104,7 @@ class Dashboard extends Component {
      this.animation.play();
     }
     const { member } = this.props;
-    if (!member.verified) {
-      Actions.replace('emailVerification');
-    }
+
 
     const balance = this.props.balance;
     const active = this.props.active;
@@ -197,6 +195,58 @@ class Dashboard extends Component {
       });
     });
 
+  }
+
+  getRandom = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return (Math.floor(Math.random() * (max - min + 1)) + min).toFixed(2);
+  }
+
+  renderJSXAmount(transactionAmount) {
+    if (transactionAmount <= 0) {
+      return (
+        <Text style={styles.redTransactionText}>
+$
+          {(transactionAmount*-1).toFixed(2)}
+        </Text>
+      );
+    }
+    return (
+      <Text style={styles.greenTransactionText}>
+-$
+        {transactionAmount.toFixed(2)}
+      </Text>
+    );
+  }
+
+  formatDate(transactionDate) {
+    const month = new Array();
+    month[1] = 'January';
+    month[2] = 'February';
+    month[3] = 'March';
+    month[4] = 'April';
+    month[5] = 'May';
+    month[6] = 'June';
+    month[7] = 'July';
+    month[8] = 'August';
+    month[9] = 'September';
+    month[10] = 'October';
+    month[11] = 'November';
+    month[12] = 'December';
+    const splitDate = String(transactionDate).split('-');
+    return `${month[splitDate[1].replace(/^0+/, '')]} ${splitDate[2]}`;
+  }
+
+  renderJSXDividers(transactionDate) {
+    if (transactionDate != global.lastDate) {
+      global.lastDate = transactionDate;
+      return (
+        <ListItem style={styles.listDividerBackgroundColor} itemDivider>
+          <Text style={styles.listDividerText}>{this.formatDate(transactionDate)}</Text>
+        </ListItem>
+      );
+    }
   }
 
   renderJSXPieChartData(transactions) {
@@ -611,47 +661,60 @@ class Dashboard extends Component {
 
   render = () => {
     const transactions = this.props.transactions;
-
+    let transactionsListItems = [];
     const { slider1ActiveSlide } = this.state;
     const { member } = this.props;
 
     if (typeof member.bankStaging !== 'undefined' && !member.bankStaging) {
       Actions.replace('linkBank');
     }
-    
+
     { this.renderJSXPieChartData(transactions); }
-    let transactionList = null;
+
     // Check that transactions are not null and that transactions are not an empty list
     if (transactions && Object.keys(transactions).length >= 2) {
-      transactionList = <TransactionList transactions = { transactions } />
+      transactionsListItems = // console.log(transaction);
+                              transactions.map(transaction => (
+                                <View key={JSON.stringify(transaction)}>
+                                  { this.renderJSXDividers(transaction.date) }
+                                  <ListItem style={styles.ListItemStyling} avatar>
+                                    <Left style={styles.ListItemStyling}>
+                                      <Thumbnail small square source={{ uri: transaction.uri }} />
+                                    </Left>
+                                    <Body style={styles.ListItemStyling}>
+                                      <Text style={styles.TransactionText}>{transaction.name}</Text>
+                                      <Text style={styles.LeftNoteText} note>{transaction.category[0]}</Text>
+                                    </Body>
+                                    <Right style={styles.RightNoteText}>
+                                      { this.renderJSXAmount(transaction.amount) }
+                                    </Right>
+                                  </ListItem>
+                                </View>
+                              ));
+    } else {
+      transactionsListItems = (
+        <View style={{flex:1, height: verticalScale(150), display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', alignSelf: 'center'}}>
+          <Animation
+            ref={animation => {
+              this.animation = animation;
+            }}
+            style={{
+              width: 180,
+              height: 180
+            }}
+            loop={true}
+            source={require('../../images/loading.json')}
+            resizeMode="cover"
+          />
+          <Text style={styles.loadingText}>
+            Retrieving Transactions
+          </Text>
+        </View>
+      );
     }
-    else {
-      transactionList = 
-      <View style={{flex:1, height: verticalScale(150), display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', alignSelf: 'center'}}>
-             <Animation
-              ref={animation => {
-                this.animation = animation;
-              }}
-              style={{
-                width: 180,
-                height: 180
-              }}
-              loop={true}
-              source={require('../../images/loading.json')}
-              resizeMode="cover"
-            />
-            <Text style={styles.loadingText}>
-              Retrieving Transactions
-            </Text>
-          </View>
-    }
-
     return (
       <Container style={{backgroundColor: 'white'}}>
-        <Content
-          style={{flex: 1}}
-          // contentContainerStyle={{flex: 1}} // important!
-        >
+        <Content style={{ flex: 1 }}>
         <Carousel
           ref={(c) => { this._carousel = c; }}
           data={this.state.entryItems}
@@ -677,7 +740,10 @@ class Dashboard extends Component {
           <Text style={styles.transactionHeader}>
             Transactions
           </Text>
-          {transactionList}
+          <List style={{ flex: 1 }}>
+            {transactionsListItems}
+          </List>
+
         <Modal
         backdropOpacity={0.2}
         isVisible={this.state.baseModalVisible}
