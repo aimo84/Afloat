@@ -59,13 +59,15 @@ class SignUp extends React.Component {
     onFormSubmit(this.state)
       .then(() => {
         console.log('after component call');
-        Actions.replace('emailVerification');
+        Actions.replace('linkBank');
       })
       .catch(e => console.log(`Error: ${e}`));
   }
 
   render() {
     const { loading, error } = this.props;
+    console.log('signup');
+    console.log(this.props);
     if (loading) return <Loading />;
 
     return (
