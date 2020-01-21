@@ -3,7 +3,7 @@
 
 # Afloat
 
-React Native for an app for providing payday cash advances to American workers. Visit [here](https://github.com/dartmouth-cs98/19w-quantweb-backend) for the backend.
+React Native frontend for an app for providing payday cash advances to American workers. Visit [https://github.com/dartmouth-cs98/19w-quantweb-backend](https://github.com/dartmouth-cs98/19w-quantweb-backend) for the backend.
 
 ## Contributions by Joe Connolly
 
