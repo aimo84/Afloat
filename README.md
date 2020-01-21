@@ -60,7 +60,7 @@ expo publish
 Tyler Burnam, Azhar Hussain, Deven Orie, Joe Connolly
 ## Contributions by Joe Connolly
 
-Joe built portions of the app's React Native frontend and Node.js backend. Joe built a number of features, including implementing the  navigational structure of the app in React, and implementing email verification by adding screens to the app's React frontend as well controllers to the app's Node.js/MongoDB backend.  Joe also designed parts of the app's Redux code to make data about user's transactions and settings available when needed.  
+Joe built portions of the app's React Native frontend and Node.js backend. Joe built a number of features, including implementing the  navigational tab structure of the app in React, and implementing email verification by adding screens to the app's React frontend as well controllers to the app's Node.js/MongoDB backend.  Joe also designed parts of the app's Redux code to make data about users' transactions and settings available when needed.  
 
 ## Acknowledgments
 
