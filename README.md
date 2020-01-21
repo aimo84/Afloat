@@ -3,11 +3,7 @@
 
 # Afloat
 
-React Native frontend for an app for providing payday cash advances to American workers. Visit [https://github.com/dartmouth-cs98/19w-quantweb-backend](https://github.com/dartmouth-cs98/19w-quantweb-backend) for the backend.
-
-## Contributions by Joe Connolly
-
-Joe built portions of the app's React Native frontend and Node.js backend. Joe built a number of features, including implementing the  navigational structure of the app in React, and implementing email verification by adding screens to the app's React frontend as well controllers on the app's Node.js backend and data fields on the app's MongoDB backend.  Joe also designed parts of the app's Redux code to make data about user's transactions and settings available when needed.  
+React Native frontend for an app for providing payday cash advances to American workers. Visit [https://github.com/dartmouth-cs98/19w-quantweb-backend](https://github.com/dartmouth-cs98/19w-quantweb-backend) for the backend.  The app was built for Dartmouth's two term computer science capstone project. 
 
 ## Architecture
 
@@ -62,6 +58,9 @@ expo publish
 ## Authors
 
 Tyler Burnam, Azhar Hussain, Deven Orie, Joe Connolly
+## Contributions by Joe Connolly
+
+Joe built portions of the app's React Native frontend and Node.js backend. Joe built a number of features, including implementing the  navigational structure of the app in React, and implementing email verification by adding screens to the app's React frontend as well controllers on the app's Node.js backend and data fields on the app's MongoDB backend.  Joe also designed parts of the app's Redux code to make data about user's transactions and settings available when needed.  
 
 ## Acknowledgments
 
