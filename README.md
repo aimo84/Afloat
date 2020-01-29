@@ -3,7 +3,7 @@
 
 # Afloat
 
-React Native frontend for an app for providing payday cash advances to American workers. Visit [https://github.com/dartmouth-cs98/19w-quantweb-backend](https://github.com/dartmouth-cs98/19w-quantweb-backend) for the backend.  The app was built for Dartmouth's two term computer science capstone project. 
+React Native frontend for an app for providing payday cash advances to American workers. Visit [here](https://github.com/Joe-Connolly/Afloat-api) for the backend.  This app was built as Dartmouth's two-term computer science capstone project. 
 
 ## Architecture
 
